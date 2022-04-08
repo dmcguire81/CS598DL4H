@@ -4,7 +4,8 @@ Project for CS 598 Deep Learning for Healthcare
 ## Submodules
 
 ```sh
-git submodule foreach `git submodule update --init`
+git submodule init
+git submodule update
 ```
 
 ## Repro Steps
