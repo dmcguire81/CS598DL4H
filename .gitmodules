@@ -1,0 +1,3 @@
+[submodule "caml-mimic"]
+	path = caml-mimic
+	url = https://github.com/jamesmullenbach/caml-mimic.git
