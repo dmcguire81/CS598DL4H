@@ -1,3 +1,6 @@
 [submodule "caml-mimic"]
 	path = caml-mimic
 	url = https://github.com/jamesmullenbach/caml-mimic.git
+[submodule "Explainable-Automated-Medical-Coding"]
+	path = Explainable-Automated-Medical-Coding
+	url = git@github.com:dmcguire81/Explainable-Automated-Medical-Coding.git
