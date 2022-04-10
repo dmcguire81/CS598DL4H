@@ -80,7 +80,7 @@ python HAN_train.py \
     --early_stop_lr 0.00002 \
     --remove_ckpts_before_train=False \
     --use_label_embedding=True \
-    --ckpt_dir checkpoint_HAN_50_per_label_bs32_LE/ \
+    --ckpt_dir ../checkpoints/checkpoint_HAN_50_per_label_bs32_LE/ \
     --use_sent_split_padded_version=False \
     --marking_id 50-hlan \
     --gpu=True  # Colab only
@@ -102,7 +102,7 @@ python HAN_train.py \
     --early_stop_lr 0.00002 \
     --remove_ckpts_before_train=False \
     --use_label_embedding=True \
-    --ckpt_dir checkpoint_HAN_shielding_per_label_bs32_LE/ \
+    --ckpt_dir ../checkpoints/checkpoint_HAN_shielding_per_label_bs32_LE/ \
     --use_sent_split_padded_version=False \
     --marking_id shielding-hlan \
     --gpu=True  # Colab only
