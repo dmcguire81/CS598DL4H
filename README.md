@@ -13,8 +13,8 @@ git submodule update
 ### CS598DL4h
 
 ```sh
-pyenv local 3.8.11
-python3.8 -m venv env
+pyenv local 3.7.11
+python3.7 -m venv env
 env/bin/pip install --upgrade pip
 env/bin/pip install -r requirements.txt
 ```
@@ -24,8 +24,8 @@ Use `env/bin/python` as the kernel for [MIMIC_III.ipynb](./MIMIC_III.ipynb).
 ### caml-mimic
 
 ```sh
-pyenv local 3.6.14
-python3.6 -m venv env
+pyenv local 3.7.11
+python3.7 -m venv env
 env/bin/pip install --upgrade pip
 env/bin/pip install -r requirements.txt
 ```
