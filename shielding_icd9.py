@@ -14,6 +14,10 @@ def main(shielding_csv, mapping_csv):
     shielding_icd9_df = shielding_icd10_df.join(mapping_df)
     print(shielding_icd9_df.info())
     shielding_icd9_df.to_csv("shielding_icd9.csv", header=True)
+    
+    unmatched_shiedling_icd9_df = shielding_icd9_df[shielding_icd9_df.ICD9.isnull()]
+    print(f"{len(unmatched_shiedling_icd9_df)} unmatched ICD9 codes:")
+    print(unmatched_shiedling_icd9_df)
 
 if __name__ == "__main__":
     main(*sys.argv[1:])

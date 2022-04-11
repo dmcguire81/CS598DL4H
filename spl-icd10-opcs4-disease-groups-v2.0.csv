@@ -11,16 +11,506 @@ B179,Unspecified transplantation of thymus gland,Transplant,OPCS-4
 "B208,Y019",Unspecified transplantation of thymus gland,Transplant,OPCS-4
 B211,HIV disease resulting in Burkitt lymphoma,Cancer undergoing active chemo/radiotherapy,ICD-10
 B238,HIV disease resulting in other specified conditions,Cancer undergoing active chemo/radiotherapy,ICD-10
-C00-C75,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
-C34,Malignant neoplasm of bronchus and lung,Cancer undergoing active chemo/radiotherapy,ICD-10
+C000,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C001,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C002,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C003,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C004,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C005,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C006,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C008,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C009,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C01,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C020,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C021,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C022,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C023,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C024,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C028,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C029,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C030,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C031,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C039,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C040,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C041,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C048,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C049,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C050,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C051,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C052,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C058,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C059,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C060,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C061,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C062,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C068,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C069,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C07,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C080,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C081,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C088,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C089,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C090,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C091,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C098,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C099,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C100,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C101,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C102,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C103,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C104,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C108,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C109,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C110,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C111,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C112,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C113,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C118,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C119,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C12,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C130,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C131,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C132,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C138,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C139,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C140,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C142,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C148,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C150,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C151,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C152,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C153,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C154,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C155,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C158,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C159,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C160,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C161,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C162,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C163,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C164,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C165,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C166,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C168,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C169,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C170,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C171,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C172,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C173,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C178,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C179,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C180,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C181,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C182,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C183,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C184,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C185,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C186,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C187,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C188,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C189,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C19,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C20,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C210,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C211,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C212,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C218,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C220,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C221,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C222,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C223,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C224,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C227,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C229,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C23,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C240,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C241,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C248,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C249,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C250,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C251,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C252,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C253,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C254,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C257,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C258,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C259,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C260,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C261,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C268,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C269,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C300,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C301,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C310,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C311,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C312,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C313,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C318,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C319,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C320,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C321,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C322,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C323,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C328,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C329,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C33,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C340,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C341,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C342,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C343,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C348,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C349,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C37,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C380,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C381,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C382,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C383,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C384,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C388,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C390,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C398,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C399,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C400,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C401,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C402,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C403,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C408,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C409,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C4101,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-101
+C4102,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-102
+C411,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C412,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C413,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C414,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C418,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C419,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C430,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C431,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C432,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C433,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C434,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C435,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C436,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C437,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C438,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C439,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C440,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C441,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C442,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C443,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C444,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C445,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C446,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C447,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C448,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C449,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C450,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C451,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C452,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C457,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C459,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C460,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C461,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C462,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C463,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C467,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C468,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C469,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C470,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C471,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C472,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C473,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C474,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C475,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C476,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C478,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C479,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C480,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C481,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C482,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C488,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C490,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C491,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C492,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C493,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C494,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C495,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C496,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C498,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C499,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C500,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C501,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C502,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C503,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C504,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C505,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C506,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C508,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C509,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C510,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C511,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C512,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C518,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C519,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C52,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C530,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C531,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C538,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C539,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C540,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C541,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C542,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C543,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C548,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C549,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C55,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C56,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C570,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C571,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C572,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C573,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C574,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C577,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C578,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C579,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C58,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C600,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C601,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C602,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C608,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C609,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C61,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C620,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C621,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C629,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C630,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C631,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C632,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C637,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C638,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C639,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C64,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C65,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C66,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C670,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C671,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C672,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C673,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C674,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C675,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C676,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C677,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C678,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C679,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C680,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C681,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C688,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C689,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C690,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C691,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C692,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C693,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C694,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C695,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C696,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C698,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C699,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C700,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C701,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C709,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C710,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C711,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C712,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C713,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C714,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C715,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C716,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C717,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C718,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C719,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C720,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C721,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C722,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C723,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C724,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C725,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C728,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C729,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C73,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C740,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C741,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C749,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C750,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C751,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C752,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C753,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C754,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C755,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C758,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
+C759,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10
 C437,Transplantation of conjunctiva,Transplant,OPCS-4
 "C438,Y012",Transplantation of conjunctiva,Transplant,OPCS-4
 "C438,Y013",Transplantation of conjunctiva,Transplant,OPCS-4
 C467,Transplant of corneal lumbal cells,Transplant,OPCS-4
-C76-C80,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C760,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C761,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C762,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C763,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C764,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C765,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C767,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C768,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C770,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C771,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C772,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C773,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C774,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C775,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C778,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C779,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C780,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C781,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C782,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C783,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C784,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C785,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C786,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C787,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C788,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C790,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C791,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C792,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C793,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C794,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C795,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C796,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C797,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
+C7981,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-101
+C7982,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-102
+C7988,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-109
+C80,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10
 C780,Secondary neoplasm lung,Cancer undergoing active chemo/radiotherapy,ICD-10
-C81-C96,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
-C947-C969,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C810,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C811,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C812,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C813,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C817,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C819,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C820,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C821,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C822,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C827,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C829,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C830,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C831,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C832,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C833,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C834,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C835,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C836,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C837,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C838,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C839,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C840,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C841,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C842,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C843,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C844,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C845,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C850,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C851,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C857,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C859,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8800,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8801,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8810,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8811,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8820,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8821,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8830,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8831,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8870,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8871,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8890,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C8891,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9000,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9001,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9010,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9011,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9020,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9021,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9100,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9101,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9110,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9111,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9120,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9121,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9130,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9131,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9140,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9141,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9150,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9151,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9170,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9171,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9190,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9191,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9200,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9201,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9210,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9211,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9220,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9221,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9230,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9231,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9240,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9241,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9250,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9251,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9270,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9271,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9290,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9291,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9300,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9301,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9310,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9311,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9320,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9321,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9370,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9371,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9390,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9391,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9400,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9401,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9410,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9411,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9420,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9421,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9430,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9431,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9440,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9441,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9450,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9451,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9470,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9471,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9500,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9501,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9510,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9511,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9520,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9521,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9570,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9571,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9590,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C9591,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C960,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C961,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C962,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C963,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C967,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
+C969,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10
 C965,Multifocal and unisystemic Langerhans-cell histiocytosis,Cancer undergoing active chemo/radiotherapy,ICD-10
 D097,Carcinoma in situ of other specified sites,Cancer undergoing active chemo/radiotherapy,ICD-10
 D374,Neoplasm of uncertain or unknown behaviour: Colon,Cancer undergoing active chemo/radiotherapy,ICD-10
@@ -38,23 +528,75 @@ D71X,Functional disorders of polymorphonuclear neutrophils,Haematological Cancer
 D730,Hyposplenism,Haematological Cancers,ICD-10
 D760,"Langerhans' cell histiocytosis, not elsewhere classified",Haematological Cancers,ICD-10
 D761,Haemophagocytic lymphohistiocytosis,Haematological Cancers,ICD-10
-D80-D89,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
-D821,Di George syndrome,"Rare genetic, metabolic and autoimmune diseases",ICD-10
-D898,"Other specified disorders involving the immune mechanism, not elsewhere classified",Haematological Cancers,ICD-10
-D899,"Disorder involving the immune mechanism, unspecified",Haematological Cancers,ICD-10
+D800,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D801,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D802,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D803,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D804,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D805,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D806,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D807,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D808,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D809,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D810,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D811,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D812,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D813,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D814,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D815,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D816,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D817,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D818,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D819,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D820,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D821,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D822,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D823,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D824,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D828,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D829,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D830,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D831,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D832,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D838,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D839,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D840,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D841,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D848,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D849,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D860,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D861,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D862,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D863,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D868,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D869,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D890,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D891,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D892,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D898,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+D899,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 E531,Double lung transplant,Transplant,OPCS-4
 E532,Single lung transplant,Transplant,OPCS-4
 E533,Single lobe lung transplant,Transplant,OPCS-4
 E538,Other specified transplantation of lung,Transplant,OPCS-4
 E539,Unspecified transplantation of lung,Transplant,OPCS-4
 E703,Albinism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
-E71,Disorders of branched-chain amino-acid metabolism and fatty-acid metabolism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+E710,Disorders of branched-chain amino-acid metabolism and fatty-acid metabolism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+E711,Disorders of branched-chain amino-acid metabolism and fatty-acid metabolism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+E712,Disorders of branched-chain amino-acid metabolism and fatty-acid metabolism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+E713,Disorders of branched-chain amino-acid metabolism and fatty-acid metabolism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 E722,Disorders of urea cycle metabolism,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 E740,Glycogen storage disease,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 E752,Other sphingolipidosis ,"Rare genetic, metabolic and autoimmune diseases",ICD-10
-E760-E763,mucopolysaccharidoses,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+E760,mucopolysaccharidoses,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+E761,mucopolysaccharidoses,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+E762,mucopolysaccharidoses,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+E763,mucopolysaccharidoses,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 E771,Defects in glycoprotein degradation,"Rare genetic, metabolic and autoimmune diseases",ICD-10
-E84,Cystic fibrosis,Respiratory,ICD-10
+E840,Cystic fibrosis,Respiratory,ICD-10
+E841,Cystic fibrosis,Respiratory,ICD-10
+E848,Cystic fibrosis,Respiratory,ICD-10
+E849,Cystic fibrosis,Respiratory,ICD-10
 G10X,Huntington disease,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 G113,Cerebellar ataxia with defective DNA repair,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 G261,Allotransplantation of stomach,Transplant,OPCS-4
@@ -83,9 +625,14 @@ J014,Transplantation of liver cells,Transplant,OPCS-4
 J015,Orthotopic transplantation of whole liver,Transplant,OPCS-4
 J018,Other specified transplantation of liver,Transplant,OPCS-4
 J019,Unspecified transplantation of liver,Transplant,OPCS-4
-J41,Simple and mucopurulent chronic bronchitis,Respiratory,ICD-10
+J410,Simple and mucopurulent chronic bronchitis,Respiratory,ICD-10
+J411,Simple and mucopurulent chronic bronchitis,Respiratory,ICD-10
+J418,Simple and mucopurulent chronic bronchitis,Respiratory,ICD-10
 J42,Unspecified chronic bronchitis,Respiratory,ICD-10
-J44,Other chronic obstructive pulmonary disease,Respiratory,ICD-10
+J440,Other chronic obstructive pulmonary disease,Respiratory,ICD-10
+J441,Other chronic obstructive pulmonary disease,Respiratory,ICD-10
+J448,Other chronic obstructive pulmonary disease,Respiratory,ICD-10
+J449,Other chronic obstructive pulmonary disease,Respiratory,ICD-10
 J46X,Status asthmaticus,Respiratory,ICD-10
 J47,Bronchiectasis,Respiratory,ICD-10
 J61,Pneumoconiosis due to asbestos and other mineral fibres,Respiratory,ICD-10
@@ -155,7 +702,9 @@ T861,Kidney transplant failure and rejection,Transplant,ICD-10
 T862,Heart transplant failure and rejection,Transplant,ICD-10
 T863,Heart-lung transplant failure and rejection,Transplant,ICD-10
 T864,Liver transplant failure and rejection,Transplant,ICD-10
-T868,Failure and rejection of other transplanted organs and tissues,Transplant,ICD-10
+T8681,Failure and rejection of other transplanted organs and tissues,Transplant,ICD-10
+T8682,Failure and rejection of other transplanted organs and tissues,Transplant,ICD-10
+T8688,Failure and rejection of other transplanted organs and tissues,Transplant,ICD-10
 T869,Failure and rejection of unspecified transplanted organ and tissue,Transplant,ICD-10
 W342,Allograft of bone marrow NEC,Transplant,OPCS-4
 W343,Allograft of bone marrow from sibling donor,Transplant,OPCS-4
@@ -169,4 +718,13 @@ X65,Radiotherapy delivery,Cancer undergoing active chemo/radiotherapy,OPCS-4
 X70-X74,Procurement and Delivery of Chemotherapy,Cancer undergoing active chemo/radiotherapy,OPCS-4
 Z510,Radiotherapy session,Cancer undergoing active chemo/radiotherapy,ICD-10
 Z511,Chemotherapy session for neoplasm,Cancer undergoing active chemo/radiotherapy,ICD-10
-Z94,Transplanted organ and tissue status,Transplant,ICD-10
+Z940,Transplanted organ and tissue status,Transplant,ICD-10
+Z941,Transplanted organ and tissue status,Transplant,ICD-10
+Z942,Transplanted organ and tissue status,Transplant,ICD-10
+Z943,Transplanted organ and tissue status,Transplant,ICD-10
+Z944,Transplanted organ and tissue status,Transplant,ICD-10
+Z945,Transplanted organ and tissue status,Transplant,ICD-10
+Z946,Transplanted organ and tissue status,Transplant,ICD-10
+Z947,Transplanted organ and tissue status,Transplant,ICD-10
+Z948,Transplanted organ and tissue status,Transplant,ICD-10
+Z949,Transplanted organ and tissue status,Transplant,ICD-10
