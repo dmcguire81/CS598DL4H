@@ -524,7 +524,7 @@ D571,Sickle-cell anaemia without crisis,"Rare genetic, metabolic and autoimmune 
 D572,Double heterozygous sickling disorders,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 D595,Paroxysmal nocturnal haemoglobinuria [Marchiafava-Micheli],Haematological Cancers,ICD-10
 D70,Agranulocytosis,Cancer undergoing active chemo/radiotherapy,ICD-10
-D71X,Functional disorders of polymorphonuclear neutrophils,Haematological Cancers,ICD-10
+D71,Functional disorders of polymorphonuclear neutrophils,Haematological Cancers,ICD-10
 D730,Hyposplenism,Haematological Cancers,ICD-10
 D760,"Langerhans' cell histiocytosis, not elsewhere classified",Haematological Cancers,ICD-10
 D761,Haemophagocytic lymphohistiocytosis,Haematological Cancers,ICD-10
@@ -597,7 +597,7 @@ E840,Cystic fibrosis,Respiratory,ICD-10
 E841,Cystic fibrosis,Respiratory,ICD-10
 E848,Cystic fibrosis,Respiratory,ICD-10
 E849,Cystic fibrosis,Respiratory,ICD-10
-G10X,Huntington disease,"Rare genetic, metabolic and autoimmune diseases",ICD-10
+G10,Huntington disease,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 G113,Cerebellar ataxia with defective DNA repair,"Rare genetic, metabolic and autoimmune diseases",ICD-10
 G261,Allotransplantation of stomach,Transplant,OPCS-4
 G268,Other specified transplantation of stomach,Transplant,OPCS-4
@@ -633,7 +633,7 @@ J440,Other chronic obstructive pulmonary disease,Respiratory,ICD-10
 J441,Other chronic obstructive pulmonary disease,Respiratory,ICD-10
 J448,Other chronic obstructive pulmonary disease,Respiratory,ICD-10
 J449,Other chronic obstructive pulmonary disease,Respiratory,ICD-10
-J46X,Status asthmaticus,Respiratory,ICD-10
+J46,Status asthmaticus,Respiratory,ICD-10
 J47,Bronchiectasis,Respiratory,ICD-10
 J61,Pneumoconiosis due to asbestos and other mineral fibres,Respiratory,ICD-10
 J620,Pneumoconiosis due to talc dust,Respiratory,ICD-10

@@ -505,7 +505,7 @@ D571,Sickle-cell anaemia without crisis,"Rare genetic, metabolic and autoimmune 
 D572,Double heterozygous sickling disorders,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,28263
 D595,Paroxysmal nocturnal haemoglobinuria [Marchiafava-Micheli],Haematological Cancers,ICD-10,A,2832
 D70,Agranulocytosis,Cancer undergoing active chemo/radiotherapy,ICD-10,A,2880
-D71X,Functional disorders of polymorphonuclear neutrophils,Haematological Cancers,ICD-10,,
+D71,Functional disorders of polymorphonuclear neutrophils,Haematological Cancers,ICD-10,A,2881
 D730,Hyposplenism,Haematological Cancers,ICD-10,A,28959
 D760,"Langerhans' cell histiocytosis, not elsewhere classified",Haematological Cancers,ICD-10,A,2778
 D761,Haemophagocytic lymphohistiocytosis,Haematological Cancers,ICD-10,A,2778
@@ -573,7 +573,7 @@ E840,Cystic fibrosis,Respiratory,ICD-10,A,27700
 E841,Cystic fibrosis,Respiratory,ICD-10,A,27701
 E848,Cystic fibrosis,Respiratory,ICD-10,A,27700
 E849,Cystic fibrosis,Respiratory,ICD-10,A,27700
-G10X,Huntington disease,"Rare genetic, metabolic and autoimmune diseases",ICD-10,,
+G10,Huntington disease,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,3334
 G113,Cerebellar ataxia with defective DNA repair,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,3343
 G712,Congenital myopathies,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,3590
 I270,Primary pulmonary hypertension,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,4160
@@ -586,7 +586,7 @@ J440,Other chronic obstructive pulmonary disease,Respiratory,ICD-10,A,49121
 J441,Other chronic obstructive pulmonary disease,Respiratory,ICD-10,A,49121
 J448,Other chronic obstructive pulmonary disease,Respiratory,ICD-10,A,496
 J449,Other chronic obstructive pulmonary disease,Respiratory,ICD-10,A,496
-J46X,Status asthmaticus,Respiratory,ICD-10,,
+J46,Status asthmaticus,Respiratory,ICD-10,A,49301
 J47,Bronchiectasis,Respiratory,ICD-10,A,494
 J61,Pneumoconiosis due to asbestos and other mineral fibres,Respiratory,ICD-10,A,501
 J620,Pneumoconiosis due to talc dust,Respiratory,ICD-10,A,502
