@@ -1,0 +1,107 @@
+,Code_Description,DiseaseGroup,CodeType,TABLETYP,ICD9
+B211,HIV disease resulting in Burkitt lymphoma,Cancer undergoing active chemo/radiotherapy,ICD-10,,
+B238,HIV disease resulting in other specified conditions,Cancer undergoing active chemo/radiotherapy,ICD-10,A,042
+C00-C75,"Malignant neoplasms, stated or presumed to be primary, of specified sites, except of lymphoid, haematopoietic and related tissue",Cancer undergoing active chemo/radiotherapy,ICD-10,,
+C34,Malignant neoplasm of bronchus and lung,Cancer undergoing active chemo/radiotherapy,ICD-10,,
+C76-C80,"Malignant neoplasms of ill-defined, secondary and unspecified sites",Cancer undergoing active chemo/radiotherapy,ICD-10,,
+C780,Secondary neoplasm lung,Cancer undergoing active chemo/radiotherapy,ICD-10,A,1970
+C81-C96,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,,
+C947-C969,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,,
+C965,Multifocal and unisystemic Langerhans-cell histiocytosis,Cancer undergoing active chemo/radiotherapy,ICD-10,,
+D097,Carcinoma in situ of other specified sites,Cancer undergoing active chemo/radiotherapy,ICD-10,A,2348
+D374,Neoplasm of uncertain or unknown behaviour: Colon,Cancer undergoing active chemo/radiotherapy,ICD-10,A,2352
+D377,Neoplasm of uncertain or unknown behaviour: Other digestive organs,Cancer undergoing active chemo/radiotherapy,ICD-10,A,2355
+D470,Histiocytic and mast cell tumours of uncertain and unknown behaviour,Haematological Cancers,ICD-10,A,2385
+D475,Chronic eosinophilic leukaemia [hypereosinophilic syndrome],Haematological Cancers,ICD-10,,
+D477,"Other specified neoplasms of uncertain or unknown behaviour of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
+D479,"Neoplasm of uncertain or unknown behaviour of lymphoid, haematopoietic and related tissue, unspecified",Haematological Cancers,ICD-10,A,2387
+D570,Sickle-cell anaemia with crisis,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,28262
+D571,Sickle-cell anaemia without crisis,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,28261
+D572,Double heterozygous sickling disorders,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,28263
+D595,Paroxysmal nocturnal haemoglobinuria [Marchiafava-Micheli],Haematological Cancers,ICD-10,A,2832
+D70,Agranulocytosis,Cancer undergoing active chemo/radiotherapy,ICD-10,A,2880
+D71X,Functional disorders of polymorphonuclear neutrophils,Haematological Cancers,ICD-10,,
+D730,Hyposplenism,Haematological Cancers,ICD-10,A,28959
+D760,"Langerhans' cell histiocytosis, not elsewhere classified",Haematological Cancers,ICD-10,A,2778
+D761,Haemophagocytic lymphohistiocytosis,Haematological Cancers,ICD-10,A,2778
+D80-D89,Certain disorders involving the immune mechanism,"Rare genetic, metabolic and autoimmune diseases",ICD-10,,
+D821,Di George syndrome,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,27911
+D898,"Other specified disorders involving the immune mechanism, not elsewhere classified",Haematological Cancers,ICD-10,A,2798
+D899,"Disorder involving the immune mechanism, unspecified",Haematological Cancers,ICD-10,A,2799
+E703,Albinism,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,2702
+E71,Disorders of branched-chain amino-acid metabolism and fatty-acid metabolism,"Rare genetic, metabolic and autoimmune diseases",ICD-10,,
+E722,Disorders of urea cycle metabolism,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,2706
+E740,Glycogen storage disease,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,2710
+E752,Other sphingolipidosis ,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,2727
+E760-E763,mucopolysaccharidoses,"Rare genetic, metabolic and autoimmune diseases",ICD-10,,
+E771,Defects in glycoprotein degradation,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,2718
+E84,Cystic fibrosis,Respiratory,ICD-10,,
+G10X,Huntington disease,"Rare genetic, metabolic and autoimmune diseases",ICD-10,,
+G113,Cerebellar ataxia with defective DNA repair,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,3343
+G712,Congenital myopathies,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,3590
+I270,Primary pulmonary hypertension,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,4160
+I712,"Thoracic aortic aneurysm, without mention of rupture",Congenital Heart,ICD-10,A,4412
+J41,Simple and mucopurulent chronic bronchitis,Respiratory,ICD-10,,
+J42,Unspecified chronic bronchitis,Respiratory,ICD-10,A,4919
+J44,Other chronic obstructive pulmonary disease,Respiratory,ICD-10,,
+J46X,Status asthmaticus,Respiratory,ICD-10,,
+J47,Bronchiectasis,Respiratory,ICD-10,A,494
+J61,Pneumoconiosis due to asbestos and other mineral fibres,Respiratory,ICD-10,A,501
+J620,Pneumoconiosis due to talc dust,Respiratory,ICD-10,A,502
+J630,Aluminosis (of lung),Respiratory,ICD-10,A,503
+J631,Bauxite fibrosis (of lung),Respiratory,ICD-10,A,503
+J633,Graphite fibrosis (of lung),Respiratory,ICD-10,A,503
+J634,Siderosis,Respiratory,ICD-10,A,503
+J635,Stannosis,Respiratory,ICD-10,A,503
+J660,Byssinosis,Respiratory,ICD-10,A,504
+J661,Flax-dresser disease,Respiratory,ICD-10,A,504
+J662,Cannabinosis,Respiratory,ICD-10,A,504
+J668,Airway disease due to other specific organic dusts,Respiratory,ICD-10,A,504
+J670,Farmer lung,Respiratory,ICD-10,A,4950
+J671,Bagassosis,Respiratory,ICD-10,A,4951
+J678,Hypersensitivity pneumonitis due to other organic dusts,Respiratory,ICD-10,A,4958
+J684,"Chronic respiratory conditions due to chemicals, gases, fumes and vapours",Respiratory,ICD-10,A,5064
+J688,"Other respiratory conditions due to chemicals, gases, fumes and vapours",Respiratory,ICD-10,A,5064
+J698,Pneumonitis due to other solids and liquids,Respiratory,ICD-10,A,5078
+J701,Chronic and other pulmonary manifestations due to radiation,Respiratory,ICD-10,A,5081
+J703,Chronic drug-induced interstitial lung disorders,Respiratory,ICD-10,A,5088
+J840,Alveolar and parietoalveolar conditions,Respiratory,ICD-10,A,5160
+J983,Compensatory emphysema,Respiratory,ICD-10,A,5182
+J991,Respiratory disorders in other diffuse connective tissue disorders,Respiratory,ICD-10,A,5172
+L412,Lymphomatoid papulosis,Haematological Cancers,ICD-10,A,6962
+M312,Lethal midline granuloma,Cancer undergoing active chemo/radiotherapy,ICD-10,A,4463
+M313,Wegener granulomatosis,Respiratory,ICD-10,A,4464
+P250,Interstitial emphysema originating in the perinatal period,Respiratory,ICD-10,A,7702
+P615,Transient neonatal neutropenia,Haematological Cancers,ICD-10,A,7767
+Q200,Common arterial trunk,Congenital Heart,ICD-10,A,7450
+Q203,Discordant ventriculoarterial connection,Congenital Heart,ICD-10,A,74510
+Q204,Double inlet ventricle,Congenital Heart,ICD-10,A,7453
+Q205,Discordant atrioventricular connection,Congenital Heart,ICD-10,A,74512
+Q208,Other congenital malformations of cardiac chambers and connections,Congenital Heart,ICD-10,A,7458
+Q211,Atrial septal defect,Congenital Heart,ICD-10,A,7455
+Q212,Atrioventricular septal defect,Congenital Heart,ICD-10,A,74560
+Q223,Other congenital malformations of pulmonary valve,Congenital Heart,ICD-10,A,74609
+Q231,Congenital insufficiency of aortic valve,Congenital Heart,ICD-10,A,7464
+Q238,Other congenital malformations of aortic and mitral valves,Congenital Heart,ICD-10,A,74689
+Q245,Malformation of coronary vessels,Congenital Heart,ICD-10,A,74685
+Q248,Other specified congenital malformations of heart,Congenital Heart,ICD-10,A,74689
+Q254,Other congenital malformations of aorta,Congenital Heart,ICD-10,A,74729
+Q268,Other congenital malformations of great veins,Congenital Heart,ICD-10,A,74749
+Q288,Other specified congenital malformations of circulatory system,Congenital Heart,ICD-10,A,74789
+Q334,Congenital bronchiectasis,Respiratory,ICD-10,A,74861
+Q851,Tuberous sclerosis,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,7595
+Q859,"Phakomatosis, unspecified","Rare genetic, metabolic and autoimmune diseases",ICD-10,A,7596
+Q878,"Other specified congenital malformation syndromes, not elsewhere classified",Congenital Heart,ICD-10,A,75989
+Q878,"Other specified congenital malformation syndromes, not elsewhere classified","Rare genetic, metabolic and autoimmune diseases",ICD-10,A,75989
+Q893,Situs inversus,Congenital Heart,ICD-10,A,7593
+Q898,Other specified congenital malformations,Congenital Heart,ICD-10,A,75989
+T860,Bone-marrow transplant rejection,Transplant,ICD-10,B,99685
+T861,Kidney transplant failure and rejection,Transplant,ICD-10,B,99681
+T862,Heart transplant failure and rejection,Transplant,ICD-10,B,99683
+T863,Heart-lung transplant failure and rejection,Transplant,ICD-10,B,99683
+T864,Liver transplant failure and rejection,Transplant,ICD-10,B,99682
+T868,Failure and rejection of other transplanted organs and tissues,Transplant,ICD-10,,
+T869,Failure and rejection of unspecified transplanted organ and tissue,Transplant,ICD-10,B,99680
+Z510,Radiotherapy session,Cancer undergoing active chemo/radiotherapy,ICD-10,V,V580
+Z511,Chemotherapy session for neoplasm,Cancer undergoing active chemo/radiotherapy,ICD-10,V,V5811
+Z94,Transplanted organ and tissue status,Transplant,ICD-10,,
