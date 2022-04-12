@@ -130,3 +130,7 @@ dmypy.json
 
 # Virtual Env
 env
+
+# Sensitive data
+shielding_diagnoses.csv
+SHIELDING_CODES.csv
