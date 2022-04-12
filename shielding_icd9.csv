@@ -471,6 +471,13 @@ C9421,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haema
 C9430,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,20780
 C9431,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,20781
 C9440,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
+C9440,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
+C9440,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
+C9440,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
+C9440,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
+C9440,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
+C9440,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
+C9440,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
 C9441,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
 C9450,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2898
 C9451,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,20721
@@ -496,15 +503,30 @@ C969,"Malignant neoplasms, stated or presumed to be primary, of lymphoid, haemat
 D097,Carcinoma in situ of other specified sites,Cancer undergoing active chemo/radiotherapy,ICD-10,A,2348
 D374,Neoplasm of uncertain or unknown behaviour: Colon,Cancer undergoing active chemo/radiotherapy,ICD-10,A,2352
 D377,Neoplasm of uncertain or unknown behaviour: Other digestive organs,Cancer undergoing active chemo/radiotherapy,ICD-10,A,2355
+D460,Refractory anemia,Haematological Cancers,ICD-10,A,23872
+D4622,Refractory anemia with excess of blasts 2,Haematological Cancers,ICD-10,A,23873
+D469,"Myelodysplastic syndrome, unspecified",Haematological Cancers,ICD-10,A,23875
+D46C,Myelodysplastic syndrome with isolated del(5q) chromosomal abnormality,Haematological Cancers,ICD-10,A,23874
 D470,Histiocytic and mast cell tumours of uncertain and unknown behaviour,Haematological Cancers,ICD-10,A,2385
+D471,Chronic myeloproliferative disease,Haematological Cancers,ICD-10,A,23876
+D473,Essential (hemorrhagic) thrombocythemia,Haematological Cancers,ICD-10,A,23871
+D473,Essential (hemorrhagic) thrombocythemia,Haematological Cancers,ICD-10,A,2387
 D475,Chronic eosinophilic leukaemia [hypereosinophilic syndrome],Haematological Cancers,ICD-10,,
 D477,"Other specified neoplasms of uncertain or unknown behaviour of lymphoid, haematopoietic and related tissue",Haematological Cancers,ICD-10,A,2387
-D479,"Neoplasm of uncertain or unknown behaviour of lymphoid, haematopoietic and related tissue, unspecified",Haematological Cancers,ICD-10,A,2387
+D479,"Neoplasm of uncertain or unknown behaviour of lymphoid, haematopoietic and related tissue, unspecified",Haematological Cancers,ICD-10,A,23879
+D47Z1,Post-transplant lymphoproliferative disorder (PTLD),Haematological Cancers,ICD-10,A,23877
 D570,Sickle-cell anaemia with crisis,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,28262
 D571,Sickle-cell anaemia without crisis,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,28261
 D572,Double heterozygous sickling disorders,"Rare genetic, metabolic and autoimmune diseases",ICD-10,A,28263
 D595,Paroxysmal nocturnal haemoglobinuria [Marchiafava-Micheli],Haematological Cancers,ICD-10,A,2832
 D70,Agranulocytosis,Cancer undergoing active chemo/radiotherapy,ICD-10,A,2880
+D700,Congenital agranulocytosis,Cancer undergoing active chemo/radiotherapy,ICD-10,A,28801
+D701,Agranulocytosis secondary to cancer chemotherapy,Cancer undergoing active chemo/radiotherapy,ICD-10,,
+D702,Other drug-induced agranulocytosis,Cancer undergoing active chemo/radiotherapy,ICD-10,A,28803
+D703,Neutropenia due to infection,Cancer undergoing active chemo/radiotherapy,ICD-10,A,28804
+D704,Cyclic neutropenia,Cancer undergoing active chemo/radiotherapy,ICD-10,A,28802
+D708,Other neutropenia,Cancer undergoing active chemo/radiotherapy,ICD-10,A,28809
+D709,"Neutropenia, unspecified",Cancer undergoing active chemo/radiotherapy,ICD-10,A,28800
 D71,Functional disorders of polymorphonuclear neutrophils,Haematological Cancers,ICD-10,A,2881
 D730,Hyposplenism,Haematological Cancers,ICD-10,A,28959
 D760,"Langerhans' cell histiocytosis, not elsewhere classified",Haematological Cancers,ICD-10,A,2778
@@ -587,7 +609,8 @@ J441,Other chronic obstructive pulmonary disease,Respiratory,ICD-10,A,49121
 J448,Other chronic obstructive pulmonary disease,Respiratory,ICD-10,A,496
 J449,Other chronic obstructive pulmonary disease,Respiratory,ICD-10,A,496
 J46,Status asthmaticus,Respiratory,ICD-10,A,49301
-J47,Bronchiectasis,Respiratory,ICD-10,A,494
+J471,Bronchiectasis with (acute) exacerbation,Respiratory,ICD-10,A,4941
+J479,"Bronchiectasis, uncomplicated",Respiratory,ICD-10,A,4940
 J61,Pneumoconiosis due to asbestos and other mineral fibres,Respiratory,ICD-10,A,501
 J620,Pneumoconiosis due to talc dust,Respiratory,ICD-10,A,502
 J630,Aluminosis (of lung),Respiratory,ICD-10,A,503
