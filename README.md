@@ -18,7 +18,7 @@ git submodule update
 pyenv local 3.7.11
 python3.7 -m venv env
 env/bin/pip install --upgrade pip
-env/bin/pip install -r requirements.txt
+env/bin/pip install -r requirements.txt -r dev-requirements.txt
 ```
 
 Use `env/bin/python` as the kernel for [MIMIC_III.ipynb](./MIMIC_III.ipynb).
@@ -94,7 +94,7 @@ cd Explainable-Automated-Medical-Coding/HLAN/
 ```sh
 # Most of the flags and options are initially hard-coded to the below values
 env/bin/python HLAN/HAN_train.py \
-    --dataset 'Explainable-Automated-Medical-Coding/datasets/mimiciii_*_50_th0.txt' \
+    --dataset 'caml-mimic/mimicdata/mimic3/*_50.csv' \
     --batch_size 32 \
     --per_label_attention=True \
     --per_label_sent_only=False \
@@ -104,9 +104,11 @@ env/bin/python HLAN/HAN_train.py \
     --early_stop_lr=0.00002 \
     --remove_ckpts_before_train=False \
     --use_label_embedding=True \
-    --ckpt_dir Explainable-Automated-Medical-Coding/checkpoints/checkpoint_HAN_50_per_label_bs32_LE/ --use_sent_split_padded_version=False \
-    --marking_id 50-hlan \
-    --gpu=True
+    --ckpt_dir Explainable-Automated-Medical-Coding/checkpoints/checkpoint_HAN_50_per_label_bs32_LE/ \
+    --use_sent_split_padded_version=False \
+    --marking_id mimic3-ds-50 \
+    --gpu=True \
+    --word2vec_model_path Explainable-Automated-Medical-Coding/embeddings/processed_full.w2v
 ```
 
 #### MIMIC-III COVID-19 Shielding
