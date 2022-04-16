@@ -1,20 +1,87 @@
 import logging
 from collections import Counter, defaultdict
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Mapping, Tuple
+from typing import Dict, Mapping, Tuple
 
 import numpy as np
 import pandas as pd
 import tensorflow as tf
 from gensim.models import Word2Vec
+from tflearn import data_utils
+
+ForwardOnehot = Mapping[str, int]
+ReverseOnehot = Mapping[int, str]
+
+
+@dataclass
+class ForwardOnehotEncoding:
+    words: ForwardOnehot
+    labels: ForwardOnehot
+
+
+@dataclass
+class ReverseOnehotEncoding:
+    words: ReverseOnehot
+    labels: ReverseOnehot
+
+
+@dataclass
+class OnehotEncoding:
+    num_classes: int
+    vocab_size: int
+    forward: ForwardOnehotEncoding
+    reverse: ReverseOnehotEncoding
+
+
+def load_encoding_data(
+    word2vec_model_path: Path,
+    validation_data_path: Path,
+    training_data_path: Path,
+    testing_data_path: Path,
+) -> OnehotEncoding:
+    logger = logging.getLogger("load_data.load_encoding_data")
+
+    (
+        vocabulary_word2index_label,
+        vocabulary_index2word_label,
+    ) = create_vocabulary_label_pre_split(
+        training_data_path=training_data_path,
+        validation_data_path=validation_data_path,
+        testing_data_path=testing_data_path,
+    )
+
+    logger.debug(
+        "display the first two labels: %s %s",
+        vocabulary_index2word_label[0],
+        vocabulary_index2word_label[1],
+    )
+
+    vocabulary_word2index, vocabulary_index2word = create_vocabulary(
+        word2vec_model_path
+    )
+
+    vocab_size = len(vocabulary_word2index)
+    logger.debug("vocab_size: %s", vocab_size)
+
+    return OnehotEncoding(
+        num_classes=len(vocabulary_index2word_label),
+        vocab_size=len(vocabulary_index2word),
+        forward=ForwardOnehotEncoding(
+            words=vocabulary_word2index, labels=vocabulary_word2index_label
+        ),
+        reverse=ReverseOnehotEncoding(
+            words=vocabulary_index2word, labels=vocabulary_index2word_label
+        ),
+    )
 
 
 def create_vocabulary_label_pre_split(
     training_data_path: Path,
     validation_data_path: Path,
     testing_data_path: Path,
-) -> Tuple[Mapping[str, int], Mapping[int, str]]:
-    logger = logging.getLogger("create_vocabulary_label_pre_split")
+) -> Tuple[ForwardOnehot, ReverseOnehot]:
+    logger = logging.getLogger("load_data.create_vocabulary_label_pre_split")
 
     label_counter: Counter = Counter()
 
@@ -37,9 +104,7 @@ def create_vocabulary_label_pre_split(
     return word2index, index2word
 
 
-def create_vocabulary(
-    word2vec_model_path: Path, name_scope: str = ""
-) -> Tuple[Mapping[str, int], Mapping[int, str]]:
+def create_vocabulary(word2vec_model_path: Path) -> Tuple[ForwardOnehot, ReverseOnehot]:
     model = Word2Vec.load(str(word2vec_model_path))
     all_features = ["PAD_ID"] + list(model.wv.vocab.keys())
 
@@ -49,16 +114,56 @@ def create_vocabulary(
     return word2index, index2word
 
 
+TrainingData = Tuple[np.ndarray, np.ndarray]
+
+
+@dataclass
+class TrainingDataSplit:
+    validation: TrainingData
+    training: TrainingData
+    testing: TrainingData
+
+
+def load_training_data(
+    vocabulary_embedding: ForwardOnehotEncoding,
+    validation_data_path: Path,
+    training_data_path: Path,
+    testing_data_path: Path,
+    sequence_length: int,
+) -> TrainingDataSplit:
+    trainX, trainY = load_data_multilabel_pre_split(
+        vocabulary_embedding,
+        data_path=training_data_path,
+    )
+    validX, validY = load_data_multilabel_pre_split(
+        vocabulary_embedding,
+        data_path=validation_data_path,
+    )
+    testX, testY = load_data_multilabel_pre_split(
+        vocabulary_embedding,
+        data_path=testing_data_path,
+    )
+
+    trainX = data_utils.pad_sequences(trainX, maxlen=sequence_length, value=0.0)
+    validX = data_utils.pad_sequences(validX, maxlen=sequence_length, value=0.0)
+    testX = data_utils.pad_sequences(testX, maxlen=sequence_length, value=0.0)
+
+    return TrainingDataSplit(
+        training=(trainX, trainY),
+        validation=(validX, validY),
+        testing=(testX, testY),
+    )
+
+
 def load_data_multilabel_pre_split(
-    vocabulary_word2index: Mapping[str, int],
-    vocabulary_word2index_label: Mapping[str, int],
+    vocabulary_embedding: ForwardOnehotEncoding,
     data_path: Path,
-) -> Tuple[List[List[int]], List[np.ndarray]]:
+) -> TrainingData:
     df = pd.read_csv(str(data_path))
     word2index: Dict[str, int] = defaultdict(int)
-    word2index.update(**vocabulary_word2index)
+    word2index.update(**vocabulary_embedding.words)
     word2index_label: Dict[str, int] = defaultdict(int)
-    word2index_label.update(**vocabulary_word2index_label)
+    word2index_label.update(**vocabulary_embedding.labels)
     label_dimension = len(word2index_label)
 
     text_lines = df["TEXT"].tolist()
@@ -78,4 +183,5 @@ def load_data_multilabel_pre_split(
         X.append(x)
         Y.append(y_multi_hot)
 
-    return X, Y
+    # dtype is object because these are "ragged nested sequences" prior to padding
+    return np.array(X, dtype=object), np.array(Y, dtype=object)

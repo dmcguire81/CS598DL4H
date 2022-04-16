@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List
 
 import pytest
+from gensim.models import Word2Vec
 
 
 @pytest.fixture
@@ -70,6 +71,13 @@ def ckpt_dir():
 
 
 @pytest.fixture
+def empty_ckpt_dir():
+    return Path(
+        "Explainable-Automated-Medical-Coding/checkpoints/no_checkpoint_here_for_sure/"
+    )
+
+
+@pytest.fixture
 def use_sent_split_padded_version():
     return False
 
@@ -79,9 +87,28 @@ def gpu():
     return True
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def word2vec_model_path():
     return Path("Explainable-Automated-Medical-Coding/embeddings/processed_full.w2v")
+
+
+@pytest.fixture(scope="session")
+def word2vec_model(word2vec_model_path: Path):
+    return Word2Vec.load(str(word2vec_model_path))
+
+
+@pytest.fixture()
+def label_embedding_model_path():
+    return Path(
+        "Explainable-Automated-Medical-Coding/embeddings/code-emb-mimic3-tr-400.model"
+    )
+
+
+@pytest.fixture()
+def label_embedding_model_path_per_label():
+    return Path(
+        "Explainable-Automated-Medical-Coding/embeddings/code-emb-mimic3-tr-200.model"
+    )
 
 
 @pytest.fixture

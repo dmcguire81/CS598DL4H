@@ -70,19 +70,20 @@ def test_load_data_multilabel_pre_split(
         word2vec_model_path
     )
 
+    forward_embedding = ld.ForwardOnehotEncoding(
+        words=vocabulary_word2index, labels=vocabulary_word2index_label
+    )
+
     trainX, trainY = ld.load_data_multilabel_pre_split(
-        vocabulary_word2index,
-        vocabulary_word2index_label,
+        forward_embedding,
         data_path=training_data_path,
     )
     validX, validY = ld.load_data_multilabel_pre_split(
-        vocabulary_word2index,
-        vocabulary_word2index_label,
+        forward_embedding,
         data_path=validation_data_path,
     )
     testX, testY = ld.load_data_multilabel_pre_split(
-        vocabulary_word2index,
-        vocabulary_word2index_label,
+        forward_embedding,
         data_path=testing_data_path,
     )
 

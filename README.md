@@ -104,11 +104,13 @@ env/bin/python HLAN/HAN_train.py \
     --early_stop_lr=0.00002 \
     --remove_ckpts_before_train=False \
     --use_label_embedding=True \
-    --ckpt_dir Explainable-Automated-Medical-Coding/checkpoints/checkpoint_HAN_50_per_label_bs32_LE/ \
+    --ckpt_dir Explainable-Automated-Medical-Coding/checkpoints/checkpoint_HAN_50_per_label_bs32_LE \
     --use_sent_split_padded_version=False \
     --marking_id mimic3-ds-50 \
     --gpu=True \
-    --word2vec_model_path Explainable-Automated-Medical-Coding/embeddings/processed_full.w2v
+    --word2vec_model_path Explainable-Automated-Medical-Coding/embeddings/processed_full.w2v \
+    --label_embedding_model_path Explainable-Automated-Medical-Coding/embeddings/code-emb-mimic3-tr-400.model \
+    --label_embedding_model_path_per_label Explainable-Automated-Medical-Coding/embeddings/code-emb-mimic3-tr-200.model
 ```
 
 #### MIMIC-III COVID-19 Shielding

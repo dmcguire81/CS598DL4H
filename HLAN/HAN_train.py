@@ -1,16 +1,22 @@
 import logging
 import os
+import shutil
+from contextlib import contextmanager
 from pathlib import Path
-from typing import List, Tuple
+from typing import Iterator, List, Tuple
 
 import click
-import numpy as np
-from tflearn import data_utils
+import tensorflow as tf
 
+import HLAN.create_session as cs
 import HLAN.load_data as ld
+from HLAN.HAN_model_dynamic import HAN
 
 LOG_LEVEL = logging._nameToLevel[os.getenv("LOG_LEVEL", "INFO")]
 logging.basicConfig(level=LOG_LEVEL)
+
+tf_logger = logging.getLogger("tensorflow")
+tf_logger.setLevel(logging.CRITICAL)
 
 
 def load_data(
@@ -19,77 +25,112 @@ def load_data(
     training_data_path: Path,
     testing_data_path: Path,
     sequence_length: int,
-) -> Tuple[
-    int,
-    Tuple[np.ndarray, np.ndarray],
-    Tuple[np.ndarray, np.ndarray],
-    Tuple[np.ndarray, np.ndarray],
-]:
-    logger = logging.getLogger("load_data")
-
-    (
-        vocabulary_word2index_label,
-        vocabulary_index2word_label,
-    ) = ld.create_vocabulary_label_pre_split(
-        training_data_path=training_data_path,
-        validation_data_path=validation_data_path,
-        testing_data_path=testing_data_path,
+) -> Tuple[ld.OnehotEncoding, ld.TrainingDataSplit]:
+    onehot_encoding = ld.load_encoding_data(
+        word2vec_model_path, validation_data_path, training_data_path, testing_data_path
     )
 
-    num_classes = len(vocabulary_word2index_label)
-    label_sim_mat = np.random.rand(num_classes, num_classes)
-    label_sub_mat = np.zeros((num_classes, num_classes))
-
-    logger.debug(
-        "display the first two labels: %s %s",
-        vocabulary_index2word_label[0],
-        vocabulary_index2word_label[1],
+    training_data_split = ld.load_training_data(
+        onehot_encoding.forward,
+        validation_data_path,
+        training_data_path,
+        testing_data_path,
+        sequence_length,
     )
 
-    vocabulary_word2index, _vocabulary_index2word = ld.create_vocabulary(
-        word2vec_model_path
-    )
-
-    # check sim and sub relations
-    logger.debug("label_sim_mat: %s", label_sim_mat.shape)
-    logger.debug("label_sim_mat[0]: %s", label_sim_mat[0])
-    logger.debug("label_sub_mat: %s", label_sub_mat.shape)
-    logger.debug("label_sub_mat[0]: %s", label_sub_mat[0])
-    logger.debug("label_sub_mat_sum: %s", np.sum(label_sub_mat))
-
-    vocab_size = len(vocabulary_word2index)
-    logger.debug("vocab_size: %s", vocab_size)
-
-    trainX, trainY = ld.load_data_multilabel_pre_split(
-        vocabulary_word2index,
-        vocabulary_word2index_label,
-        data_path=training_data_path,
-    )
-    validX, validY = ld.load_data_multilabel_pre_split(
-        vocabulary_word2index,
-        vocabulary_word2index_label,
-        data_path=validation_data_path,
-    )
-    testX, testY = ld.load_data_multilabel_pre_split(
-        vocabulary_word2index,
-        vocabulary_word2index_label,
-        data_path=testing_data_path,
-    )
-
-    trainX = data_utils.pad_sequences(trainX, maxlen=sequence_length, value=0.0)
-    validX = data_utils.pad_sequences(validX, maxlen=sequence_length, value=0.0)
-    testX = data_utils.pad_sequences(testX, maxlen=sequence_length, value=0.0)
-
-    return (
-        num_classes,
-        (np.array(trainX), np.array(trainY)),
-        (np.array(validX), np.array(validY)),
-        (np.array(testX), np.array(testY)),
-    )
+    return onehot_encoding, training_data_split
 
 
-def create_session():
-    pass
+@contextmanager
+def create_session(
+    model: HAN,
+    ckpt_dir: Path,
+    remove_ckpts_before_train: bool,
+    per_label_attention: bool,
+    per_label_sent_only: bool,
+    reverse_embedding: ld.ReverseOnehotEncoding,
+    word2vec_model_path: Path,
+    label_embedding_model_path: Path,
+    label_embedding_model_path_per_label: Path,
+    use_embedding: bool = True,
+    use_label_embedding: bool = True,
+) -> Iterator[tf.compat.v1.Session]:
+    logger = logging.getLogger("create_session")
+
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = False
+
+    with tf.compat.v1.Session(config=config) as session:
+        saver = tf.train.Saver(max_to_keep=1)
+
+        if remove_ckpts_before_train and ckpt_dir.exists():
+            shutil.rmtree(str(ckpt_dir))
+            logger.info("Removed checkpoint at %s", ckpt_dir)
+
+        ckpt_file = ckpt_dir / "checkpoint"
+        if ckpt_file.exists():
+            logger.info("Restoring from checkpoint at %s", ckpt_file)
+            saver.restore(session, tf.train.latest_checkpoint(ckpt_dir))
+        else:
+            logger.info("Initializing without checkpoint")
+            session.run(tf.global_variables_initializer())
+
+            if use_embedding:
+                word_embedding = cs.assign_pretrained_word_embedding(
+                    word2vec_model_path,
+                )
+                result = session.run(
+                    tf.assign(
+                        model.Embedding, tf.constant(word_embedding, dtype=tf.float32)
+                    )
+                )
+                logger.info("Variable %s assigned %s", model.Embedding, result)
+            if use_label_embedding:
+                label_embedding_transposed = cs.assign_pretrained_label_embedding(
+                    reverse_embedding.labels,
+                    label_embedding_model_path,
+                ).transpose()
+                result = session.run(
+                    tf.assign(
+                        model.W_projection,
+                        tf.constant(label_embedding_transposed, dtype=tf.float32),
+                    )
+                )
+                logger.info("Variable %s assigned %s", model.W_projection, result)
+                if per_label_attention:
+                    label_embedding = cs.assign_pretrained_label_embedding(
+                        reverse_embedding.labels,
+                        label_embedding_model_path_per_label,
+                    )
+                    label_embedding_tensor = tf.constant(
+                        label_embedding, dtype=tf.float32
+                    )
+                    if not per_label_sent_only:
+                        result = session.run(
+                            tf.assign(
+                                model.context_vector_word_per_label,
+                                label_embedding_tensor,
+                            )
+                        )
+                        logger.info(
+                            "Variable %s assigned %s",
+                            model.context_vector_word_per_label,
+                            result,
+                        )
+                    result = session.run(
+                        tf.assign(
+                            model.context_vector_sentence_per_label,
+                            label_embedding_tensor,
+                        )
+                    )
+                    logger.info(
+                        "Variable %s assigned %s",
+                        model.context_vector_sentence_per_label,
+                        result,
+                    )
+
+        yield session
+        session.close()
 
 
 def feed_data():
@@ -125,16 +166,17 @@ def process_options(
     dataset_paths: List[Path],
     word2vec_model_path: Path,
 ) -> Tuple[Path, Path, Path]:
-    click.echo(f"Training on {[str(path) for path in dataset_paths]}")
+    logger = logging.getLogger("process_options")
+    logger.debug(f"Training on {[str(path) for path in dataset_paths]}")
 
     validation_data_path, testing_data_path, training_data_path = sorted(
         dataset_paths, key=str
     )
-    click.echo(f"Using {training_data_path} for training")
-    click.echo(f"Using {validation_data_path} for validation")
-    click.echo(f"Using {testing_data_path} for testing")
+    logger.info(f"Using {training_data_path} for training")
+    logger.info(f"Using {validation_data_path} for validation")
+    logger.info(f"Using {testing_data_path} for testing")
 
-    click.echo(f"Using batch size {batch_size}")
+    logger.info(f"Using batch size {batch_size}")
 
     if not per_label_attention:
         raise NotImplementedError("HAN variant not implemented")
@@ -142,8 +184,8 @@ def process_options(
     if per_label_sent_only:
         raise NotImplementedError("HA-GRU varient not implemented")
 
-    click.echo("Running HLAN variant")
-    click.echo(f"Using num epochs {num_epochs}")
+    logger.info("Running HLAN variant")
+    logger.info(f"Using num epochs {num_epochs}")
 
     if report_rand_pred:
         raise NotImplementedError("Random prediction reporting not implemented")
@@ -153,9 +195,9 @@ def process_options(
             "Multiple runs with a static split is not implemented"
         )
 
-    click.echo(f"Using early stop LR {early_stop_lr}")
+    logger.info(f"Using early stop LR {early_stop_lr}")
 
-    click.echo(
+    logger.info(
         f"{'Removing' if remove_ckpts_before_train else 'Not removing'} checkpoints before training"
     )
 
@@ -164,21 +206,21 @@ def process_options(
             "Omitting label embedding (HLAN minus LE) not implemented"
         )
 
-    click.echo(f"Using checkpoint path {ckpt_dir}")
+    logger.info(f"Using checkpoint path {ckpt_dir}")
 
     if use_sent_split_padded_version:
         raise NotImplementedError(
             "Sentence splitting instead of chunking (HLAN plus sent split) not implemented"
         )
 
-    click.echo(f"Tagging outputs with marking ID {marking_id}")
+    logger.info(f"Tagging outputs with marking ID {marking_id}")
 
     if not gpu:
         raise NotImplementedError(
             "Forcibly disabling static GPUs not implemented (just change environment)"
         )
 
-    click.echo(f"Loading training data word embedding from {word2vec_model_path}")
+    logger.info(f"Loading training data word embedding from {word2vec_model_path}")
 
     return validation_data_path, training_data_path, testing_data_path
 
@@ -240,7 +282,13 @@ def process_options(
 @click.option(
     "--ckpt_dir",
     required=True,
-    type=click.Path(file_okay=False, dir_okay=True, writable=True, resolve_path=False),
+    type=click.Path(
+        file_okay=False,
+        dir_okay=True,
+        writable=True,
+        resolve_path=False,
+        path_type=Path,
+    ),
 )
 @click.option(
     "--use_sent_split_padded_version",
@@ -260,7 +308,7 @@ def process_options(
 @click.option(
     "--word2vec_model_path",
     required=True,
-    type=click.Path(file_okay=True, dir_okay=False, writable=True, resolve_path=False),
+    type=click.Path(file_okay=True, dir_okay=False, resolve_path=False, path_type=Path),
     help="gensim word2vec's vocabulary and vectors",
 )
 @click.option(
@@ -268,6 +316,18 @@ def process_options(
     required=False,
     default=2500,
     help="as in Mullenbach et al., 2018",
+)
+@click.option(
+    "--label_embedding_model_path",
+    required=True,
+    type=click.Path(file_okay=True, dir_okay=False, resolve_path=False, path_type=Path),
+    help="pre-trained model from mimic3-ds labels for label embedding initialisation: final projection matrix, self.W_projection.",
+)
+@click.option(
+    "--label_embedding_model_path_per_label",
+    required=True,
+    type=click.Path(file_okay=True, dir_okay=False, resolve_path=False, path_type=Path),
+    help="pre-trained model from mimic3-ds labels for label embedding initialisation: per label context matrices, self.context_vector_word_per_label and self.context_vector_sentence_per_label",
 )
 def main(
     dataset: str,
@@ -286,10 +346,12 @@ def main(
     gpu: bool,
     word2vec_model_path: Path,
     sequence_length: int,
+    label_embedding_model_path: Path,
+    label_embedding_model_path_per_label: Path,
 ):
     last_separator = dataset.rindex(os.sep)
     root, glob = dataset[:last_separator], dataset[last_separator + 1 :]
-    dataset_paths = Path(root).glob(glob)
+    dataset_paths = list(Path(root).glob(glob))
 
     validation_data_path, training_data_path, testing_data_path = process_options(
         batch_size,
@@ -305,29 +367,48 @@ def main(
         use_sent_split_padded_version,
         marking_id,
         gpu,
-        list(dataset_paths),
+        dataset_paths,
         word2vec_model_path,
     )
-    (num_classes, (trainX, trainY), (validX, validY), (testX, testY)) = load_data(
+    (onehot_encoding, training_data_split,) = load_data(
         word2vec_model_path,
         validation_data_path,
         training_data_path,
         testing_data_path,
         sequence_length=sequence_length,
     )
-    click.echo(num_classes)
-    click.echo(trainX)
-    click.echo(trainY)
-    click.echo(validX)
-    click.echo(validY)
-    click.echo(testX)
-    click.echo(testY)
 
-    create_session()
-    feed_data()
-    training()
-    validation()
-    prediction()
+    model = HAN(
+        num_classes=onehot_encoding.num_classes,
+        batch_size=batch_size,
+        sequence_length=sequence_length,
+        vocab_size=onehot_encoding.vocab_size,
+        embed_size=100,
+        hidden_size=100,
+        per_label_attention=per_label_attention,
+        per_label_sent_only=per_label_sent_only,
+    )
+
+    with create_session(
+        model=model,
+        ckpt_dir=ckpt_dir,
+        remove_ckpts_before_train=remove_ckpts_before_train,
+        per_label_attention=per_label_attention,
+        per_label_sent_only=per_label_sent_only,
+        reverse_embedding=onehot_encoding.reverse,
+        word2vec_model_path=word2vec_model_path,
+        label_embedding_model_path=label_embedding_model_path,
+        label_embedding_model_path_per_label=label_embedding_model_path_per_label,
+    ) as session:
+        click.echo(model.Embedding.eval())
+        click.echo(model.W_projection.eval())
+        click.echo(model.context_vector_word_per_label.eval())
+        click.echo(model.context_vector_sentence_per_label.eval())
+        click.echo(session)
+        feed_data()
+        training()
+        validation()
+        prediction()
 
 
 if __name__ == "__main__":
