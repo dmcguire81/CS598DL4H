@@ -1,3 +1,8 @@
 ipykernel
 google-cloud
 pandas
+click
+gensim==3.8.3
+tflearn
+tensorflow==1.15.2
+tqdm

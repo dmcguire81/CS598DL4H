@@ -1,0 +1,13 @@
+wheel
+coverage
+flake8
+ipython
+isort >= 5.9.2
+pytest
+pytest-mock >= 3.5.1
+pytest-cov
+pytest-watch
+pre-commit
+black
+mypy >= 0.910
+scipy
