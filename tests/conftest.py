@@ -20,7 +20,7 @@ def caml_dataset_paths(caml_dataset) -> List[Path]:
 
 @pytest.fixture
 def batch_size():
-    32
+    return 32
 
 
 @pytest.fixture

@@ -24,6 +24,19 @@ class HAN:
         self.per_label_attention = per_label_attention
         self.per_label_sent_only = per_label_sent_only
 
+        self.input_x = tf.placeholder(
+            tf.int32, [None, self.sequence_length], name="input_x"
+        )
+        self.input_y = tf.placeholder(
+            tf.float32, [None, self.num_classes], name="input_y"
+        )
+        self.dropout_rate = tf.placeholder(tf.float32, name="dropout_rate")
+
+        self.epoch_step = tf.Variable(0, trainable=False, name="Epoch_Step")
+        self.epoch_increment = tf.assign(
+            self.epoch_step, tf.add(self.epoch_step, tf.constant(1))
+        )
+
         self.instantiate_weights()
 
     def instantiate_weights(

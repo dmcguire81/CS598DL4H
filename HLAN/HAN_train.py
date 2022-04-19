@@ -3,9 +3,10 @@ import os
 import shutil
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Iterator, List, Tuple
+from typing import Any, Iterable, Iterator, List, Mapping, Tuple
 
 import click
+import numpy as np
 import tensorflow as tf
 
 import HLAN.create_session as cs
@@ -133,19 +134,34 @@ def create_session(
         session.close()
 
 
-def feed_data():
+def feed_data(
+    model: HAN, X: np.ndarray, Y: np.ndarray, batch_size: int, dropout_rate: float = 0.0
+) -> Iterable[Mapping[Any, Any]]:
+    n = len(X)
+    b = batch_size
+    assert len(Y) == n
+    # trim the final slice to *exactly* the size of the input, rather than overshooting
+    batches = [slice(i, i + b) for i in range(0, n, b)][:-1] + [slice(n - (n % b), n)]
+
+    for batch in batches:
+        batch_X = X[batch]
+        batch_Y = Y[batch]
+        yield {
+            model.input_x: batch_X,
+            model.input_y: batch_Y,
+            model.dropout_rate: dropout_rate,
+        }
+
+
+def training(session: tf.compat.v1.Session, model: HAN, feed_dict: Mapping[Any, Any]):
     pass
 
 
-def training():
+def validation(session: tf.compat.v1.Session, model: HAN, feed_dict: Mapping[Any, Any]):
     pass
 
 
-def validation():
-    pass
-
-
-def prediction():
+def prediction(session: tf.compat.v1.Session, model: HAN, feed_dict: Mapping[Any, Any]):
     pass
 
 
@@ -400,15 +416,30 @@ def main(
         label_embedding_model_path=label_embedding_model_path,
         label_embedding_model_path_per_label=label_embedding_model_path_per_label,
     ) as session:
-        click.echo(model.Embedding.eval())
-        click.echo(model.W_projection.eval())
-        click.echo(model.context_vector_word_per_label.eval())
-        click.echo(model.context_vector_sentence_per_label.eval())
-        click.echo(session)
-        feed_data()
-        training()
-        validation()
-        prediction()
+        for epoch in range(0, num_epochs):
+            click.echo(epoch)
+
+            for feed_dict in feed_data(
+                model,
+                *training_data_split.training,
+                batch_size=batch_size,
+                dropout_rate=0.5,
+            ):
+                training(session, model, feed_dict)
+
+            for feed_dict in feed_data(
+                model, *training_data_split.validation, batch_size=batch_size
+            ):
+                validation(session, model, feed_dict)
+
+            click.echo("Incrementing epoch counter in session")
+            session.run(model.epoch_increment)
+
+        for feed_dict in feed_data(
+            model, *training_data_split.testing, batch_size=batch_size
+        ):
+            click.echo(feed_dict)
+            prediction(session, model, feed_dict)
 
 
 if __name__ == "__main__":

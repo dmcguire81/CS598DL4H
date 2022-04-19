@@ -9,7 +9,7 @@ from pytest_mock import MockerFixture
 
 from HLAN import load_data as ld
 from HLAN.HAN_model_dynamic import HAN
-from HLAN.HAN_train import create_session, load_data
+from HLAN.HAN_train import create_session, feed_data, load_data
 
 
 def test_load_data(
@@ -148,7 +148,7 @@ def test_create_session_from_scratch(
     )
     monkeypatch.undo()
 
-    # The TensorFlow session appears to be process global, so this and the above
+    # NOTE: TensorFlow sessions appear to be process global, so this and the above
     # model definitions are colliding because they (re)-define the same variables
     # in the session without explicitly declaring reuse=True or reuse=tf.AUTO_REUSE.
     # Now, because the original implementation, for which we have a checkpoint, was
@@ -194,3 +194,67 @@ def test_create_session_from_scratch(
                 model.context_vector_sentence_per_label.eval().mean()
                 == pytest.approx(-0.001482437)
             )
+
+
+def test_feed_data(
+    monkeypatch: pytest.MonkeyPatch,
+    mocker: MockerFixture,
+    caml_dataset_paths: List[Path],
+    word2vec_model_path: Path,
+    word2vec_model: Word2Vec,
+    batch_size: int,
+    per_label_attention: bool,
+    per_label_sent_only: bool,
+    sequence_length: int,
+):
+    validation_data_path, testing_data_path, training_data_path = sorted(
+        caml_dataset_paths, key=str
+    )
+
+    monkeypatch.setattr(
+        ld.Word2Vec, "load", mocker.MagicMock(return_value=word2vec_model)
+    )
+    onehot_encoding, training_data_split = load_data(
+        word2vec_model_path,
+        validation_data_path,
+        training_data_path,
+        testing_data_path,
+        sequence_length,
+    )
+    monkeypatch.undo()
+
+    # See NOTE on scoping in test above
+    with tf.compat.v1.variable_scope("test_feed_data"):
+        model = HAN(
+            num_classes=onehot_encoding.num_classes,
+            batch_size=batch_size,
+            sequence_length=sequence_length,
+            vocab_size=onehot_encoding.vocab_size,
+            embed_size=100,
+            hidden_size=100,
+            per_label_attention=per_label_attention,
+            per_label_sent_only=per_label_sent_only,
+        )
+
+        (trainX, trainY) = training_data_split.training
+        (validX, validY) = training_data_split.validation
+        (testX, testY) = training_data_split.testing
+
+        for (X, Y, dropout_rate) in [
+            (trainX, trainY, 0.5),
+            (validX, validY, 0.0),
+            (testX, testY, 0.0),
+        ]:
+            n = len(X)
+            b = batch_size
+            batches = list(feed_data(model, X, Y, batch_size, dropout_rate))
+            assert len(batches) == int(n / b) + 1 if (n % b) else 0
+            assert len(batches[-1][model.input_x]) == len(X) % batch_size
+            assert len(batches[-1][model.input_y]) == len(Y) % batch_size
+            assert all(
+                [len(batch[model.input_x]) == batch_size for batch in batches[:-1]]
+            )
+            assert all(
+                [len(batch[model.input_y]) == batch_size for batch in batches[:-1]]
+            )
+            assert all([batch[model.dropout_rate] == dropout_rate for batch in batches])
