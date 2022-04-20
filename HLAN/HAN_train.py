@@ -3,7 +3,7 @@ import os
 import shutil
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Iterable, Iterator, List, Mapping, Tuple
+from typing import Any, Iterable, Iterator, List, Mapping, Tuple, cast
 
 import click
 import numpy as np
@@ -11,7 +11,7 @@ import tensorflow as tf
 
 import HLAN.create_session as cs
 import HLAN.load_data as ld
-from HLAN.HAN_model_dynamic import HAN
+from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
 
 LOG_LEVEL = logging._nameToLevel[os.getenv("LOG_LEVEL", "INFO")]
 logging.basicConfig(level=LOG_LEVEL)
@@ -57,6 +57,7 @@ def create_session(
     use_label_embedding: bool = True,
 ) -> Iterator[tf.compat.v1.Session]:
     logger = logging.getLogger("create_session")
+    logger.debug("creating session")
 
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = False
@@ -109,24 +110,24 @@ def create_session(
                     if not per_label_sent_only:
                         result = session.run(
                             tf.assign(
-                                model.context_vector_word_per_label,
+                                cast(HLAN, model).context_vector_word_per_label,
                                 label_embedding_tensor,
                             )
                         )
                         logger.info(
                             "Variable %s assigned %s",
-                            model.context_vector_word_per_label,
+                            cast(HLAN, model).context_vector_word_per_label,
                             result,
                         )
                     result = session.run(
                         tf.assign(
-                            model.context_vector_sentence_per_label,
+                            cast(HA_GRU, model).context_vector_sentence_per_label,
                             label_embedding_tensor,
                         )
                     )
                     logger.info(
                         "Variable %s assigned %s",
-                        model.context_vector_sentence_per_label,
+                        cast(HA_GRU, model).context_vector_sentence_per_label,
                         result,
                     )
 
@@ -153,11 +154,39 @@ def feed_data(
         }
 
 
-def training(session: tf.compat.v1.Session, model: HAN, feed_dict: Mapping[Any, Any]):
-    pass
+def training(
+    session: tf.compat.v1.Session,
+    model: HAN,
+    step: int,
+    epoch: int,
+    feed_dict: Mapping[Any, Any],
+):
+    logger = logging.getLogger("training")
+    loss, training_loss_per_batch, training_loss_per_epoch, _ = session.run(
+        [
+            model.loss,
+            model.training_loss_per_batch,
+            model.training_loss_per_epoch,
+            model.train_op,
+        ],
+        feed_dict,
+    )
+
+    logger.info("Training loss: %s", loss)
+
+    model.writer.add_summary(training_loss_per_batch, step)
+
+    if step == 0:  # epoch rolled over
+        model.writer.add_summary(training_loss_per_epoch, epoch)
 
 
-def validation(session: tf.compat.v1.Session, model: HAN, feed_dict: Mapping[Any, Any]):
+def validation(
+    session: tf.compat.v1.Session,
+    model: HAN,
+    step: int,
+    epoch: int,
+    feed_dict: Mapping[Any, Any],
+):
     pass
 
 
@@ -194,13 +223,14 @@ def process_options(
 
     logger.info(f"Using batch size {batch_size}")
 
-    if not per_label_attention:
-        raise NotImplementedError("HAN variant not implemented")
+    if per_label_attention:
+        if not per_label_sent_only:
+            logger.info("Running HLAN variant")
+        else:
+            logger.info("Running HA-GRU variant")
+    else:
+        logger.info("Running HAN variant")
 
-    if per_label_sent_only:
-        raise NotImplementedError("HA-GRU varient not implemented")
-
-    logger.info("Running HLAN variant")
     logger.info(f"Using num epochs {num_epochs}")
 
     if report_rand_pred:
@@ -322,6 +352,17 @@ def process_options(
     type=bool,
 )
 @click.option(
+    "--log_dir",
+    required=True,
+    type=click.Path(
+        file_okay=False,
+        dir_okay=True,
+        writable=True,
+        resolve_path=False,
+        path_type=Path,
+    ),
+)
+@click.option(
     "--word2vec_model_path",
     required=True,
     type=click.Path(file_okay=True, dir_okay=False, resolve_path=False, path_type=Path),
@@ -332,6 +373,12 @@ def process_options(
     required=False,
     default=2500,
     help="as in Mullenbach et al., 2018",
+)
+@click.option(
+    "--num_sentences",
+    required=False,
+    default=100,
+    help="break sentences up as blocks of N characters",
 )
 @click.option(
     "--label_embedding_model_path",
@@ -360,8 +407,10 @@ def main(
     use_sent_split_padded_version: bool,
     marking_id: str,
     gpu: bool,
+    log_dir: Path,
     word2vec_model_path: Path,
     sequence_length: int,
+    num_sentences: int,
     label_embedding_model_path: Path,
     label_embedding_model_path_per_label: Path,
 ):
@@ -394,16 +443,27 @@ def main(
         sequence_length=sequence_length,
     )
 
-    model = HAN(
+    kwargs = dict(
         num_classes=onehot_encoding.num_classes,
+        learning_rate=0.01,
         batch_size=batch_size,
+        decay_steps=6000,
+        decay_rate=1.0,
         sequence_length=sequence_length,
+        num_sentences=num_sentences,
         vocab_size=onehot_encoding.vocab_size,
         embed_size=100,
         hidden_size=100,
-        per_label_attention=per_label_attention,
-        per_label_sent_only=per_label_sent_only,
+        log_dir=log_dir,
     )
+
+    if not per_label_attention:
+        model = HAN(**kwargs)
+    else:
+        if per_label_sent_only:
+            model = HA_GRU(**kwargs)
+        else:
+            model = HLAN(**kwargs)
 
     with create_session(
         model=model,
@@ -417,20 +477,21 @@ def main(
         label_embedding_model_path_per_label=label_embedding_model_path_per_label,
     ) as session:
         for epoch in range(0, num_epochs):
-            click.echo(epoch)
 
-            for feed_dict in feed_data(
-                model,
-                *training_data_split.training,
-                batch_size=batch_size,
-                dropout_rate=0.5,
+            for step, feed_dict in enumerate(
+                feed_data(
+                    model,
+                    *training_data_split.training,
+                    batch_size=batch_size,
+                    dropout_rate=0.5,
+                )
             ):
-                training(session, model, feed_dict)
+                training(session, model, step, epoch, feed_dict)
 
-            for feed_dict in feed_data(
-                model, *training_data_split.validation, batch_size=batch_size
+            for step, feed_dict in enumerate(
+                feed_data(model, *training_data_split.validation, batch_size=batch_size)
             ):
-                validation(session, model, feed_dict)
+                validation(session, model, step, epoch, feed_dict)
 
             click.echo("Incrementing epoch counter in session")
             session.run(model.epoch_increment)

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List
+from typing import List, Type
 
 import numpy as np
 import pytest
@@ -8,7 +8,7 @@ from gensim.models import Word2Vec
 from pytest_mock import MockerFixture
 
 from HLAN import load_data as ld
-from HLAN.HAN_model_dynamic import HAN
+from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
 from HLAN.HAN_train import create_session, feed_data, load_data
 
 
@@ -68,9 +68,8 @@ def test_create_session_from_checkpoint(
     word2vec_model_path: Path,
     word2vec_model: Word2Vec,
     batch_size: int,
-    per_label_attention: bool,
-    per_label_sent_only: bool,
     sequence_length: int,
+    num_sentences: int,
     ckpt_dir: Path,
     remove_ckpts_before_train: bool,
 ):
@@ -86,15 +85,17 @@ def test_create_session_from_checkpoint(
     )
     monkeypatch.undo()
 
-    model = HAN(
+    model = HLAN(
         num_classes=onehot_encoding.num_classes,
+        learning_rate=0.01,
         batch_size=batch_size,
+        decay_steps=6000,
+        decay_rate=1.0,
         sequence_length=sequence_length,
+        num_sentences=num_sentences,
         vocab_size=onehot_encoding.vocab_size,
         embed_size=100,
         hidden_size=100,
-        per_label_attention=per_label_attention,
-        per_label_sent_only=per_label_sent_only,
     )
 
     with create_session(
@@ -112,15 +113,19 @@ def test_create_session_from_checkpoint(
 
         assert model.Embedding.eval().mean() == pytest.approx(-8.406006963923573e-05)
         assert model.W_projection.eval().mean() == pytest.approx(-0.0108663635)
-        if not per_label_sent_only:
-            assert model.context_vector_word_per_label.eval().mean() == pytest.approx(
-                -0.009843622334301472
-            )
-        assert model.context_vector_sentence_per_label.eval().mean() == pytest.approx(
-            -0.0023771661799401045
+        assert model.context_vector_word_per_label.eval().mean() == pytest.approx(
+            -0.009843622334301472
         )
 
 
+@pytest.mark.parametrize(
+    ("per_label_attention", "per_label_sent_only", "model_class"),
+    [
+        (False, False, HAN),
+        (True, True, HA_GRU),
+        (True, False, HLAN),
+    ],
+)
 def test_create_session_from_scratch(
     monkeypatch: pytest.MonkeyPatch,
     mocker: MockerFixture,
@@ -128,13 +133,15 @@ def test_create_session_from_scratch(
     word2vec_model_path: Path,
     word2vec_model: Word2Vec,
     batch_size: int,
-    per_label_attention: bool,
-    per_label_sent_only: bool,
     sequence_length: int,
+    num_sentences: int,
     empty_ckpt_dir: Path,
     remove_ckpts_before_train: bool,
     label_embedding_model_path: Path,
     label_embedding_model_path_per_label: Path,
+    per_label_attention: bool,
+    per_label_sent_only: bool,
+    model_class: Type,
 ):
     validation_data_path, testing_data_path, training_data_path = sorted(
         caml_dataset_paths, key=str
@@ -157,17 +164,21 @@ def test_create_session_from_scratch(
     # where the session thinks the variables in the model live, so long as it lets
     # us assert on them, so we scope *only the from-scratch* load to keep the two
     # from colliding in a single test process.
-    with tf.compat.v1.variable_scope("test_create_session_from_scratch"):
+    with tf.compat.v1.variable_scope(
+        f"test_create_session_from_scratch-{per_label_attention}-{per_label_sent_only}"
+    ):
 
-        model = HAN(
+        model = model_class(
             num_classes=onehot_encoding.num_classes,
+            learning_rate=0.01,
             batch_size=batch_size,
+            decay_steps=6000,
+            decay_rate=1.0,
             sequence_length=sequence_length,
+            num_sentences=num_sentences,
             vocab_size=onehot_encoding.vocab_size,
             embed_size=100,
             hidden_size=100,
-            per_label_attention=per_label_attention,
-            per_label_sent_only=per_label_sent_only,
         )
 
         with create_session(
@@ -203,8 +214,7 @@ def test_feed_data(
     word2vec_model_path: Path,
     word2vec_model: Word2Vec,
     batch_size: int,
-    per_label_attention: bool,
-    per_label_sent_only: bool,
+    num_sentences: int,
     sequence_length: int,
 ):
     validation_data_path, testing_data_path, training_data_path = sorted(
@@ -225,15 +235,17 @@ def test_feed_data(
 
     # See NOTE on scoping in test above
     with tf.compat.v1.variable_scope("test_feed_data"):
-        model = HAN(
+        model = HLAN(
             num_classes=onehot_encoding.num_classes,
+            learning_rate=0.01,
             batch_size=batch_size,
+            decay_steps=6000,
+            decay_rate=1.0,
             sequence_length=sequence_length,
+            num_sentences=num_sentences,
             vocab_size=onehot_encoding.vocab_size,
             embed_size=100,
             hidden_size=100,
-            per_label_attention=per_label_attention,
-            per_label_sent_only=per_label_sent_only,
         )
 
         (trainX, trainY) = training_data_split.training
