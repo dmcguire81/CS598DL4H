@@ -72,6 +72,7 @@ def test_create_session_from_checkpoint(
     num_sentences: int,
     ckpt_dir: Path,
     remove_ckpts_before_train: bool,
+    tmp_path: Path,
 ):
     validation_data_path, testing_data_path, training_data_path = sorted(
         caml_dataset_paths, key=str
@@ -96,6 +97,7 @@ def test_create_session_from_checkpoint(
         vocab_size=onehot_encoding.vocab_size,
         embed_size=100,
         hidden_size=100,
+        log_dir=tmp_path,
     )
 
     with create_session(
@@ -139,6 +141,7 @@ def test_create_session_from_scratch(
     remove_ckpts_before_train: bool,
     label_embedding_model_path: Path,
     label_embedding_model_path_per_label: Path,
+    tmp_path: Path,
     per_label_attention: bool,
     per_label_sent_only: bool,
     model_class: Type,
@@ -179,6 +182,7 @@ def test_create_session_from_scratch(
             vocab_size=onehot_encoding.vocab_size,
             embed_size=100,
             hidden_size=100,
+            logs_dir=tmp_path,
         )
 
         with create_session(
@@ -216,6 +220,7 @@ def test_feed_data(
     batch_size: int,
     num_sentences: int,
     sequence_length: int,
+    tmp_path: Path,
 ):
     validation_data_path, testing_data_path, training_data_path = sorted(
         caml_dataset_paths, key=str
@@ -246,6 +251,7 @@ def test_feed_data(
             vocab_size=onehot_encoding.vocab_size,
             embed_size=100,
             hidden_size=100,
+            log_dir=tmp_path,
         )
 
         (trainX, trainY) = training_data_split.training

@@ -131,6 +131,9 @@ dmypy.json
 # Virtual Env
 env
 
+# TensorBoard
+logs
+
 # Sensitive data
 shielding_diagnoses.csv
 SHIELDING_CODES.csv

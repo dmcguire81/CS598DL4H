@@ -247,11 +247,6 @@ def process_options(
         f"{'Removing' if remove_ckpts_before_train else 'Not removing'} checkpoints before training"
     )
 
-    if not use_label_embedding:
-        raise NotImplementedError(
-            "Omitting label embedding (HLAN minus LE) not implemented"
-        )
-
     logger.info(f"Using checkpoint path {ckpt_dir}")
 
     if use_sent_split_padded_version:
