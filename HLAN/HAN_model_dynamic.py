@@ -55,13 +55,7 @@ class HAN:
         self.loss = self.loss_function()
         self.train_op = self.train()
 
-        self.training_loss_per_batch = tf.summary.scalar(
-            "train_loss_per_batch", self.loss
-        )
-        self.training_loss_per_epoch = tf.summary.scalar(
-            "train_loss_per_epoch", self.loss
-        )
-        self.writer = tf.summary.FileWriter(str(log_dir))
+        self.add_summary(log_dir)
 
     def instantiate_weights(
         self,
@@ -189,18 +183,24 @@ class HAN:
                 "W_b_attention_sentence", shape=[self.hidden_size * 2]
             )
 
-            logger.debug("Informative word across all labels")
-            self.context_vector_word = tf.get_variable(
-                "what_is_the_informative_word",
-                shape=[self.hidden_size * 2],
-                initializer=self.initializer,
-            )
-            logger.debug("Informative sentence across all labels")
-            self.context_vector_sentence = tf.get_variable(
-                "what_is_the_informative_sentence",
-                shape=[self.hidden_size * 2],
-                initializer=self.initializer,
-            )
+            logger.debug("Context vectors")
+            self.instantiate_context_vectors()
+
+    def instantiate_context_vectors(self):
+        logger = logging.getLogger("HAN.instantiate_context_vectors")
+
+        logger.debug("Informative word across all labels")
+        self.context_vector_word = tf.get_variable(
+            "what_is_the_informative_word",
+            shape=[self.hidden_size * 2],
+            initializer=self.initializer,
+        )
+        logger.debug("Informative sentence across all labels")
+        self.context_vector_sentence = tf.get_variable(
+            "what_is_the_informative_sentence",
+            shape=[self.hidden_size * 2],
+            initializer=self.initializer,
+        )
 
     def inference(self):
         """main computation graph here: 1.Word Encoder. 2.Word Attention. 3.Sentence Encoder 4.Sentence Attention 5.linear classifier"""
@@ -538,22 +538,32 @@ class HAN:
         logger.info("Training configured")
         return train_op
 
+    def add_summary(self, log_dir):
+        self.training_loss_per_batch = tf.summary.scalar(
+            "train_loss_per_batch", self.loss
+        )
+        self.training_loss_per_epoch = tf.summary.scalar(
+            "train_loss_per_epoch", self.loss
+        )
+        self.writer = tf.summary.FileWriter(str(log_dir))
+
 
 class HA_GRU(HAN):
-    def instantiate_weights(
-        self,
-    ):
-        super(HA_GRU, self).instantiate_weights()
-        logger = logging.getLogger("HA_GRU.instantiate_weights")
+    def instantiate_context_vectors(self):
+        logger = logging.getLogger("HA_GRU.instantiate_context_vectors")
 
-        with tf.name_scope("attention"):
-            logger.debug("Sentence-level attention")
-            logger.debug("Informative sentence per label")
-            self.context_vector_sentence_per_label = tf.get_variable(
-                "what_is_the_informative_sentence_per_label",
-                shape=[self.num_classes, self.hidden_size * 2],
-                initializer=self.initializer,
-            )
+        logger.debug("Informative word across all labels")
+        self.context_vector_word = tf.get_variable(
+            "what_is_the_informative_word",
+            shape=[self.hidden_size * 2],
+            initializer=self.initializer,
+        )
+        logger.debug("Informative sentence per label")
+        self.context_vector_sentence_per_label = tf.get_variable(
+            "what_is_the_informative_sentence_per_label",
+            shape=[self.num_classes, self.hidden_size * 2],
+            initializer=self.initializer,
+        )
 
     def linear_layer(self):
         h_drop_transposed = tf.transpose(self.h_drop, perm=[1, 2, 0])
@@ -573,20 +583,21 @@ class HA_GRU(HAN):
 
 
 class HLAN(HA_GRU):
-    def instantiate_weights(
-        self,
-    ):
-        super(HLAN, self).instantiate_weights()
-        logger = logging.getLogger("HLAN.instantiate_weights")
+    def instantiate_context_vectors(self):
+        logger = logging.getLogger("HLAN.instantiate_context_vectors")
 
-        with tf.name_scope("attention"):
-            logger.debug("Word-level attention")
-            logger.debug("Informative word per label")
-            self.context_vector_word_per_label = tf.get_variable(
-                "what_is_the_informative_word_per_label",
-                shape=[self.num_classes, self.hidden_size * 2],
-                initializer=self.initializer,
-            )
+        logger.debug("Informative word per label")
+        self.context_vector_word_per_label = tf.get_variable(
+            "what_is_the_informative_word_per_label",
+            shape=[self.num_classes, self.hidden_size * 2],
+            initializer=self.initializer,
+        )
+        logger.debug("Informative sentence per label")
+        self.context_vector_sentence_per_label = tf.get_variable(
+            "what_is_the_informative_sentence_per_label",
+            shape=[self.num_classes, self.hidden_size * 2],
+            initializer=self.initializer,
+        )
 
     def word_level_attention_shape(self):
         return [self.num_classes, -1, self.num_sentences, self.hidden_size * 2]

@@ -12,6 +12,48 @@ from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
 from HLAN.HAN_train import create_session, feed_data, load_data
 
 
+class MockHAN(HAN):
+    def inference(self):
+        return None
+
+    def loss_function(self):
+        return None
+
+    def train(self):
+        return None
+
+    def add_summary(self, log_dir):
+        pass
+
+
+class MockHA_GRU(HA_GRU):
+    def inference(self):
+        return None
+
+    def loss_function(self):
+        return None
+
+    def train(self):
+        return None
+
+    def add_summary(self, log_dir):
+        pass
+
+
+class MockHLAN(HLAN):
+    def inference(self):
+        return None
+
+    def loss_function(self):
+        return None
+
+    def train(self):
+        return None
+
+    def add_summary(self, log_dir):
+        pass
+
+
 def test_load_data(
     word2vec_model_path: Path,
     caml_dataset_paths: List[Path],
@@ -86,7 +128,7 @@ def test_create_session_from_checkpoint(
     )
     monkeypatch.undo()
 
-    model = HLAN(
+    model = MockHLAN(
         num_classes=onehot_encoding.num_classes,
         learning_rate=0.01,
         batch_size=batch_size,
@@ -123,9 +165,9 @@ def test_create_session_from_checkpoint(
 @pytest.mark.parametrize(
     ("per_label_attention", "per_label_sent_only", "model_class"),
     [
-        (False, False, HAN),
-        (True, True, HA_GRU),
-        (True, False, HLAN),
+        (False, False, MockHAN),
+        (True, True, MockHA_GRU),
+        (True, False, MockHLAN),
     ],
 )
 def test_create_session_from_scratch(
@@ -170,7 +212,6 @@ def test_create_session_from_scratch(
     with tf.compat.v1.variable_scope(
         f"test_create_session_from_scratch-{per_label_attention}-{per_label_sent_only}"
     ):
-
         model = model_class(
             num_classes=onehot_encoding.num_classes,
             learning_rate=0.01,
@@ -182,7 +223,8 @@ def test_create_session_from_scratch(
             vocab_size=onehot_encoding.vocab_size,
             embed_size=100,
             hidden_size=100,
-            logs_dir=tmp_path,
+            log_dir=tmp_path,
+            initializer=tf.random_normal_initializer(stddev=0.1, seed=0),
         )
 
         with create_session(
@@ -200,15 +242,34 @@ def test_create_session_from_scratch(
 
             assert model.Embedding.eval().mean() == pytest.approx(0.000983558)
             assert model.W_projection.eval().mean() == pytest.approx(-0.0017410218)
-            if not per_label_sent_only:
+            if per_label_attention:
+                if not per_label_sent_only:
+                    assert not hasattr(model, "context_vector_word")
+                    assert (
+                        model.context_vector_word_per_label.eval().mean()
+                        == pytest.approx(-0.001482437)
+                    )
+                else:
+                    assert model.context_vector_word.eval().mean() == pytest.approx(
+                        -0.004016303
+                    )
+                    assert not hasattr(model, "context_vector_word_per_label")
+
+                assert not hasattr(model, "context_vector_sentence")
                 assert (
-                    model.context_vector_word_per_label.eval().mean()
+                    model.context_vector_sentence_per_label.eval().mean()
                     == pytest.approx(-0.001482437)
                 )
-            assert (
-                model.context_vector_sentence_per_label.eval().mean()
-                == pytest.approx(-0.001482437)
-            )
+            else:
+                assert model.context_vector_word.eval().mean() == pytest.approx(
+                    -0.004016303
+                )
+                assert not hasattr(model, "context_vector_word_per_label")
+
+                assert model.context_vector_sentence.eval().mean() == pytest.approx(
+                    -0.004016303
+                )
+                assert not hasattr(model, "context_vector_sentence_per_label")
 
 
 def test_feed_data(
@@ -240,7 +301,7 @@ def test_feed_data(
 
     # See NOTE on scoping in test above
     with tf.compat.v1.variable_scope("test_feed_data"):
-        model = HLAN(
+        model = MockHLAN(
             num_classes=onehot_encoding.num_classes,
             learning_rate=0.01,
             batch_size=batch_size,
