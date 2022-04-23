@@ -12,34 +12,6 @@ from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
 from HLAN.HAN_train import create_session, feed_data, load_data
 
 
-class MockHAN(HAN):
-    def inference(self):
-        return None
-
-    def loss_function(self):
-        return None
-
-    def train(self):
-        return None
-
-    def add_summary(self, log_dir):
-        pass
-
-
-class MockHA_GRU(HA_GRU):
-    def inference(self):
-        return None
-
-    def loss_function(self):
-        return None
-
-    def train(self):
-        return None
-
-    def add_summary(self, log_dir):
-        pass
-
-
 class MockHLAN(HLAN):
     def inference(self):
         return None
@@ -162,12 +134,13 @@ def test_create_session_from_checkpoint(
         )
 
 
+@pytest.mark.slow()
 @pytest.mark.parametrize(
     ("per_label_attention", "per_label_sent_only", "model_class"),
     [
-        (False, False, MockHAN),
-        (True, True, MockHA_GRU),
-        (True, False, MockHLAN),
+        (False, False, HAN),
+        (True, True, HA_GRU),
+        (True, False, HLAN),
     ],
 )
 def test_create_session_from_scratch(
