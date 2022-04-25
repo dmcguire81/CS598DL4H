@@ -21,12 +21,14 @@ tf_logger.setLevel(logging.CRITICAL)
 
 
 class ModelPerformance(NamedTuple):
+    loss: float
     precision: float
     recall: float
     jaccard_index: float
 
     def __add__(self, other):
         return ModelPerformance(
+            self.loss + other.loss,
             self.precision + other.precision,
             self.recall + other.recall,
             self.jaccard_index + other.jaccard_index,
@@ -34,6 +36,7 @@ class ModelPerformance(NamedTuple):
 
     def __truediv__(self, scalar):
         return ModelPerformance(
+            self.loss / scalar,
             self.precision / scalar,
             self.recall / scalar,
             self.jaccard_index / scalar,
@@ -47,7 +50,7 @@ class RunningModelPerformance:
 
     @staticmethod
     def empty():
-        return RunningModelPerformance(ModelPerformance(0, 0, 0), 0)
+        return RunningModelPerformance(ModelPerformance(0, 0, 0, 0), 0)
 
     def __add__(self, performance: ModelPerformance):
         return RunningModelPerformance(
@@ -220,14 +223,20 @@ def training(
         feed_dict,
     )
 
-    performance = ModelPerformance(precision, recall, jaccard_index)
+    performance = ModelPerformance(
+        loss=loss, precision=precision, recall=recall, jaccard_index=jaccard_index
+    )
     logger.debug("Current training performance: %s", performance)
 
     running_performance = running_performance + performance
     assert running_performance.count == step + 1
 
     if step % 50 == 0:
-        logger.info("Average training performance: %s", running_performance.average())
+        logger.info(
+            "Average training performance (step %s): %s",
+            step,
+            running_performance.average(),
+        )
 
     model.writer.add_summary(training_loss_per_batch, step)
 
