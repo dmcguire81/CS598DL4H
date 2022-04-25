@@ -91,8 +91,7 @@ def create_session(
     word2vec_model_path: Path,
     label_embedding_model_path: Path,
     label_embedding_model_path_per_label: Path,
-    use_embedding: bool = True,
-    use_label_embedding: bool = True,
+    use_label_embedding: bool,
 ) -> Iterator[tf.compat.v1.Session]:
     logger = logging.getLogger("create_session")
     logger.debug("creating session")
@@ -115,16 +114,15 @@ def create_session(
             logger.info("Initializing without checkpoint")
             session.run(tf.global_variables_initializer())
 
-            if use_embedding:
-                word_embedding = cs.assign_pretrained_word_embedding(
-                    word2vec_model_path,
+            word_embedding = cs.assign_pretrained_word_embedding(
+                word2vec_model_path,
+            )
+            result = session.run(
+                tf.assign(
+                    model.Embedding, tf.constant(word_embedding, dtype=tf.float32)
                 )
-                result = session.run(
-                    tf.assign(
-                        model.Embedding, tf.constant(word_embedding, dtype=tf.float32)
-                    )
-                )
-                logger.info("Variable %s assigned %s", model.Embedding, result)
+            )
+            logger.info("Variable %s assigned %s", model.Embedding, result)
             if use_label_embedding:
                 label_embedding_transposed = cs.assign_pretrained_label_embedding(
                     reverse_embedding.labels,
@@ -527,6 +525,7 @@ def main(
         word2vec_model_path=word2vec_model_path,
         label_embedding_model_path=label_embedding_model_path,
         label_embedding_model_path_per_label=label_embedding_model_path_per_label,
+        use_label_embedding=use_label_embedding,
     ) as session:
         for epoch in range(0, num_epochs):
 

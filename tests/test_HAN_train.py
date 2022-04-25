@@ -22,6 +22,9 @@ class MockHLAN(HLAN):
     def train(self):
         return None
 
+    def model_performance(self):
+        return (None, None, None)
+
     def add_summary(self, log_dir):
         pass
 
@@ -124,6 +127,7 @@ def test_create_session_from_checkpoint(
         word2vec_model_path=None,  # type: ignore
         label_embedding_model_path=None,  # type: ignore
         label_embedding_model_path_per_label=None,  # type: ignore
+        use_label_embedding=True,
     ) as session:
         assert session
 
@@ -210,6 +214,7 @@ def test_create_session_from_scratch(
             word2vec_model_path=word2vec_model_path,
             label_embedding_model_path=label_embedding_model_path,
             label_embedding_model_path_per_label=label_embedding_model_path_per_label,
+            use_label_embedding=True,
         ) as session:
             assert session
 
