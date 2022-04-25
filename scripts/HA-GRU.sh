@@ -11,7 +11,7 @@ env/bin/python HLAN/HAN_train.py \
     --early_stop_lr=0.00002 \
     --remove_ckpts_before_train=False \
     --use_label_embedding=False \
-    --ckpt_dir Explainable-Automated-Medical-Coding/checkpoints/no_checkpoint \
+    --ckpt_dir checkpoints/HA-GRU/ \
     --use_sent_split_padded_version=False \
     --marking_id mimic3-ds-50 \
     --gpu=True \

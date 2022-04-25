@@ -34,6 +34,9 @@ class HAN:
         self.learning_rate = tf.Variable(
             learning_rate, trainable=False, name="learning_rate"
         )
+        self.learning_rate_decay_half_op = tf.assign(
+            self.learning_rate, self.learning_rate * 0.5
+        )
 
         self.input_x = tf.placeholder(
             tf.int32, [None, self.sequence_length], name="input_x"
@@ -575,6 +578,12 @@ class HAN:
         )
         self.training_loss_per_epoch = tf.summary.scalar(
             "train_loss_per_epoch", self.loss
+        )
+        self.validation_loss_per_batch = tf.summary.scalar(
+            "validation_loss_per_batch", self.loss
+        )
+        self.validation_loss_per_epoch = tf.summary.scalar(
+            "validation_loss_per_epoch", self.loss
         )
         self.writer = tf.summary.FileWriter(str(log_dir))
 
