@@ -3,7 +3,7 @@ import os
 import shutil
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Iterable, Iterator, List, Mapping, Tuple, cast
+from typing import Any, Iterable, Iterator, List, Mapping, NamedTuple, Tuple, cast
 
 import click
 import numpy as np
@@ -18,6 +18,44 @@ logging.basicConfig(level=LOG_LEVEL)
 
 tf_logger = logging.getLogger("tensorflow")
 tf_logger.setLevel(logging.CRITICAL)
+
+
+class ModelPerformance(NamedTuple):
+    precision: float
+    recall: float
+    jaccard_index: float
+
+    def __add__(self, other):
+        return ModelPerformance(
+            self.precision + other.precision,
+            self.recall + other.recall,
+            self.jaccard_index + other.jaccard_index,
+        )
+
+    def __truediv__(self, scalar):
+        return ModelPerformance(
+            self.precision / scalar,
+            self.recall / scalar,
+            self.jaccard_index / scalar,
+        )
+
+
+class RunningModelPerformance:
+    def __init__(self, performance: ModelPerformance, count: int):
+        self.performance_sum = performance
+        self.count = count
+
+    @staticmethod
+    def empty():
+        return RunningModelPerformance(ModelPerformance(0, 0, 0), 0)
+
+    def __add__(self, performance: ModelPerformance):
+        return RunningModelPerformance(
+            self.performance_sum + performance, self.count + 1
+        )
+
+    def average(self) -> ModelPerformance:
+        return self.performance_sum / self.count
 
 
 def load_data(
@@ -160,24 +198,45 @@ def training(
     step: int,
     epoch: int,
     feed_dict: Mapping[Any, Any],
-):
+    running_performance: RunningModelPerformance,
+) -> RunningModelPerformance:
     logger = logging.getLogger("training")
-    loss, training_loss_per_batch, training_loss_per_epoch, _ = session.run(
+    (
+        training_loss_per_batch,
+        training_loss_per_epoch,
+        loss,
+        precision,
+        recall,
+        jaccard_index,
+        _,
+    ) = session.run(
         [
-            model.loss,
             model.training_loss_per_batch,
             model.training_loss_per_epoch,
+            model.loss,
+            model.precision,
+            model.recall,
+            model.jaccard_index,
             model.train_op,
         ],
         feed_dict,
     )
 
-    logger.info("Training loss: %s", loss)
+    performance = ModelPerformance(precision, recall, jaccard_index)
+    logger.debug("Current training performance: %s", performance)
+
+    running_performance = running_performance + performance
+    assert running_performance.count == step + 1
+
+    if step % 50 == 0:
+        logger.info("Average training performance: %s", running_performance.average())
 
     model.writer.add_summary(training_loss_per_batch, step)
 
     if step == 0:  # epoch rolled over
         model.writer.add_summary(training_loss_per_epoch, epoch)
+
+    return running_performance
 
 
 def validation(
@@ -203,7 +262,6 @@ def process_options(
     running_times: int,
     early_stop_lr: float,
     remove_ckpts_before_train: bool,
-    use_label_embedding: bool,
     ckpt_dir: Path,
     use_sent_split_padded_version: bool,
     marking_id: str,
@@ -422,7 +480,6 @@ def main(
         running_times,
         early_stop_lr,
         remove_ckpts_before_train,
-        use_label_embedding,
         ckpt_dir,
         use_sent_split_padded_version,
         marking_id,
@@ -473,6 +530,8 @@ def main(
     ) as session:
         for epoch in range(0, num_epochs):
 
+            running_training_performance = RunningModelPerformance.empty()
+
             for step, feed_dict in enumerate(
                 feed_data(
                     model,
@@ -481,7 +540,9 @@ def main(
                     dropout_rate=0.5,
                 )
             ):
-                training(session, model, step, epoch, feed_dict)
+                running_training_performance = training(
+                    session, model, step, epoch, feed_dict, running_training_performance
+                )
 
             for step, feed_dict in enumerate(
                 feed_data(model, *training_data_split.validation, batch_size=batch_size)

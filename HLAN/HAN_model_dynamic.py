@@ -54,6 +54,7 @@ class HAN:
         self.logits = self.inference()
         self.loss = self.loss_function()
         self.train_op = self.train()
+        self.precision, self.recall, self.jaccard_index = self.model_performance()
 
         self.add_summary(log_dir)
 
@@ -537,6 +538,36 @@ class HAN:
 
         logger.info("Training configured")
         return train_op
+
+    def model_performance(self):
+        logger = logging.getLogger("model_performance")
+
+        # XXX using rounding logic means there is an implicit threshold of 0.5
+        self.predictions = tf.round(tf.sigmoid(self.logits))  # domain is {0, 1}
+        equal = tf.cast(tf.equal(self.predictions, self.input_y), tf.float32)
+        true_positives = tf.reduce_sum(
+            tf.multiply(equal, self.predictions), axis=1
+        )  # TP
+        predicted_positives = tf.reduce_sum(self.predictions, axis=1) + 1e-10  # PP
+        actual_positives = tf.reduce_sum(self.input_y, axis=1)  # P
+        precision = tf.reduce_mean(tf.div(true_positives, predicted_positives))
+        recall = tf.reduce_mean(tf.div(true_positives, actual_positives))
+
+        # "all positives" is defined as the union of Predicted Positive (PP) and Actual Positive (P);
+        # the size of the resultant set is the same as the count TP + FN + FP
+        all_positives = tf.reduce_sum(
+            tf.cast(tf.greater(self.predictions + self.input_y, 0), tf.float32), axis=1
+        )
+        # Although the original implementation has this labelled as "accuracy"
+        # this is actually computing the Jaccard index, since it's the same as
+        # TP / (TP + FN + FP)
+        # accuracy would require the numerator and denominator to both include TN, as in
+        # (TP + TN) / ((TP + FN) + (FP + TN)) = (TP + TN) / (P + N)
+        # SEE https://en.wikipedia.org/wiki/Precision_and_recall for details
+        jaccard_index = tf.reduce_mean(tf.div(true_positives, all_positives))
+
+        logger.info("Model performance computation configured")
+        return precision, recall, jaccard_index
 
     def add_summary(self, log_dir):
         self.training_loss_per_batch = tf.summary.scalar(
