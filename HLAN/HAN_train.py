@@ -3,7 +3,17 @@ import os
 import shutil
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Iterable, Iterator, List, Mapping, NamedTuple, Tuple, cast
+from typing import (
+    Any,
+    Callable,
+    Iterable,
+    Iterator,
+    List,
+    Mapping,
+    NamedTuple,
+    Tuple,
+    cast,
+)
 
 import click
 import numpy as np
@@ -197,55 +207,55 @@ def feed_data(
 def training(
     session: tf.compat.v1.Session,
     model: HAN,
-    step: int,
     epoch: int,
-    feed_dict: Mapping[Any, Any],
-    running_performance: RunningModelPerformance,
-) -> RunningModelPerformance:
+    feeder: Callable[[], Iterable[Mapping[Any, Any]]],
+):
     logger = logging.getLogger("training")
-    (
-        training_loss_per_batch,
-        training_loss_per_epoch,
-        loss,
-        precision,
-        recall,
-        jaccard_index,
-        _,
-    ) = session.run(
-        [
-            model.training_loss_per_batch,
-            model.training_loss_per_epoch,
-            model.loss,
-            model.precision,
-            model.recall,
-            model.jaccard_index,
-            model.train_op,
-        ],
-        feed_dict,
-    )
+    running_performance = RunningModelPerformance.empty()
 
-    performance = ModelPerformance(
-        loss=loss, precision=precision, recall=recall, jaccard_index=jaccard_index
-    )
-    logger.debug("Current training performance: %s", performance)
+    for step, feed_dict in enumerate(feeder()):
 
-    running_performance = running_performance + performance
-    assert running_performance.count == step + 1
-
-    if step % 50 == 0:
-        logger.info(
-            "Average training performance (epoch %s, step %s): %s",
-            epoch,
-            step,
-            running_performance.average(),
+        (
+            training_loss_per_batch,
+            training_loss_per_epoch,
+            loss,
+            precision,
+            recall,
+            jaccard_index,
+            _,
+        ) = session.run(
+            [
+                model.training_loss_per_batch,
+                model.training_loss_per_epoch,
+                model.loss,
+                model.precision,
+                model.recall,
+                model.jaccard_index,
+                model.train_op,
+            ],
+            feed_dict,
         )
 
-    model.writer.add_summary(training_loss_per_batch, step)
+        performance = ModelPerformance(
+            loss=loss, precision=precision, recall=recall, jaccard_index=jaccard_index
+        )
+        logger.debug("Current training performance: %s", performance)
 
-    if step == 0:  # epoch rolled over
-        model.writer.add_summary(training_loss_per_epoch, epoch)
+        running_performance = running_performance + performance
+        assert running_performance.count == step + 1
 
-    return running_performance
+        if step % 50 == 0:
+            logger.info(
+                "Average training performance (epoch %s, step %s): %s",
+                epoch,
+                step,
+                running_performance.average(),
+            )
+
+        model.writer.add_summary(training_loss_per_batch, step)
+
+        if step == 0:  # epoch rolled over
+            model.writer.add_summary(training_loss_per_epoch, epoch)
 
 
 def validation(
@@ -588,22 +598,21 @@ def main(
 
         for epoch in range(0, num_epochs):
 
-            running_training_performance = RunningModelPerformance.empty()
             running_validation_performance = RunningModelPerformance.empty()
             all_predictions = np.empty((0, onehot_encoding.num_classes))
             all_labels = np.empty((0, onehot_encoding.num_classes))
 
-            for step, feed_dict in enumerate(
-                feed_data(
+            training(
+                session,
+                model,
+                epoch,
+                lambda: feed_data(
                     model,
                     *training_data_split.training,
                     batch_size=batch_size,
                     dropout_rate=0.5,
-                )
-            ):
-                running_training_performance = training(
-                    session, model, step, epoch, feed_dict, running_training_performance
-                )
+                ),
+            )
 
             for step, feed_dict in enumerate(
                 feed_data(model, *training_data_split.validation, batch_size=batch_size)
