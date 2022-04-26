@@ -5,6 +5,8 @@ from typing import List
 import pytest
 from gensim.models import Word2Vec
 
+from HLAN.HAN_model_dynamic import HLAN
+
 
 @pytest.fixture
 def caml_dataset():
@@ -119,3 +121,24 @@ def sequence_length():
 @pytest.fixture
 def num_sentences():
     return 100
+
+
+@pytest.fixture(scope="session")
+def mock_hlan_class():
+    class MockHLAN(HLAN):
+        def inference(self):
+            return None
+
+        def loss_function(self):
+            return None
+
+        def train(self):
+            return None
+
+        def model_performance(self):
+            return (None, None, None)
+
+        def add_summary(self, log_dir):
+            pass
+
+    return MockHLAN

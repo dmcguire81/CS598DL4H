@@ -4,7 +4,56 @@ from typing import List
 import numpy as np
 from gensim.models import Word2Vec
 
-from HLAN import load_data as ld
+from HLAN import data_loading
+
+
+def test_load_data(
+    word2vec_model_path: Path,
+    caml_dataset_paths: List[Path],
+    sequence_length,
+):
+    validation_data_path, testing_data_path, training_data_path = sorted(
+        caml_dataset_paths, key=str
+    )
+
+    onehot_encoding, training_data_split = data_loading.load_data(
+        word2vec_model_path,
+        validation_data_path,
+        training_data_path,
+        testing_data_path,
+        sequence_length,
+    )
+
+    assert len(onehot_encoding.forward.labels) == 50
+    assert len(onehot_encoding.forward.words) == 150855
+
+    assert len(onehot_encoding.reverse.labels) == 50
+    assert len(onehot_encoding.reverse.words) == 150855
+
+    (trainX, trainY) = training_data_split.training
+    (validX, validY) = training_data_split.validation
+    (testX, testY) = training_data_split.testing
+
+    assert isinstance(trainX, np.ndarray)
+    assert isinstance(trainY, np.ndarray)
+    assert isinstance(validX, np.ndarray)
+    assert isinstance(validY, np.ndarray)
+    assert isinstance(testX, np.ndarray)
+    assert isinstance(testY, np.ndarray)
+
+    assert len(trainX) == len(trainY)
+    assert len(validX) == len(validY)
+    assert len(testX) == len(testY)
+    assert len(trainY) == 8066
+    assert len(validY) == 1573
+    assert len(testY) == 1729
+
+    assert np.mean(trainX) == 1078.8257977188198
+    assert np.mean(trainY) == 0.11385817009670221
+    assert np.mean(validX) == 1440.640283534647
+    assert np.mean(validY) == 0.11802924348378893
+    assert np.mean(testX) == 1465.9599076923078
+    assert np.mean(testY) == 0.12119144013880856
 
 
 def test_create_vocabulary_label_pre_split(
@@ -17,7 +66,7 @@ def test_create_vocabulary_label_pre_split(
     (
         vocabulary_word2index_label,
         vocabulary_index2word_label,
-    ) = ld.create_vocabulary_label_pre_split(
+    ) = data_loading.create_vocabulary_label_pre_split(
         training_data_path=training_data_path,
         validation_data_path=validation_data_path,
         testing_data_path=testing_data_path,
@@ -36,7 +85,7 @@ def test_create_vocabulary_label_pre_split(
 def test_create_vocabulary(
     word2vec_model_path: Path,
 ):
-    (vocabulary_word2index, vocabulary_index2word,) = ld.create_vocabulary(
+    (vocabulary_word2index, vocabulary_index2word,) = data_loading.create_vocabulary(
         word2vec_model_path=word2vec_model_path,
     )
 
@@ -60,29 +109,29 @@ def test_load_data_multilabel_pre_split(
     (
         vocabulary_word2index_label,
         vocabulary_index2word_label,
-    ) = ld.create_vocabulary_label_pre_split(
+    ) = data_loading.create_vocabulary_label_pre_split(
         training_data_path=training_data_path,
         validation_data_path=validation_data_path,
         testing_data_path=testing_data_path,
     )
 
-    vocabulary_word2index, _vocabulary_index2word = ld.create_vocabulary(
+    vocabulary_word2index, _vocabulary_index2word = data_loading.create_vocabulary(
         word2vec_model_path
     )
 
-    forward_embedding = ld.ForwardOnehotEncoding(
+    forward_embedding = data_loading.ForwardOnehotEncoding(
         words=vocabulary_word2index, labels=vocabulary_word2index_label
     )
 
-    trainX, trainY = ld.load_data_multilabel_pre_split(
+    trainX, trainY = data_loading.load_data_multilabel_pre_split(
         forward_embedding,
         data_path=training_data_path,
     )
-    validX, validY = ld.load_data_multilabel_pre_split(
+    validX, validY = data_loading.load_data_multilabel_pre_split(
         forward_embedding,
         data_path=validation_data_path,
     )
-    testX, testY = ld.load_data_multilabel_pre_split(
+    testX, testY = data_loading.load_data_multilabel_pre_split(
         forward_embedding,
         data_path=testing_data_path,
     )
