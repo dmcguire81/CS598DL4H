@@ -261,57 +261,64 @@ def training(
 def validation(
     session: tf.compat.v1.Session,
     model: HAN,
-    step: int,
     epoch: int,
-    feed_dict: Mapping[Any, Any],
-    running_performance: RunningModelPerformance,
-) -> Tuple[RunningModelPerformance, np.ndarray, np.ndarray]:
+    num_classes: int,
+    feeder: Callable[[], Iterable[Mapping[Any, Any]]],
+) -> Tuple[np.ndarray, np.ndarray]:
     logger = logging.getLogger("validation")
-    (
-        validation_loss_per_batch,
-        validation_loss_per_epoch,
-        loss,
-        precision,
-        recall,
-        jaccard_index,
-        predictions,
-        labels,
-    ) = session.run(
-        [
-            model.validation_loss_per_batch,
-            model.validation_loss_per_epoch,
-            model.loss,
-            model.precision,
-            model.recall,
-            model.jaccard_index,
-            model.predictions,
-            model.input_y,
-        ],
-        feed_dict,
-    )
+    running_performance = RunningModelPerformance.empty()
+    all_predictions = np.empty((0, num_classes))
+    all_labels = np.empty((0, num_classes))
 
-    performance = ModelPerformance(
-        loss=loss, precision=precision, recall=recall, jaccard_index=jaccard_index
-    )
-    logger.debug("Current validation performance: %s", performance)
-
-    running_performance = running_performance + performance
-    assert running_performance.count == step + 1
-
-    if step % 50 == 0:
-        logger.info(
-            "Average validation performance (epoch %s, step %s): %s",
-            epoch,
-            step,
-            running_performance.average(),
+    for step, feed_dict in enumerate(feeder()):
+        (
+            validation_loss_per_batch,
+            validation_loss_per_epoch,
+            loss,
+            precision,
+            recall,
+            jaccard_index,
+            predictions,
+            labels,
+        ) = session.run(
+            [
+                model.validation_loss_per_batch,
+                model.validation_loss_per_epoch,
+                model.loss,
+                model.precision,
+                model.recall,
+                model.jaccard_index,
+                model.predictions,
+                model.input_y,
+            ],
+            feed_dict,
         )
 
-    model.writer.add_summary(validation_loss_per_batch, step)
+        performance = ModelPerformance(
+            loss=loss, precision=precision, recall=recall, jaccard_index=jaccard_index
+        )
+        logger.debug("Current validation performance: %s", performance)
 
-    if step == 0:  # epoch rolled over
-        model.writer.add_summary(validation_loss_per_epoch, epoch)
+        running_performance = running_performance + performance
+        assert running_performance.count == step + 1
 
-    return running_performance, predictions, labels
+        if step % 50 == 0:
+            logger.info(
+                "Average validation performance (epoch %s, step %s): %s",
+                epoch,
+                step,
+                running_performance.average(),
+            )
+
+        model.writer.add_summary(validation_loss_per_batch, step)
+
+        if step == 0:  # epoch rolled over
+            model.writer.add_summary(validation_loss_per_epoch, epoch)
+
+        all_predictions = np.concatenate((all_predictions, predictions), axis=0)
+        all_labels = np.concatenate((all_labels, labels), axis=0)
+
+    return all_predictions, all_labels
 
 
 def prediction(session: tf.compat.v1.Session, model: HAN, feed_dict: Mapping[Any, Any]):
@@ -598,10 +605,6 @@ def main(
 
         for epoch in range(0, num_epochs):
 
-            running_validation_performance = RunningModelPerformance.empty()
-            all_predictions = np.empty((0, onehot_encoding.num_classes))
-            all_labels = np.empty((0, onehot_encoding.num_classes))
-
             training(
                 session,
                 model,
@@ -614,19 +617,15 @@ def main(
                 ),
             )
 
-            for step, feed_dict in enumerate(
-                feed_data(model, *training_data_split.validation, batch_size=batch_size)
-            ):
-                running_validation_performance, predictions, labels = validation(
-                    session,
-                    model,
-                    step,
-                    epoch,
-                    feed_dict,
-                    running_validation_performance,
-                )
-                all_predictions = np.concatenate((all_predictions, predictions), axis=0)
-                all_labels = np.concatenate((all_labels, labels), axis=0)
+            all_predictions, all_labels = validation(
+                session,
+                model,
+                epoch,
+                onehot_encoding.num_classes,
+                lambda: feed_data(
+                    model, *training_data_split.validation, batch_size=batch_size
+                ),
+            )
 
             best_micro_f1_score = valid.update_validation_performance(
                 ckpt_dir,

@@ -10,13 +10,7 @@ from sklearn import metrics
 
 from HLAN import load_data as ld
 from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
-from HLAN.HAN_train import (
-    RunningModelPerformance,
-    create_session,
-    feed_data,
-    load_data,
-    validation,
-)
+from HLAN.HAN_train import create_session, feed_data, load_data, validation
 
 
 class MockHLAN(HLAN):
@@ -456,23 +450,15 @@ def test_validation_performance(
         ) as session:
             epoch = 0
 
-            running_validation_performance = RunningModelPerformance.empty()
-            all_predictions = np.empty((0, onehot_encoding.num_classes))
-            all_labels = np.empty((0, onehot_encoding.num_classes))
-
-            for step, feed_dict in enumerate(
-                feed_data(model, *training_data_split.validation, batch_size=batch_size)
-            ):
-                (running_validation_performance, predictions, labels,) = validation(
-                    session,
-                    model,
-                    step,
-                    epoch,
-                    feed_dict,
-                    running_validation_performance,
-                )
-                all_predictions = np.concatenate((all_predictions, predictions), axis=0)
-                all_labels = np.concatenate((all_labels, labels), axis=0)
+            all_predictions, all_labels = validation(
+                session,
+                model,
+                epoch,
+                onehot_encoding.num_classes,
+                lambda: feed_data(
+                    model, *training_data_split.validation, batch_size=batch_size
+                ),
+            )
 
         sklearn_micro_f1_score = metrics.f1_score(
             all_labels, all_predictions, average="micro"
