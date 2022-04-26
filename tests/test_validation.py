@@ -189,13 +189,13 @@ def test_update_validation_performance_saves_checkpoint_on_improvement(
 
     mock_saver = mocker.MagicMock()
     mock_saver_constructor = mocker.MagicMock(return_value=mock_saver)
-    monkeypatch.setattr(validation.tf.train, "Saver", mock_saver_constructor)
+    monkeypatch.setattr(validation.tf.compat.v1.train, "Saver", mock_saver_constructor)
 
     epoch = 0
     all_predictions = np.empty((0, 50))
     all_labels = np.empty((0, 50))
 
-    best_micro_f1_score = validation.update_performance(
+    best_micro_f1_score, _ = validation.update_performance(
         empty_ckpt_dir,
         mock_model,
         mock_session,
@@ -247,7 +247,7 @@ def test_update_validation_performance_halves_learning_rate_on_degredation(
     all_predictions = np.empty((0, 50))
     all_labels = np.empty((0, 50))
 
-    best_micro_f1_score = validation.update_performance(
+    best_micro_f1_score, _ = validation.update_performance(
         empty_ckpt_dir,
         mock_model,
         mock_session,

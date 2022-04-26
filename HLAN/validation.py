@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Tuple
 
 import numpy as np
@@ -73,7 +74,13 @@ def validate(
 
 
 def update_performance(
-    ckpt_dir, model, session, best_micro_f1_score, epoch, all_predictions, all_labels
+    ckpt_dir: Path,
+    model: HAN,
+    session: tf.compat.v1.Session,
+    best_micro_f1_score: float,
+    epoch: int,
+    all_predictions: np.ndarray,
+    all_labels: np.ndarray,
 ):
     logger = logging.getLogger("update_performance")
 
@@ -83,12 +90,13 @@ def update_performance(
     logger.info("Micro ROC-AUC score is %s", micro_roc_auc_score)
 
     micro_f1_score = metrics.f1_score(all_labels, all_predictions, average="micro")
+    current_learning_rate = session.run(model.learning_rate)
 
     if micro_f1_score >= best_micro_f1_score:
         logger.info(
             "Micro F1 score improved from %s to %s", best_micro_f1_score, micro_f1_score
         )
-        saver = tf.train.Saver(max_to_keep=1)
+        saver = tf.compat.v1.train.Saver(max_to_keep=1)
         save_path = ckpt_dir / "model.ckpt"
         logger.info("Saving model checkpoint to %s", save_path)
         saver.save(session, str(save_path), global_step=epoch)
@@ -97,7 +105,6 @@ def update_performance(
         logger.info(
             "Micro F1 score degraded from %s to %s", best_micro_f1_score, micro_f1_score
         )
-        current_learning_rate = session.run(model.learning_rate)
         _ = session.run([model.learning_rate_decay_half_op])
         new_learning_rate = session.run(model.learning_rate)
         logger.info(
@@ -105,5 +112,6 @@ def update_performance(
             current_learning_rate,
             new_learning_rate,
         )
+        current_learning_rate = new_learning_rate
 
-    return best_micro_f1_score
+    return best_micro_f1_score, current_learning_rate

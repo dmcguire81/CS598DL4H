@@ -25,7 +25,7 @@ def predict(
             "For best prediction performance, restoring from checkpoint at %s",
             ckpt_file,
         )
-        saver = tf.train.Saver(max_to_keep=1)
+        saver = tf.compat.v1.train.Saver(max_to_keep=1)
         saver.restore(session, tf.train.latest_checkpoint(ckpt_dir))
 
     running_performance = RunningModelPerformance.empty()

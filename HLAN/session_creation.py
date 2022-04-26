@@ -32,7 +32,7 @@ def create_session(
     config.gpu_options.allow_growth = False
 
     with tf.compat.v1.Session(config=config) as session:
-        saver = tf.train.Saver(max_to_keep=1)
+        saver = tf.compat.v1.train.Saver(max_to_keep=1)
 
         if remove_ckpts_before_train and ckpt_dir.exists():
             shutil.rmtree(str(ckpt_dir))

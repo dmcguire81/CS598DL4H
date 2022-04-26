@@ -324,7 +324,7 @@ def main(
                 ),
             )
 
-            best_micro_f1_score = validation.update_performance(
+            best_micro_f1_score, current_learning_rate = validation.update_performance(
                 ckpt_dir,
                 model,
                 session,
@@ -333,6 +333,12 @@ def main(
                 all_predictions,
                 all_labels,
             )
+
+            if current_learning_rate < early_stop_lr:
+                click.echo(
+                    f"Terminating early for learning rate {current_learning_rate} < {early_stop_lr}"
+                )
+                break
 
             click.echo("Incrementing epoch counter in session")
             session.run(model.epoch_increment)
