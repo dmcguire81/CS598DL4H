@@ -346,6 +346,39 @@ def micro_f1(yhatmic, ymic):
     return f1
 
 
+def auc_metrics(yhat_raw, y, ymic):
+    if yhat_raw.shape[0] <= 1:
+        return
+    fpr = {}
+    tpr = {}
+    roc_auc = {}
+    # get AUC for each label individually
+    relevant_labels = []
+    auc_labels = {}
+    for i in range(y.shape[1]):
+        # only if there are true positives for this label
+        if y[:, i].sum() > 0:  # if the label has a true instance in the data
+            fpr[i], tpr[i], _ = metrics.roc_curve(y[:, i], yhat_raw[:, i])
+            if len(fpr[i]) > 1 and len(tpr[i]) > 1:
+                auc_score = metrics.auc(fpr[i], tpr[i])
+                if not np.isnan(auc_score):
+                    auc_labels["auc_%d" % i] = auc_score
+                    relevant_labels.append(i)
+
+    # macro-AUC: just average the auc scores
+    aucs = []
+    for i in relevant_labels:
+        aucs.append(auc_labels["auc_%d" % i])
+    roc_auc["auc_macro"] = np.mean(aucs)
+
+    # micro-AUC: just look at each individual prediction
+    yhatmic = yhat_raw.ravel()
+    fpr["micro"], tpr["micro"], _ = metrics.roc_curve(ymic, yhatmic)
+    roc_auc["auc_micro"] = metrics.auc(fpr["micro"], tpr["micro"])
+
+    return roc_auc
+
+
 @pytest.mark.slow()
 @pytest.mark.parametrize(
     ("per_label_attention", "per_label_sent_only", "model_class"),
@@ -447,3 +480,12 @@ def test_validation_performance(
         original_micro_f1_score = micro_f1(all_predictions.ravel(), all_labels.ravel())
 
         assert sklearn_micro_f1_score == original_micro_f1_score
+
+        sklearn_micro_roc_auc_score = metrics.roc_auc_score(
+            all_labels, all_predictions, average="micro"
+        )
+        original_micro_roc_auc_score = auc_metrics(
+            all_predictions, all_labels, all_labels.ravel()
+        )["auc_micro"]
+
+        assert sklearn_micro_roc_auc_score == original_micro_roc_auc_score

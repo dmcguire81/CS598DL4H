@@ -8,6 +8,12 @@ def update_validation_performance(
     ckpt_dir, model, session, best_micro_f1_score, epoch, all_predictions, all_labels
 ):
     logger = logging.getLogger("update_validation_performance")
+
+    micro_roc_auc_score = metrics.roc_auc_score(
+        all_labels, all_predictions, average="micro"
+    )
+    logger.info("Micro ROC-AUC score is %s", micro_roc_auc_score)
+
     micro_f1_score = metrics.f1_score(all_labels, all_predictions, average="micro")
 
     if micro_f1_score >= best_micro_f1_score:

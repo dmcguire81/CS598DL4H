@@ -15,6 +15,9 @@ def test_update_validation_performance_saves_checkpoint_on_improvement(
     mock_model = mocker.MagicMock()
     mock_session = mocker.MagicMock()
 
+    mock_roc_auc_score = mocker.MagicMock()
+    monkeypatch.setattr(valid.metrics, "roc_auc_score", mock_roc_auc_score)
+
     # performance has improved
     best_micro_f1_score = 0
     mock_f1_score = mocker.MagicMock(return_value=1)
@@ -41,6 +44,12 @@ def test_update_validation_performance_saves_checkpoint_on_improvement(
     # updated
     assert best_micro_f1_score == 1
 
+    mock_roc_auc_score.assert_called_once_with(
+        all_labels,
+        all_predictions,
+        average="micro",
+    )
+
     mock_f1_score.assert_called_once_with(
         all_labels,
         all_predictions,
@@ -61,6 +70,9 @@ def test_update_validation_performance_halves_learning_rate_on_degredation(
 ):
     mock_model = mocker.MagicMock()
     mock_session = mocker.MagicMock()
+
+    mock_roc_auc_score = mocker.MagicMock()
+    monkeypatch.setattr(valid.metrics, "roc_auc_score", mock_roc_auc_score)
 
     # performance has degraded
     best_micro_f1_score = 1
@@ -83,6 +95,12 @@ def test_update_validation_performance_halves_learning_rate_on_degredation(
 
     # not updated
     assert best_micro_f1_score == 1
+
+    mock_roc_auc_score.assert_called_once_with(
+        all_labels,
+        all_predictions,
+        average="micro",
+    )
 
     mock_f1_score.assert_called_once_with(
         all_labels,
