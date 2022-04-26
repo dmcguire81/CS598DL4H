@@ -321,8 +321,15 @@ def validation(
     return all_predictions, all_labels
 
 
-def prediction(session: tf.compat.v1.Session, model: HAN, feed_dict: Mapping[Any, Any]):
-    pass
+def prediction(
+    session: tf.compat.v1.Session,
+    model: HAN,
+    feeder: Callable[[], Iterable[Mapping[Any, Any]]],
+):
+    logger = logging.getLogger("prediction")
+
+    for step, feed_dict in enumerate(feeder()):
+        logger.debug(feed_dict)
 
 
 def process_options(
@@ -640,11 +647,13 @@ def main(
             click.echo("Incrementing epoch counter in session")
             session.run(model.epoch_increment)
 
-        for feed_dict in feed_data(
-            model, *training_data_split.testing, batch_size=batch_size
-        ):
-            click.echo(feed_dict)
-            prediction(session, model, feed_dict)
+        prediction(
+            session,
+            model,
+            lambda: feed_data(
+                model, *training_data_split.testing, batch_size=batch_size
+            ),
+        )
 
 
 if __name__ == "__main__":
