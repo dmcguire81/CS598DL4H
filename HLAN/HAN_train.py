@@ -27,14 +27,9 @@ def process_options(
     per_label_attention: bool,
     per_label_sent_only: bool,
     num_epochs: int,
-    report_rand_pred: bool,
-    running_times: int,
     early_stop_lr: float,
     remove_ckpts_before_train: bool,
     ckpt_dir: Path,
-    use_sent_split_padded_version: bool,
-    marking_id: str,
-    gpu: bool,
     dataset_paths: List[Path],
     word2vec_model_path: Path,
 ) -> Tuple[Path, Path, Path]:
@@ -60,14 +55,6 @@ def process_options(
 
     logger.info(f"Using num epochs {num_epochs}")
 
-    if report_rand_pred:
-        raise NotImplementedError("Random prediction reporting not implemented")
-
-    if running_times != 1:
-        raise NotImplementedError(
-            "Multiple runs with a static split is not implemented"
-        )
-
     logger.info(f"Using early stop LR {early_stop_lr}")
 
     logger.info(
@@ -75,18 +62,6 @@ def process_options(
     )
 
     logger.info(f"Using checkpoint path {ckpt_dir}")
-
-    if use_sent_split_padded_version:
-        raise NotImplementedError(
-            "Sentence splitting instead of chunking (HLAN plus sent split) not implemented"
-        )
-
-    logger.info(f"Tagging outputs with marking ID {marking_id}")
-
-    if not gpu:
-        raise NotImplementedError(
-            "Forcibly disabling static GPUs not implemented (just change environment)"
-        )
 
     logger.info(f"Loading training data word embedding from {word2vec_model_path}")
 
@@ -120,18 +95,6 @@ def process_options(
     type=int,
 )
 @click.option(
-    "--report_rand_pred",
-    required=True,
-    type=bool,
-    help="report random prediction for qualitative analysis",
-)
-@click.option(
-    "--running_times",
-    required=True,
-    type=int,
-    help="running the model for a number of times to get averaged results. This is only applied if using pre-defined data split (kfold=0)",
-)
-@click.option(
     "--early_stop_lr",
     required=True,
     type=float,
@@ -157,21 +120,6 @@ def process_options(
         resolve_path=False,
         path_type=Path,
     ),
-)
-@click.option(
-    "--use_sent_split_padded_version",
-    required=True,
-    type=bool,
-)
-@click.option(
-    "--marking_id",
-    required=True,
-    type=str,
-)
-@click.option(
-    "--gpu",
-    required=True,
-    type=bool,
 )
 @click.option(
     "--log_dir",
@@ -220,15 +168,10 @@ def main(
     per_label_attention: bool,
     per_label_sent_only: bool,
     num_epochs: int,
-    report_rand_pred: bool,
-    running_times: int,
     early_stop_lr: float,
     remove_ckpts_before_train: bool,
     use_label_embedding: bool,
     ckpt_dir: Path,
-    use_sent_split_padded_version: bool,
-    marking_id: str,
-    gpu: bool,
     log_dir: Path,
     word2vec_model_path: Path,
     sequence_length: int,
@@ -245,14 +188,9 @@ def main(
         per_label_attention,
         per_label_sent_only,
         num_epochs,
-        report_rand_pred,
-        running_times,
         early_stop_lr,
         remove_ckpts_before_train,
         ckpt_dir,
-        use_sent_split_padded_version,
-        marking_id,
-        gpu,
         dataset_paths,
         word2vec_model_path,
     )
