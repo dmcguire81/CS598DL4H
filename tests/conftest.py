@@ -20,7 +20,7 @@ def caml_dataset_paths(caml_dataset) -> List[Path]:
 
 @pytest.fixture
 def batch_size():
-    32
+    return 32
 
 
 @pytest.fixture
@@ -114,3 +114,8 @@ def label_embedding_model_path_per_label():
 @pytest.fixture
 def sequence_length():
     return 2500
+
+
+@pytest.fixture
+def num_sentences():
+    return 100

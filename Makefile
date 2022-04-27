@@ -5,4 +5,4 @@ format:
 	env/bin/black HLAN tests
 
 test:
-	env/bin/pytest --disable-warnings tests/
+	env/bin/pytest --disable-warnings -m "not slow" tests/

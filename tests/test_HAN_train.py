@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List
+from typing import List, Type
 
 import numpy as np
 import pytest
@@ -8,8 +8,25 @@ from gensim.models import Word2Vec
 from pytest_mock import MockerFixture
 
 from HLAN import load_data as ld
-from HLAN.HAN_model_dynamic import HAN
-from HLAN.HAN_train import create_session, load_data
+from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
+from HLAN.HAN_train import create_session, feed_data, load_data
+
+
+class MockHLAN(HLAN):
+    def inference(self):
+        return None
+
+    def loss_function(self):
+        return None
+
+    def train(self):
+        return None
+
+    def model_performance(self):
+        return (None, None, None)
+
+    def add_summary(self, log_dir):
+        pass
 
 
 def test_load_data(
@@ -68,11 +85,11 @@ def test_create_session_from_checkpoint(
     word2vec_model_path: Path,
     word2vec_model: Word2Vec,
     batch_size: int,
-    per_label_attention: bool,
-    per_label_sent_only: bool,
     sequence_length: int,
+    num_sentences: int,
     ckpt_dir: Path,
     remove_ckpts_before_train: bool,
+    tmp_path: Path,
 ):
     validation_data_path, testing_data_path, training_data_path = sorted(
         caml_dataset_paths, key=str
@@ -86,15 +103,18 @@ def test_create_session_from_checkpoint(
     )
     monkeypatch.undo()
 
-    model = HAN(
+    model = MockHLAN(
         num_classes=onehot_encoding.num_classes,
+        learning_rate=0.01,
         batch_size=batch_size,
+        decay_steps=6000,
+        decay_rate=1.0,
         sequence_length=sequence_length,
+        num_sentences=num_sentences,
         vocab_size=onehot_encoding.vocab_size,
         embed_size=100,
         hidden_size=100,
-        per_label_attention=per_label_attention,
-        per_label_sent_only=per_label_sent_only,
+        log_dir=tmp_path,
     )
 
     with create_session(
@@ -107,20 +127,26 @@ def test_create_session_from_checkpoint(
         word2vec_model_path=None,  # type: ignore
         label_embedding_model_path=None,  # type: ignore
         label_embedding_model_path_per_label=None,  # type: ignore
+        use_label_embedding=True,
     ) as session:
         assert session
 
         assert model.Embedding.eval().mean() == pytest.approx(-8.406006963923573e-05)
         assert model.W_projection.eval().mean() == pytest.approx(-0.0108663635)
-        if not per_label_sent_only:
-            assert model.context_vector_word_per_label.eval().mean() == pytest.approx(
-                -0.009843622334301472
-            )
-        assert model.context_vector_sentence_per_label.eval().mean() == pytest.approx(
-            -0.0023771661799401045
+        assert model.context_vector_word_per_label.eval().mean() == pytest.approx(
+            -0.009843622334301472
         )
 
 
+@pytest.mark.slow()
+@pytest.mark.parametrize(
+    ("per_label_attention", "per_label_sent_only", "model_class"),
+    [
+        (False, False, HAN),
+        (True, True, HA_GRU),
+        (True, False, HLAN),
+    ],
+)
 def test_create_session_from_scratch(
     monkeypatch: pytest.MonkeyPatch,
     mocker: MockerFixture,
@@ -128,13 +154,16 @@ def test_create_session_from_scratch(
     word2vec_model_path: Path,
     word2vec_model: Word2Vec,
     batch_size: int,
-    per_label_attention: bool,
-    per_label_sent_only: bool,
     sequence_length: int,
+    num_sentences: int,
     empty_ckpt_dir: Path,
     remove_ckpts_before_train: bool,
     label_embedding_model_path: Path,
     label_embedding_model_path_per_label: Path,
+    tmp_path: Path,
+    per_label_attention: bool,
+    per_label_sent_only: bool,
+    model_class: Type,
 ):
     validation_data_path, testing_data_path, training_data_path = sorted(
         caml_dataset_paths, key=str
@@ -148,7 +177,7 @@ def test_create_session_from_scratch(
     )
     monkeypatch.undo()
 
-    # The TensorFlow session appears to be process global, so this and the above
+    # NOTE: TensorFlow sessions appear to be process global, so this and the above
     # model definitions are colliding because they (re)-define the same variables
     # in the session without explicitly declaring reuse=True or reuse=tf.AUTO_REUSE.
     # Now, because the original implementation, for which we have a checkpoint, was
@@ -157,17 +186,22 @@ def test_create_session_from_scratch(
     # where the session thinks the variables in the model live, so long as it lets
     # us assert on them, so we scope *only the from-scratch* load to keep the two
     # from colliding in a single test process.
-    with tf.compat.v1.variable_scope("test_create_session_from_scratch"):
-
-        model = HAN(
+    with tf.compat.v1.variable_scope(
+        f"test_create_session_from_scratch-{per_label_attention}-{per_label_sent_only}"
+    ):
+        model = model_class(
             num_classes=onehot_encoding.num_classes,
+            learning_rate=0.01,
             batch_size=batch_size,
+            decay_steps=6000,
+            decay_rate=1.0,
             sequence_length=sequence_length,
+            num_sentences=num_sentences,
             vocab_size=onehot_encoding.vocab_size,
             embed_size=100,
             hidden_size=100,
-            per_label_attention=per_label_attention,
-            per_label_sent_only=per_label_sent_only,
+            log_dir=tmp_path,
+            initializer=tf.random_normal_initializer(stddev=0.1, seed=0),
         )
 
         with create_session(
@@ -180,17 +214,104 @@ def test_create_session_from_scratch(
             word2vec_model_path=word2vec_model_path,
             label_embedding_model_path=label_embedding_model_path,
             label_embedding_model_path_per_label=label_embedding_model_path_per_label,
+            use_label_embedding=True,
         ) as session:
             assert session
 
             assert model.Embedding.eval().mean() == pytest.approx(0.000983558)
             assert model.W_projection.eval().mean() == pytest.approx(-0.0017410218)
-            if not per_label_sent_only:
+            if per_label_attention:
+                if not per_label_sent_only:
+                    assert not hasattr(model, "context_vector_word")
+                    assert (
+                        model.context_vector_word_per_label.eval().mean()
+                        == pytest.approx(-0.001482437)
+                    )
+                else:
+                    assert model.context_vector_word.eval().mean() == pytest.approx(
+                        -0.004016303
+                    )
+                    assert not hasattr(model, "context_vector_word_per_label")
+
+                assert not hasattr(model, "context_vector_sentence")
                 assert (
-                    model.context_vector_word_per_label.eval().mean()
+                    model.context_vector_sentence_per_label.eval().mean()
                     == pytest.approx(-0.001482437)
                 )
-            assert (
-                model.context_vector_sentence_per_label.eval().mean()
-                == pytest.approx(-0.001482437)
+            else:
+                assert model.context_vector_word.eval().mean() == pytest.approx(
+                    -0.004016303
+                )
+                assert not hasattr(model, "context_vector_word_per_label")
+
+                assert model.context_vector_sentence.eval().mean() == pytest.approx(
+                    -0.004016303
+                )
+                assert not hasattr(model, "context_vector_sentence_per_label")
+
+
+def test_feed_data(
+    monkeypatch: pytest.MonkeyPatch,
+    mocker: MockerFixture,
+    caml_dataset_paths: List[Path],
+    word2vec_model_path: Path,
+    word2vec_model: Word2Vec,
+    batch_size: int,
+    num_sentences: int,
+    sequence_length: int,
+    tmp_path: Path,
+):
+    validation_data_path, testing_data_path, training_data_path = sorted(
+        caml_dataset_paths, key=str
+    )
+
+    monkeypatch.setattr(
+        ld.Word2Vec, "load", mocker.MagicMock(return_value=word2vec_model)
+    )
+    onehot_encoding, training_data_split = load_data(
+        word2vec_model_path,
+        validation_data_path,
+        training_data_path,
+        testing_data_path,
+        sequence_length,
+    )
+    monkeypatch.undo()
+
+    # See NOTE on scoping in test above
+    with tf.compat.v1.variable_scope("test_feed_data"):
+        model = MockHLAN(
+            num_classes=onehot_encoding.num_classes,
+            learning_rate=0.01,
+            batch_size=batch_size,
+            decay_steps=6000,
+            decay_rate=1.0,
+            sequence_length=sequence_length,
+            num_sentences=num_sentences,
+            vocab_size=onehot_encoding.vocab_size,
+            embed_size=100,
+            hidden_size=100,
+            log_dir=tmp_path,
+        )
+
+        (trainX, trainY) = training_data_split.training
+        (validX, validY) = training_data_split.validation
+        (testX, testY) = training_data_split.testing
+
+        for (X, Y, dropout_rate) in [
+            (trainX, trainY, 0.5),
+            (validX, validY, 0.0),
+            (testX, testY, 0.0),
+        ]:
+            n = len(X)
+            b = batch_size
+            batches = list(feed_data(model, X, Y, batch_size, dropout_rate))
+            assert len(batches) == int(n / b) + 1 if (n % b) else 0
+            assert len(batches[-1][model.input_x]) == len(X) % batch_size
+            assert len(batches[-1][model.input_y]) == len(Y) % batch_size
+            assert all(
+                [len(batch[model.input_x]) == batch_size for batch in batches[:-1]]
             )
+            assert all(
+                [len(batch[model.input_y]) == batch_size for batch in batches[:-1]]
+            )
+            assert all([batch[model.dropout_rate] == dropout_rate for batch in batches])
