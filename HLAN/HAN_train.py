@@ -14,6 +14,7 @@ from HLAN import (
     validation,
 )
 from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
+from HLAN.performance import ModelOutputs, SummaryPerformance
 
 LOG_LEVEL = logging._nameToLevel[os.getenv("LOG_LEVEL", "INFO")]
 logging.basicConfig(level=LOG_LEVEL)
@@ -194,7 +195,7 @@ def main(
         dataset_paths,
         word2vec_model_path,
     )
-    (onehot_encoding, training_data_split,) = data_loading.load_data(
+    onehot_encoding, training_data_split = data_loading.load_data(
         word2vec_model_path,
         validation_data_path,
         training_data_path,
@@ -254,7 +255,7 @@ def main(
                 ),
             )
 
-            all_predictions, all_labels = validation.validate(
+            validation_outputs: ModelOutputs = validation.validate(
                 session,
                 model,
                 epoch,
@@ -273,8 +274,7 @@ def main(
                 session,
                 best_micro_f1_score,
                 epoch,
-                all_predictions,
-                all_labels,
+                validation_outputs,
             )
 
             if current_learning_rate < early_stop_lr:
@@ -283,7 +283,7 @@ def main(
                 )
                 break
 
-        all_predictions, all_labels = prediction.predict(
+        prediction_outputs: ModelOutputs = prediction.predict(
             session,
             model,
             onehot_encoding.num_classes,
@@ -293,14 +293,13 @@ def main(
             ),
         )
 
-        micro_f1_score, micro_roc_auc_score = prediction.calculate_performance(
-            all_predictions,
-            all_labels,
+        test_performance: SummaryPerformance = prediction.calculate_performance(
+            prediction_outputs
         )
 
         click.echo("Final results --")
-        click.echo(f"Micro F1 Score: {micro_f1_score}")
-        click.echo(f"Micro ROC-AUC Score: {micro_roc_auc_score}")
+        click.echo(f"Micro F1 Score: {test_performance.micro_f1_score}")
+        click.echo(f"Micro ROC-AUC Score: {test_performance.micro_roc_auc_score}")
 
 
 if __name__ == "__main__":

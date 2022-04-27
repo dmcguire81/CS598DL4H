@@ -4,10 +4,15 @@ from typing import Any, Callable, Iterable, Mapping
 
 import numpy as np
 import tensorflow as tf
-from sklearn import metrics
 
 from HLAN.HAN_model_dynamic import HAN
-from HLAN.performance import ModelPerformance, RunningModelPerformance
+from HLAN.performance import (
+    ModelOutputs,
+    ModelPerformance,
+    RunningModelPerformance,
+    SummaryPerformance,
+    compute_summary_performance,
+)
 
 
 def predict(
@@ -16,7 +21,7 @@ def predict(
     num_classes: int,
     ckpt_dir: Path,
     feeder: Callable[[], Iterable[Mapping[Any, Any]]],
-):
+) -> ModelOutputs:
     logger = logging.getLogger("prediction")
 
     ckpt_file = ckpt_dir / "checkpoint"
@@ -29,16 +34,26 @@ def predict(
         saver.restore(session, tf.train.latest_checkpoint(ckpt_dir))
 
     running_performance = RunningModelPerformance.empty()
+    all_logits = np.empty((0, num_classes))
     all_predictions = np.empty((0, num_classes))
     all_labels = np.empty((0, num_classes))
 
     for step, feed_dict in enumerate(feeder()):
-        (loss, precision, recall, jaccard_index, predictions, labels,) = session.run(
+        (
+            loss,
+            precision,
+            recall,
+            jaccard_index,
+            logits,
+            predictions,
+            labels,
+        ) = session.run(
             [
                 model.loss,
                 model.precision,
                 model.recall,
                 model.jaccard_index,
+                model.logits,
                 model.predictions,
                 model.input_y,
             ],
@@ -48,33 +63,32 @@ def predict(
         performance = ModelPerformance(
             loss=loss, precision=precision, recall=recall, jaccard_index=jaccard_index
         )
-        logger.debug("Current prediction performance: %s", performance)
+        logger.debug("Current performance: %s", performance)
 
         running_performance = running_performance + performance
         assert running_performance.count == step + 1
 
         if step % 50 == 0:
             logger.info(
-                "Average prediction performance (step %s): %s",
+                "Average performance (step %s): %s",
                 step,
                 running_performance.average(),
             )
 
+        all_logits = np.concatenate((all_logits, logits), axis=0)
         all_predictions = np.concatenate((all_predictions, predictions), axis=0)
         all_labels = np.concatenate((all_labels, labels), axis=0)
 
-    return all_predictions, all_labels
-
-
-def calculate_performance(all_predictions, all_labels):
-    logger = logging.getLogger("calculate_prediction_performance")
-
-    micro_roc_auc_score = metrics.roc_auc_score(
-        all_labels, all_predictions, average="micro"
+    return ModelOutputs(
+        logits=all_logits, predictions=all_predictions, labels=all_labels
     )
-    logger.info("Micro ROC-AUC score is %s", micro_roc_auc_score)
 
-    micro_f1_score = metrics.f1_score(all_labels, all_predictions, average="micro")
-    logger.info("Micro F1 score is %s", micro_f1_score)
 
-    return micro_f1_score, micro_roc_auc_score
+def calculate_performance(model_outputs: ModelOutputs) -> SummaryPerformance:
+    logger = logging.getLogger("calculate_performance")
+    summary_performance = compute_summary_performance(model_outputs)
+
+    logger.info("Micro ROC-AUC score is %s", summary_performance.micro_roc_auc_score)
+    logger.info("Micro F1 score is %s", summary_performance.micro_f1_score)
+
+    return summary_performance

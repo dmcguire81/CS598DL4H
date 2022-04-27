@@ -1,5 +1,8 @@
 from typing import NamedTuple
 
+import numpy as np
+from sklearn import metrics
+
 
 class ModelPerformance(NamedTuple):
     loss: float
@@ -40,3 +43,30 @@ class RunningModelPerformance:
 
     def average(self) -> ModelPerformance:
         return self.performance_sum / self.count
+
+
+class ModelOutputs(NamedTuple):
+    logits: np.ndarray
+    predictions: np.ndarray
+    labels: np.ndarray
+
+
+class SummaryPerformance(NamedTuple):
+    micro_f1_score: float
+    micro_roc_auc_score: float
+
+
+def compute_summary_performance(model_outputs: ModelOutputs) -> SummaryPerformance:
+    micro_roc_auc_score = metrics.roc_auc_score(
+        model_outputs.labels, sigmoid(model_outputs.logits), average="micro"
+    )
+    micro_f1_score = metrics.f1_score(
+        model_outputs.labels, model_outputs.predictions, average="micro"
+    )
+    return SummaryPerformance(
+        micro_roc_auc_score=micro_roc_auc_score, micro_f1_score=micro_f1_score
+    )
+
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))

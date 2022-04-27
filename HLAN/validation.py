@@ -1,13 +1,17 @@
 import logging
 from pathlib import Path
-from typing import Any, Callable, Iterable, Mapping, Tuple
+from typing import Any, Callable, Iterable, Mapping
 
 import numpy as np
 import tensorflow as tf
-from sklearn import metrics
 
 from HLAN.HAN_model_dynamic import HAN
-from HLAN.performance import ModelPerformance, RunningModelPerformance
+from HLAN.performance import (
+    ModelOutputs,
+    ModelPerformance,
+    RunningModelPerformance,
+    compute_summary_performance,
+)
 
 
 def validate(
@@ -16,9 +20,10 @@ def validate(
     epoch: int,
     num_classes: int,
     feeder: Callable[[], Iterable[Mapping[Any, Any]]],
-) -> Tuple[np.ndarray, np.ndarray]:
+) -> ModelOutputs:
     logger = logging.getLogger("validation")
     running_performance = RunningModelPerformance.empty()
+    all_logits = np.empty((0, num_classes))
     all_predictions = np.empty((0, num_classes))
     all_labels = np.empty((0, num_classes))
 
@@ -30,6 +35,7 @@ def validate(
             precision,
             recall,
             jaccard_index,
+            logits,
             predictions,
             labels,
         ) = session.run(
@@ -40,6 +46,7 @@ def validate(
                 model.precision,
                 model.recall,
                 model.jaccard_index,
+                model.logits,
                 model.predictions,
                 model.input_y,
             ],
@@ -67,6 +74,7 @@ def validate(
         if step == 0:  # epoch rolled over
             model.writer.add_summary(validation_loss_per_epoch, epoch)
 
+        all_logits = np.concatenate((all_logits, logits), axis=0)
         all_predictions = np.concatenate((all_predictions, predictions), axis=0)
         all_labels = np.concatenate((all_labels, labels), axis=0)
 
@@ -77,7 +85,9 @@ def validate(
         running_performance.average(),
     )
 
-    return all_predictions, all_labels
+    return ModelOutputs(
+        logits=all_logits, predictions=all_predictions, labels=all_labels
+    )
 
 
 def update_performance(
@@ -86,31 +96,31 @@ def update_performance(
     session: tf.compat.v1.Session,
     best_micro_f1_score: float,
     epoch: int,
-    all_predictions: np.ndarray,
-    all_labels: np.ndarray,
+    model_outputs: ModelOutputs,
 ):
     logger = logging.getLogger("update_performance")
 
-    micro_roc_auc_score = metrics.roc_auc_score(
-        all_labels, all_predictions, average="micro"
-    )
-    logger.info("Micro ROC-AUC score is %s", micro_roc_auc_score)
+    summary_performance = compute_summary_performance(model_outputs)
+    logger.info("Micro ROC-AUC score is %s", summary_performance.micro_roc_auc_score)
 
-    micro_f1_score = metrics.f1_score(all_labels, all_predictions, average="micro")
     current_learning_rate = session.run(model.learning_rate)
 
-    if micro_f1_score >= best_micro_f1_score:
+    if summary_performance.micro_f1_score >= best_micro_f1_score:
         logger.info(
-            "Micro F1 score improved from %s to %s", best_micro_f1_score, micro_f1_score
+            "Micro F1 score improved from %s to %s",
+            best_micro_f1_score,
+            summary_performance.micro_f1_score,
         )
         saver = tf.compat.v1.train.Saver(max_to_keep=1)
         save_path = ckpt_dir / "model.ckpt"
         logger.info("Saving model checkpoint to %s", save_path)
         saver.save(session, str(save_path), global_step=epoch)
-        best_micro_f1_score = micro_f1_score
+        best_micro_f1_score = summary_performance.micro_f1_score
     else:
         logger.info(
-            "Micro F1 score degraded from %s to %s", best_micro_f1_score, micro_f1_score
+            "Micro F1 score degraded from %s to %s",
+            best_micro_f1_score,
+            summary_performance.micro_f1_score,
         )
         _ = session.run([model.learning_rate_decay_half_op])
         new_learning_rate = session.run(model.learning_rate)

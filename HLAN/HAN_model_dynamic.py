@@ -270,7 +270,9 @@ class HAN:
         with tf.name_scope("dropout"):
             self.h_drop = tf.nn.dropout(document_representation, rate=self.dropout_rate)
 
-        logger.info("5 Logits (linear layer) and Predictions (argmax)")
+        logger.info(
+            "5 Logits (linear layer) and Predictions (sigmoid activation and probability threshold)"
+        )
         with tf.name_scope("output"):
             logits = self.linear_layer()
 
