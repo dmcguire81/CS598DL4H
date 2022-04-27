@@ -1,17 +1,20 @@
 import logging
 import os
-import shutil
-from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Iterable, Iterator, List, Mapping, NamedTuple, Tuple, cast
+from typing import List, Tuple
 
 import click
-import numpy as np
-import tensorflow as tf
 
-import HLAN.create_session as cs
-import HLAN.load_data as ld
+from HLAN import (
+    data_feeding,
+    data_loading,
+    prediction,
+    session_creation,
+    training,
+    validation,
+)
 from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
+from HLAN.performance import ModelOutputs, SummaryPerformance
 
 LOG_LEVEL = logging._nameToLevel[os.getenv("LOG_LEVEL", "INFO")]
 logging.basicConfig(level=LOG_LEVEL)
@@ -20,259 +23,14 @@ tf_logger = logging.getLogger("tensorflow")
 tf_logger.setLevel(logging.CRITICAL)
 
 
-class ModelPerformance(NamedTuple):
-    loss: float
-    precision: float
-    recall: float
-    jaccard_index: float
-
-    def __add__(self, other):
-        return ModelPerformance(
-            self.loss + other.loss,
-            self.precision + other.precision,
-            self.recall + other.recall,
-            self.jaccard_index + other.jaccard_index,
-        )
-
-    def __truediv__(self, scalar):
-        return ModelPerformance(
-            self.loss / scalar,
-            self.precision / scalar,
-            self.recall / scalar,
-            self.jaccard_index / scalar,
-        )
-
-
-class RunningModelPerformance:
-    def __init__(self, performance: ModelPerformance, count: int):
-        self.performance_sum = performance
-        self.count = count
-
-    @staticmethod
-    def empty():
-        return RunningModelPerformance(ModelPerformance(0, 0, 0, 0), 0)
-
-    def __add__(self, performance: ModelPerformance):
-        return RunningModelPerformance(
-            self.performance_sum + performance, self.count + 1
-        )
-
-    def average(self) -> ModelPerformance:
-        return self.performance_sum / self.count
-
-
-def load_data(
-    word2vec_model_path: Path,
-    validation_data_path: Path,
-    training_data_path: Path,
-    testing_data_path: Path,
-    sequence_length: int,
-) -> Tuple[ld.OnehotEncoding, ld.TrainingDataSplit]:
-    onehot_encoding = ld.load_encoding_data(
-        word2vec_model_path, validation_data_path, training_data_path, testing_data_path
-    )
-
-    training_data_split = ld.load_training_data(
-        onehot_encoding.forward,
-        validation_data_path,
-        training_data_path,
-        testing_data_path,
-        sequence_length,
-    )
-
-    return onehot_encoding, training_data_split
-
-
-@contextmanager
-def create_session(
-    model: HAN,
-    ckpt_dir: Path,
-    remove_ckpts_before_train: bool,
-    per_label_attention: bool,
-    per_label_sent_only: bool,
-    reverse_embedding: ld.ReverseOnehotEncoding,
-    word2vec_model_path: Path,
-    label_embedding_model_path: Path,
-    label_embedding_model_path_per_label: Path,
-    use_label_embedding: bool,
-) -> Iterator[tf.compat.v1.Session]:
-    logger = logging.getLogger("create_session")
-    logger.debug("creating session")
-
-    config = tf.ConfigProto()
-    config.gpu_options.allow_growth = False
-
-    with tf.compat.v1.Session(config=config) as session:
-        saver = tf.train.Saver(max_to_keep=1)
-
-        if remove_ckpts_before_train and ckpt_dir.exists():
-            shutil.rmtree(str(ckpt_dir))
-            logger.info("Removed checkpoint at %s", ckpt_dir)
-
-        ckpt_file = ckpt_dir / "checkpoint"
-        if ckpt_file.exists():
-            logger.info("Restoring from checkpoint at %s", ckpt_file)
-            saver.restore(session, tf.train.latest_checkpoint(ckpt_dir))
-        else:
-            logger.info("Initializing without checkpoint")
-            session.run(tf.global_variables_initializer())
-
-            word_embedding = cs.assign_pretrained_word_embedding(
-                word2vec_model_path,
-            )
-            result = session.run(
-                tf.assign(
-                    model.Embedding, tf.constant(word_embedding, dtype=tf.float32)
-                )
-            )
-            logger.info("Variable %s assigned %s", model.Embedding, result)
-            if use_label_embedding:
-                label_embedding_transposed = cs.assign_pretrained_label_embedding(
-                    reverse_embedding.labels,
-                    label_embedding_model_path,
-                ).transpose()
-                result = session.run(
-                    tf.assign(
-                        model.W_projection,
-                        tf.constant(label_embedding_transposed, dtype=tf.float32),
-                    )
-                )
-                logger.info("Variable %s assigned %s", model.W_projection, result)
-                if per_label_attention:
-                    label_embedding = cs.assign_pretrained_label_embedding(
-                        reverse_embedding.labels,
-                        label_embedding_model_path_per_label,
-                    )
-                    label_embedding_tensor = tf.constant(
-                        label_embedding, dtype=tf.float32
-                    )
-                    if not per_label_sent_only:
-                        result = session.run(
-                            tf.assign(
-                                cast(HLAN, model).context_vector_word_per_label,
-                                label_embedding_tensor,
-                            )
-                        )
-                        logger.info(
-                            "Variable %s assigned %s",
-                            cast(HLAN, model).context_vector_word_per_label,
-                            result,
-                        )
-                    result = session.run(
-                        tf.assign(
-                            cast(HA_GRU, model).context_vector_sentence_per_label,
-                            label_embedding_tensor,
-                        )
-                    )
-                    logger.info(
-                        "Variable %s assigned %s",
-                        cast(HA_GRU, model).context_vector_sentence_per_label,
-                        result,
-                    )
-
-        yield session
-        session.close()
-
-
-def feed_data(
-    model: HAN, X: np.ndarray, Y: np.ndarray, batch_size: int, dropout_rate: float = 0.0
-) -> Iterable[Mapping[Any, Any]]:
-    n = len(X)
-    b = batch_size
-    assert len(Y) == n
-    # trim the final slice to *exactly* the size of the input, rather than overshooting
-    batches = [slice(i, i + b) for i in range(0, n, b)][:-1] + [slice(n - (n % b), n)]
-
-    for batch in batches:
-        batch_X = X[batch]
-        batch_Y = Y[batch]
-        yield {
-            model.input_x: batch_X,
-            model.input_y: batch_Y,
-            model.dropout_rate: dropout_rate,
-        }
-
-
-def training(
-    session: tf.compat.v1.Session,
-    model: HAN,
-    step: int,
-    epoch: int,
-    feed_dict: Mapping[Any, Any],
-    running_performance: RunningModelPerformance,
-) -> RunningModelPerformance:
-    logger = logging.getLogger("training")
-    (
-        training_loss_per_batch,
-        training_loss_per_epoch,
-        loss,
-        precision,
-        recall,
-        jaccard_index,
-        _,
-    ) = session.run(
-        [
-            model.training_loss_per_batch,
-            model.training_loss_per_epoch,
-            model.loss,
-            model.precision,
-            model.recall,
-            model.jaccard_index,
-            model.train_op,
-        ],
-        feed_dict,
-    )
-
-    performance = ModelPerformance(
-        loss=loss, precision=precision, recall=recall, jaccard_index=jaccard_index
-    )
-    logger.debug("Current training performance: %s", performance)
-
-    running_performance = running_performance + performance
-    assert running_performance.count == step + 1
-
-    if step % 50 == 0:
-        logger.info(
-            "Average training performance (step %s): %s",
-            step,
-            running_performance.average(),
-        )
-
-    model.writer.add_summary(training_loss_per_batch, step)
-
-    if step == 0:  # epoch rolled over
-        model.writer.add_summary(training_loss_per_epoch, epoch)
-
-    return running_performance
-
-
-def validation(
-    session: tf.compat.v1.Session,
-    model: HAN,
-    step: int,
-    epoch: int,
-    feed_dict: Mapping[Any, Any],
-):
-    pass
-
-
-def prediction(session: tf.compat.v1.Session, model: HAN, feed_dict: Mapping[Any, Any]):
-    pass
-
-
 def process_options(
     batch_size: int,
     per_label_attention: bool,
     per_label_sent_only: bool,
     num_epochs: int,
-    report_rand_pred: bool,
-    running_times: int,
     early_stop_lr: float,
     remove_ckpts_before_train: bool,
     ckpt_dir: Path,
-    use_sent_split_padded_version: bool,
-    marking_id: str,
-    gpu: bool,
     dataset_paths: List[Path],
     word2vec_model_path: Path,
 ) -> Tuple[Path, Path, Path]:
@@ -298,14 +56,6 @@ def process_options(
 
     logger.info(f"Using num epochs {num_epochs}")
 
-    if report_rand_pred:
-        raise NotImplementedError("Random prediction reporting not implemented")
-
-    if running_times != 1:
-        raise NotImplementedError(
-            "Multiple runs with a static split is not implemented"
-        )
-
     logger.info(f"Using early stop LR {early_stop_lr}")
 
     logger.info(
@@ -313,18 +63,6 @@ def process_options(
     )
 
     logger.info(f"Using checkpoint path {ckpt_dir}")
-
-    if use_sent_split_padded_version:
-        raise NotImplementedError(
-            "Sentence splitting instead of chunking (HLAN plus sent split) not implemented"
-        )
-
-    logger.info(f"Tagging outputs with marking ID {marking_id}")
-
-    if not gpu:
-        raise NotImplementedError(
-            "Forcibly disabling static GPUs not implemented (just change environment)"
-        )
 
     logger.info(f"Loading training data word embedding from {word2vec_model_path}")
 
@@ -358,18 +96,6 @@ def process_options(
     type=int,
 )
 @click.option(
-    "--report_rand_pred",
-    required=True,
-    type=bool,
-    help="report random prediction for qualitative analysis",
-)
-@click.option(
-    "--running_times",
-    required=True,
-    type=int,
-    help="running the model for a number of times to get averaged results. This is only applied if using pre-defined data split (kfold=0)",
-)
-@click.option(
     "--early_stop_lr",
     required=True,
     type=float,
@@ -395,21 +121,6 @@ def process_options(
         resolve_path=False,
         path_type=Path,
     ),
-)
-@click.option(
-    "--use_sent_split_padded_version",
-    required=True,
-    type=bool,
-)
-@click.option(
-    "--marking_id",
-    required=True,
-    type=str,
-)
-@click.option(
-    "--gpu",
-    required=True,
-    type=bool,
 )
 @click.option(
     "--log_dir",
@@ -458,15 +169,10 @@ def main(
     per_label_attention: bool,
     per_label_sent_only: bool,
     num_epochs: int,
-    report_rand_pred: bool,
-    running_times: int,
     early_stop_lr: float,
     remove_ckpts_before_train: bool,
     use_label_embedding: bool,
     ckpt_dir: Path,
-    use_sent_split_padded_version: bool,
-    marking_id: str,
-    gpu: bool,
     log_dir: Path,
     word2vec_model_path: Path,
     sequence_length: int,
@@ -483,18 +189,13 @@ def main(
         per_label_attention,
         per_label_sent_only,
         num_epochs,
-        report_rand_pred,
-        running_times,
         early_stop_lr,
         remove_ckpts_before_train,
         ckpt_dir,
-        use_sent_split_padded_version,
-        marking_id,
-        gpu,
         dataset_paths,
         word2vec_model_path,
     )
-    (onehot_encoding, training_data_split,) = load_data(
+    onehot_encoding, training_data_split = data_loading.load_data(
         word2vec_model_path,
         validation_data_path,
         training_data_path,
@@ -524,7 +225,7 @@ def main(
         else:
             model = HLAN(**kwargs)
 
-    with create_session(
+    with session_creation.create_session(
         model=model,
         ckpt_dir=ckpt_dir,
         remove_ckpts_before_train=remove_ckpts_before_train,
@@ -536,35 +237,69 @@ def main(
         label_embedding_model_path_per_label=label_embedding_model_path_per_label,
         use_label_embedding=use_label_embedding,
     ) as session:
-        for epoch in range(0, num_epochs):
+        best_micro_f1_score = 0
 
-            running_training_performance = RunningModelPerformance.empty()
+        start_epoch = session.run(model.epoch_step)
 
-            for step, feed_dict in enumerate(
-                feed_data(
+        for epoch in range(start_epoch, num_epochs):
+
+            training.train(
+                session,
+                model,
+                epoch,
+                lambda: data_feeding.feed_data(
                     model,
                     *training_data_split.training,
                     batch_size=batch_size,
                     dropout_rate=0.5,
-                )
-            ):
-                running_training_performance = training(
-                    session, model, step, epoch, feed_dict, running_training_performance
-                )
+                ),
+            )
 
-            for step, feed_dict in enumerate(
-                feed_data(model, *training_data_split.validation, batch_size=batch_size)
-            ):
-                validation(session, model, step, epoch, feed_dict)
+            validation_outputs: ModelOutputs = validation.validate(
+                session,
+                model,
+                epoch,
+                onehot_encoding.num_classes,
+                lambda: data_feeding.feed_data(
+                    model, *training_data_split.validation, batch_size=batch_size
+                ),
+            )
 
             click.echo("Incrementing epoch counter in session")
             session.run(model.epoch_increment)
 
-        for feed_dict in feed_data(
-            model, *training_data_split.testing, batch_size=batch_size
-        ):
-            click.echo(feed_dict)
-            prediction(session, model, feed_dict)
+            best_micro_f1_score, current_learning_rate = validation.update_performance(
+                ckpt_dir,
+                model,
+                session,
+                best_micro_f1_score,
+                epoch,
+                validation_outputs,
+            )
+
+            if current_learning_rate < early_stop_lr:
+                click.echo(
+                    f"Terminating early for learning rate {current_learning_rate} < {early_stop_lr}"
+                )
+                break
+
+        prediction_outputs: ModelOutputs = prediction.predict(
+            session,
+            model,
+            onehot_encoding.num_classes,
+            ckpt_dir,
+            lambda: data_feeding.feed_data(
+                model, *training_data_split.testing, batch_size=batch_size
+            ),
+        )
+
+        test_performance: SummaryPerformance = prediction.calculate_performance(
+            prediction_outputs
+        )
+
+        click.echo("Final results --")
+        click.echo(f"Micro F1 Score: {test_performance.micro_f1_score}")
+        click.echo(f"Micro ROC-AUC Score: {test_performance.micro_roc_auc_score}")
 
 
 if __name__ == "__main__":

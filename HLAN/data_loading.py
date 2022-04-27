@@ -34,6 +34,38 @@ class OnehotEncoding:
     reverse: ReverseOnehotEncoding
 
 
+TrainingData = Tuple[np.ndarray, np.ndarray]
+
+
+@dataclass
+class TrainingDataSplit:
+    validation: TrainingData
+    training: TrainingData
+    testing: TrainingData
+
+
+def load_data(
+    word2vec_model_path: Path,
+    validation_data_path: Path,
+    training_data_path: Path,
+    testing_data_path: Path,
+    sequence_length: int,
+) -> Tuple[OnehotEncoding, TrainingDataSplit]:
+    onehot_encoding = load_encoding_data(
+        word2vec_model_path, validation_data_path, training_data_path, testing_data_path
+    )
+
+    training_data_split = load_training_data(
+        onehot_encoding.forward,
+        validation_data_path,
+        training_data_path,
+        testing_data_path,
+        sequence_length,
+    )
+
+    return onehot_encoding, training_data_split
+
+
 def load_encoding_data(
     word2vec_model_path: Path,
     validation_data_path: Path,
@@ -112,16 +144,6 @@ def create_vocabulary(word2vec_model_path: Path) -> Tuple[ForwardOnehot, Reverse
     index2word = {index: word for index, word in enumerate(all_features)}
 
     return word2index, index2word
-
-
-TrainingData = Tuple[np.ndarray, np.ndarray]
-
-
-@dataclass
-class TrainingDataSplit:
-    validation: TrainingData
-    training: TrainingData
-    testing: TrainingData
 
 
 def load_training_data(

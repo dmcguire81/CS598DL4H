@@ -7,75 +7,8 @@ import tensorflow as tf
 from gensim.models import Word2Vec
 from pytest_mock import MockerFixture
 
-from HLAN import load_data as ld
+from HLAN import data_loading, session_creation
 from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
-from HLAN.HAN_train import create_session, feed_data, load_data
-
-
-class MockHLAN(HLAN):
-    def inference(self):
-        return None
-
-    def loss_function(self):
-        return None
-
-    def train(self):
-        return None
-
-    def model_performance(self):
-        return (None, None, None)
-
-    def add_summary(self, log_dir):
-        pass
-
-
-def test_load_data(
-    word2vec_model_path: Path,
-    caml_dataset_paths: List[Path],
-    sequence_length,
-):
-    validation_data_path, testing_data_path, training_data_path = sorted(
-        caml_dataset_paths, key=str
-    )
-
-    onehot_encoding, training_data_split = load_data(
-        word2vec_model_path,
-        validation_data_path,
-        training_data_path,
-        testing_data_path,
-        sequence_length,
-    )
-
-    assert len(onehot_encoding.forward.labels) == 50
-    assert len(onehot_encoding.forward.words) == 150855
-
-    assert len(onehot_encoding.reverse.labels) == 50
-    assert len(onehot_encoding.reverse.words) == 150855
-
-    (trainX, trainY) = training_data_split.training
-    (validX, validY) = training_data_split.validation
-    (testX, testY) = training_data_split.testing
-
-    assert isinstance(trainX, np.ndarray)
-    assert isinstance(trainY, np.ndarray)
-    assert isinstance(validX, np.ndarray)
-    assert isinstance(validY, np.ndarray)
-    assert isinstance(testX, np.ndarray)
-    assert isinstance(testY, np.ndarray)
-
-    assert len(trainX) == len(trainY)
-    assert len(validX) == len(validY)
-    assert len(testX) == len(testY)
-    assert len(trainY) == 8066
-    assert len(validY) == 1573
-    assert len(testY) == 1729
-
-    assert np.mean(trainX) == 1078.8257977188198
-    assert np.mean(trainY) == 0.11385817009670221
-    assert np.mean(validX) == 1440.640283534647
-    assert np.mean(validY) == 0.11802924348378893
-    assert np.mean(testX) == 1465.9599076923078
-    assert np.mean(testY) == 0.12119144013880856
 
 
 def test_create_session_from_checkpoint(
@@ -90,52 +23,56 @@ def test_create_session_from_checkpoint(
     ckpt_dir: Path,
     remove_ckpts_before_train: bool,
     tmp_path: Path,
+    mock_hlan_class: Type,
 ):
     validation_data_path, testing_data_path, training_data_path = sorted(
         caml_dataset_paths, key=str
     )
 
     monkeypatch.setattr(
-        ld.Word2Vec, "load", mocker.MagicMock(return_value=word2vec_model)
+        data_loading.Word2Vec, "load", mocker.MagicMock(return_value=word2vec_model)
     )
-    onehot_encoding = ld.load_encoding_data(
+    onehot_encoding = data_loading.load_encoding_data(
         word2vec_model_path, validation_data_path, training_data_path, testing_data_path
     )
     monkeypatch.undo()
 
-    model = MockHLAN(
-        num_classes=onehot_encoding.num_classes,
-        learning_rate=0.01,
-        batch_size=batch_size,
-        decay_steps=6000,
-        decay_rate=1.0,
-        sequence_length=sequence_length,
-        num_sentences=num_sentences,
-        vocab_size=onehot_encoding.vocab_size,
-        embed_size=100,
-        hidden_size=100,
-        log_dir=tmp_path,
-    )
-
-    with create_session(
-        model=model,
-        ckpt_dir=ckpt_dir,
-        remove_ckpts_before_train=remove_ckpts_before_train,
-        per_label_attention=None,  # type: ignore
-        per_label_sent_only=None,  # type: ignore
-        reverse_embedding=None,  # type: ignore
-        word2vec_model_path=None,  # type: ignore
-        label_embedding_model_path=None,  # type: ignore
-        label_embedding_model_path_per_label=None,  # type: ignore
-        use_label_embedding=True,
-    ) as session:
-        assert session
-
-        assert model.Embedding.eval().mean() == pytest.approx(-8.406006963923573e-05)
-        assert model.W_projection.eval().mean() == pytest.approx(-0.0108663635)
-        assert model.context_vector_word_per_label.eval().mean() == pytest.approx(
-            -0.009843622334301472
+    with tf.compat.v1.variable_scope(""):
+        model = mock_hlan_class(
+            num_classes=onehot_encoding.num_classes,
+            learning_rate=0.01,
+            batch_size=batch_size,
+            decay_steps=6000,
+            decay_rate=1.0,
+            sequence_length=sequence_length,
+            num_sentences=num_sentences,
+            vocab_size=onehot_encoding.vocab_size,
+            embed_size=100,
+            hidden_size=100,
+            log_dir=tmp_path,
         )
+
+        with session_creation.create_session(
+            model=model,
+            ckpt_dir=ckpt_dir,
+            remove_ckpts_before_train=remove_ckpts_before_train,
+            per_label_attention=None,  # type: ignore
+            per_label_sent_only=None,  # type: ignore
+            reverse_embedding=None,  # type: ignore
+            word2vec_model_path=None,  # type: ignore
+            label_embedding_model_path=None,  # type: ignore
+            label_embedding_model_path_per_label=None,  # type: ignore
+            use_label_embedding=True,
+        ) as session:
+            assert session
+
+            assert model.Embedding.eval().mean() == pytest.approx(
+                -8.406006963923573e-05
+            )
+            assert model.W_projection.eval().mean() == pytest.approx(-0.0108663635)
+            assert model.context_vector_word_per_label.eval().mean() == pytest.approx(
+                -0.009843622334301472
+            )
 
 
 @pytest.mark.slow()
@@ -170,9 +107,9 @@ def test_create_session_from_scratch(
     )
 
     monkeypatch.setattr(
-        ld.Word2Vec, "load", mocker.MagicMock(return_value=word2vec_model)
+        data_loading.Word2Vec, "load", mocker.MagicMock(return_value=word2vec_model)
     )
-    onehot_encoding = ld.load_encoding_data(
+    onehot_encoding = data_loading.load_encoding_data(
         word2vec_model_path, validation_data_path, training_data_path, testing_data_path
     )
     monkeypatch.undo()
@@ -204,7 +141,7 @@ def test_create_session_from_scratch(
             initializer=tf.random_normal_initializer(stddev=0.1, seed=0),
         )
 
-        with create_session(
+        with session_creation.create_session(
             model=model,
             ckpt_dir=empty_ckpt_dir,
             remove_ckpts_before_train=remove_ckpts_before_train,
@@ -250,68 +187,67 @@ def test_create_session_from_scratch(
                 assert not hasattr(model, "context_vector_sentence_per_label")
 
 
-def test_feed_data(
+def test_assign_pretrained_word_embedding(
+    word2vec_model_path: Path,
+):
+    embedding: np.ndarray = session_creation.assign_pretrained_word_embedding(
+        word2vec_model_path,
+    )
+
+    assert embedding.mean() == pytest.approx(0.000983558)
+
+
+def test_assign_pretrained_label_embedding_not_per_label(
     monkeypatch: pytest.MonkeyPatch,
     mocker: MockerFixture,
     caml_dataset_paths: List[Path],
     word2vec_model_path: Path,
     word2vec_model: Word2Vec,
-    batch_size: int,
-    num_sentences: int,
-    sequence_length: int,
-    tmp_path: Path,
+    label_embedding_model_path: Path,
 ):
     validation_data_path, testing_data_path, training_data_path = sorted(
         caml_dataset_paths, key=str
     )
 
     monkeypatch.setattr(
-        ld.Word2Vec, "load", mocker.MagicMock(return_value=word2vec_model)
+        data_loading.Word2Vec, "load", mocker.MagicMock(return_value=word2vec_model)
     )
-    onehot_encoding, training_data_split = load_data(
-        word2vec_model_path,
-        validation_data_path,
-        training_data_path,
-        testing_data_path,
-        sequence_length,
+    onehot_encoding = data_loading.load_encoding_data(
+        word2vec_model_path, validation_data_path, training_data_path, testing_data_path
     )
     monkeypatch.undo()
 
-    # See NOTE on scoping in test above
-    with tf.compat.v1.variable_scope("test_feed_data"):
-        model = MockHLAN(
-            num_classes=onehot_encoding.num_classes,
-            learning_rate=0.01,
-            batch_size=batch_size,
-            decay_steps=6000,
-            decay_rate=1.0,
-            sequence_length=sequence_length,
-            num_sentences=num_sentences,
-            vocab_size=onehot_encoding.vocab_size,
-            embed_size=100,
-            hidden_size=100,
-            log_dir=tmp_path,
-        )
+    w_projection: np.ndarray = session_creation.assign_pretrained_label_embedding(
+        onehot_encoding.reverse.labels,
+        label_embedding_model_path,
+    )
 
-        (trainX, trainY) = training_data_split.training
-        (validX, validY) = training_data_split.validation
-        (testX, testY) = training_data_split.testing
+    assert w_projection.mean() == pytest.approx(-0.0017410218)
 
-        for (X, Y, dropout_rate) in [
-            (trainX, trainY, 0.5),
-            (validX, validY, 0.0),
-            (testX, testY, 0.0),
-        ]:
-            n = len(X)
-            b = batch_size
-            batches = list(feed_data(model, X, Y, batch_size, dropout_rate))
-            assert len(batches) == int(n / b) + 1 if (n % b) else 0
-            assert len(batches[-1][model.input_x]) == len(X) % batch_size
-            assert len(batches[-1][model.input_y]) == len(Y) % batch_size
-            assert all(
-                [len(batch[model.input_x]) == batch_size for batch in batches[:-1]]
-            )
-            assert all(
-                [len(batch[model.input_y]) == batch_size for batch in batches[:-1]]
-            )
-            assert all([batch[model.dropout_rate] == dropout_rate for batch in batches])
+
+def test_assign_pretrained_label_embedding_per_label(
+    monkeypatch: pytest.MonkeyPatch,
+    mocker: MockerFixture,
+    caml_dataset_paths: List[Path],
+    word2vec_model_path: Path,
+    word2vec_model: Word2Vec,
+    label_embedding_model_path_per_label: Path,
+):
+    validation_data_path, testing_data_path, training_data_path = sorted(
+        caml_dataset_paths, key=str
+    )
+
+    monkeypatch.setattr(
+        data_loading.Word2Vec, "load", mocker.MagicMock(return_value=word2vec_model)
+    )
+    onehot_encoding = data_loading.load_encoding_data(
+        word2vec_model_path, validation_data_path, training_data_path, testing_data_path
+    )
+    monkeypatch.undo()
+
+    context_vector_per_label = session_creation.assign_pretrained_label_embedding(
+        onehot_encoding.reverse.labels,
+        label_embedding_model_path_per_label,
+    )
+
+    assert context_vector_per_label.mean() == pytest.approx(-0.001482437)

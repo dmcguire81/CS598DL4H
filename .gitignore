@@ -134,6 +134,9 @@ env
 # TensorBoard
 logs
 
+# Training
+checkpoints
+
 # Sensitive data
 shielding_diagnoses.csv
 SHIELDING_CODES.csv
