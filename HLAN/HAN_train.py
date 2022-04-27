@@ -300,7 +300,9 @@ def main(
     ) as session:
         best_micro_f1_score = 0
 
-        for epoch in range(0, num_epochs):
+        start_epoch = session.run(model.epoch_step)
+
+        for epoch in range(start_epoch, num_epochs):
 
             training.train(
                 session,
