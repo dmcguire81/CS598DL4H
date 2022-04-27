@@ -42,14 +42,14 @@ def train(
         performance = ModelPerformance(
             loss=loss, precision=precision, recall=recall, jaccard_index=jaccard_index
         )
-        logger.debug("Current training performance: %s", performance)
+        logger.debug("Current performance: %s", performance)
 
         running_performance = running_performance + performance
         assert running_performance.count == step + 1
 
         if step % 50 == 0:
             logger.info(
-                "Average training performance (epoch %s, step %s): %s",
+                "Average performance (epoch %s, step %s): %s",
                 epoch,
                 step,
                 running_performance.average(),
@@ -59,3 +59,10 @@ def train(
 
         if step == 0:  # epoch rolled over
             model.writer.add_summary(training_loss_per_epoch, epoch)
+
+    logger.info(
+        "Average performance (epoch %s, step %s): %s",
+        epoch,
+        step,
+        running_performance.average(),
+    )

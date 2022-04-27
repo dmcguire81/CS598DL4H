@@ -49,14 +49,14 @@ def validate(
         performance = ModelPerformance(
             loss=loss, precision=precision, recall=recall, jaccard_index=jaccard_index
         )
-        logger.debug("Current validation performance: %s", performance)
+        logger.debug("Current performance: %s", performance)
 
         running_performance = running_performance + performance
         assert running_performance.count == step + 1
 
         if step % 50 == 0:
             logger.info(
-                "Average validation performance (epoch %s, step %s): %s",
+                "Average performance (epoch %s, step %s): %s",
                 epoch,
                 step,
                 running_performance.average(),
@@ -69,6 +69,13 @@ def validate(
 
         all_predictions = np.concatenate((all_predictions, predictions), axis=0)
         all_labels = np.concatenate((all_labels, labels), axis=0)
+
+    logger.info(
+        "Average performance (epoch %s, step %s): %s",
+        epoch,
+        step,
+        running_performance.average(),
+    )
 
     return all_predictions, all_labels
 
