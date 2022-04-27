@@ -2,7 +2,7 @@
 
 env/bin/python HLAN/HAN_train.py \
     --dataset 'caml-mimic/mimicdata/mimic3/*_50.csv' \
-    --batch_size 32 \
+    --batch_size 128 \
     --per_label_attention=False \
     --per_label_sent_only=False \
     --num_epochs=100 \
