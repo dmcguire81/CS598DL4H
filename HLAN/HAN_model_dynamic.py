@@ -587,7 +587,7 @@ class HAN:
         self.validation_loss_per_epoch = tf.summary.scalar(
             "validation_loss_per_epoch", self.loss
         )
-        self.writer = tf.summary.FileWriter(str(log_dir))
+        self.writer = tf.summary.FileWriter(log_dir.as_posix())
 
 
 class HA_GRU(HAN):

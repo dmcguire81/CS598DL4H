@@ -35,7 +35,7 @@ def process_options(
     word2vec_model_path: Path,
 ) -> Tuple[Path, Path, Path]:
     logger = logging.getLogger("process_options")
-    logger.debug(f"Training on {[str(path) for path in dataset_paths]}")
+    logger.debug(f"Training on {[path.as_posix() for path in dataset_paths]}")
 
     validation_data_path, testing_data_path, training_data_path = sorted(
         dataset_paths, key=str
@@ -64,7 +64,9 @@ def process_options(
 
     logger.info(f"Using checkpoint path {ckpt_dir}")
 
-    logger.info(f"Loading training data word embedding from {word2vec_model_path}")
+    logger.info(
+        f"Loading training data word embedding from {word2vec_model_path.as_posix()}"
+    )
 
     return validation_data_path, training_data_path, testing_data_path
 

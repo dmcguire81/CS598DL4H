@@ -89,7 +89,7 @@ def test_create_vocabulary(
         word2vec_model_path=word2vec_model_path,
     )
 
-    model = Word2Vec.load(str(word2vec_model_path))
+    model = Word2Vec.load(word2vec_model_path.as_posix())
     dimension = len(model.wv.vocab) + 1
 
     assert len(vocabulary_word2index) == len(vocabulary_index2word)

@@ -35,7 +35,7 @@ def create_session(
         saver = tf.compat.v1.train.Saver(max_to_keep=1)
 
         if remove_ckpts_before_train and ckpt_dir.exists():
-            shutil.rmtree(str(ckpt_dir))
+            shutil.rmtree(ckpt_dir.as_posix())
             logger.info("Removed checkpoint at %s", ckpt_dir)
 
         ckpt_file = ckpt_dir / "checkpoint"
@@ -112,7 +112,7 @@ def assign_pretrained_word_embedding(
         "Using pre-trained word emebedding at %s",
         word2vec_model_path,
     )
-    word2vec_model = Word2Vec.load(str(word2vec_model_path))
+    word2vec_model = Word2Vec.load(word2vec_model_path.as_posix())
     return np.array(
         [np.zeros(embed_size)]
         + [word2vec_model.wv[word] for word in word2vec_model.wv.vocab]
@@ -126,7 +126,7 @@ def assign_pretrained_label_embedding(
     logger = logging.getLogger("create_session.assign_pretrained_label_embedding")
     logger.info("Using pre-trained label emebedding at %s", label_embedding_model_path)
 
-    word2vec_model_labels = Word2Vec.load(str(label_embedding_model_path))
+    word2vec_model_labels = Word2Vec.load(label_embedding_model_path.as_posix())
     label_embeddings = [
         word2vec_model_labels.wv[vocabulary_index2word_label[i]]
         for i in range(len(vocabulary_index2word_label))

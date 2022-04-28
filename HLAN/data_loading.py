@@ -118,7 +118,7 @@ def create_vocabulary_label_pre_split(
     label_counter: Counter = Counter()
 
     for data_path in [training_data_path, validation_data_path, testing_data_path]:
-        df = pd.read_csv(str(data_path))
+        df = pd.read_csv(data_path.as_posix())
 
         for labels_list in df["LABELS"].tolist():
             label_counter += Counter(labels_list.split(";"))
@@ -137,7 +137,7 @@ def create_vocabulary_label_pre_split(
 
 
 def create_vocabulary(word2vec_model_path: Path) -> Tuple[ForwardOnehot, ReverseOnehot]:
-    model = Word2Vec.load(str(word2vec_model_path))
+    model = Word2Vec.load(word2vec_model_path.as_posix())
     all_features = ["PAD_ID"] + list(model.wv.vocab.keys())
 
     word2index = {word: index for index, word in enumerate(all_features)}
@@ -181,7 +181,7 @@ def load_data_multilabel_pre_split(
     vocabulary_embedding: ForwardOnehotEncoding,
     data_path: Path,
 ) -> TrainingData:
-    df = pd.read_csv(str(data_path))
+    df = pd.read_csv(data_path.as_posix())
     word2index: Dict[str, int] = defaultdict(int)
     word2index.update(**vocabulary_embedding.words)
     word2index_label: Dict[str, int] = defaultdict(int)

@@ -55,7 +55,7 @@ def test_update_validation_performance_saves_checkpoint_on_improvement(
 
     mock_saver.save.assert_called_once_with(
         mock_session,
-        str(empty_ckpt_dir / "model.ckpt"),
+        (empty_ckpt_dir / "model.ckpt").as_posix(),
         global_step=epoch,
     )
 

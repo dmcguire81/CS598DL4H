@@ -96,7 +96,7 @@ def word2vec_model_path():
 
 @pytest.fixture(scope="session")
 def word2vec_model(word2vec_model_path: Path):
-    return Word2Vec.load(str(word2vec_model_path))
+    return Word2Vec.load(word2vec_model_path.as_posix())
 
 
 @pytest.fixture()

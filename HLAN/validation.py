@@ -114,7 +114,7 @@ def update_performance(
         saver = tf.compat.v1.train.Saver(max_to_keep=1)
         save_path = ckpt_dir / "model.ckpt"
         logger.info("Saving model checkpoint to %s", save_path)
-        saver.save(session, str(save_path), global_step=epoch)
+        saver.save(session, save_path.as_posix(), global_step=epoch)
         best_micro_f1_score = summary_performance.micro_f1_score
     else:
         logger.info(
