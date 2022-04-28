@@ -19,9 +19,6 @@ from HLAN.performance import ModelOutputs, SummaryPerformance
 LOG_LEVEL = logging._nameToLevel[os.getenv("LOG_LEVEL", "INFO")]
 logging.basicConfig(level=LOG_LEVEL)
 
-tf_logger = logging.getLogger("tensorflow")
-tf_logger.setLevel(logging.CRITICAL)
-
 
 def process_options(
     batch_size: int,
