@@ -17,7 +17,11 @@ from HLAN.HAN_model_dynamic import HA_GRU, HAN, HLAN
 from HLAN.performance import ModelOutputs, SummaryPerformance
 
 LOG_LEVEL = logging._nameToLevel[os.getenv("LOG_LEVEL", "INFO")]
-logging.basicConfig(level=LOG_LEVEL)
+logging.basicConfig(
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    level=LOG_LEVEL,
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 
 
 def process_options(
