@@ -1,6 +1,7 @@
 import logging
 
 import tensorflow.compat.v1 as tf
+import tf_slim as slim
 
 tf.disable_v2_behavior()
 
@@ -535,7 +536,7 @@ class HAN:
         )
 
         logger.info("Optimize SGD with Adam and gradient clipping")
-        train_op = tf.contrib.layers.optimize_loss(
+        train_op = slim.optimize_loss(
             self.loss,
             global_step=self.global_step,
             learning_rate=learning_rate,
