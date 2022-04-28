@@ -1,6 +1,6 @@
 #!/bin/bash
 
-env/bin/python HLAN/HAN_train.py \
+python HLAN/HAN_train.py \
     --dataset 'caml-mimic/mimicdata/mimic3/*_50.csv' \
     --batch_size 32 \
     --per_label_attention=True \
