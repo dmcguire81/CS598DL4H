@@ -3,7 +3,7 @@ from typing import List, Type
 
 import numpy as np
 import pytest
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from gensim.models import Word2Vec
 from pytest_mock import MockerFixture
 
@@ -37,7 +37,7 @@ def test_create_session_from_checkpoint(
     )
     monkeypatch.undo()
 
-    with tf.compat.v1.variable_scope(""):
+    with tf.variable_scope(""):
         model = mock_hlan_class(
             num_classes=onehot_encoding.num_classes,
             learning_rate=0.01,
@@ -123,7 +123,7 @@ def test_create_session_from_scratch(
     # where the session thinks the variables in the model live, so long as it lets
     # us assert on them, so we scope *only the from-scratch* load to keep the two
     # from colliding in a single test process.
-    with tf.compat.v1.variable_scope(
+    with tf.variable_scope(
         f"test_create_session_from_scratch-{per_label_attention}-{per_label_sent_only}"
     ):
         model = model_class(

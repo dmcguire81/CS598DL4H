@@ -3,7 +3,7 @@ from typing import List, Type
 
 import numpy as np
 import pytest
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from gensim.models import Word2Vec
 from pytest_mock import MockerFixture
 from sklearn import metrics
@@ -114,7 +114,7 @@ def test_validation_performance(
         sequence_length=sequence_length,
     )
 
-    with tf.compat.v1.variable_scope(
+    with tf.variable_scope(
         f"test_validation_performance-{per_label_attention}-{per_label_sent_only}"
     ):
         model = model_class(
@@ -219,7 +219,7 @@ def test_prediction_performance(
         sequence_length=sequence_length,
     )
 
-    with tf.compat.v1.variable_scope(
+    with tf.variable_scope(
         f"test_prediction_performance-{per_label_attention}-{per_label_sent_only}"
     ):
         model = model_class(

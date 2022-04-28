@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 from HLAN.HAN_model_dynamic import HAN
 from HLAN.performance import (
@@ -16,7 +16,7 @@ from HLAN.performance import (
 
 
 def predict(
-    session: tf.compat.v1.Session,
+    session: tf.Session,
     model: HAN,
     num_classes: int,
     ckpt_dir: Path,
@@ -30,7 +30,7 @@ def predict(
             "For best prediction performance, restoring from checkpoint at %s",
             ckpt_file,
         )
-        saver = tf.compat.v1.train.Saver(max_to_keep=1)
+        saver = tf.train.Saver(max_to_keep=1)
         saver.restore(session, tf.train.latest_checkpoint(ckpt_dir))
 
     running_performance = RunningModelPerformance.empty()

@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Iterator, Mapping, cast
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from gensim.models import Word2Vec
 
 from HLAN import data_loading
@@ -24,15 +24,15 @@ def create_session(
     label_embedding_model_path: Path,
     label_embedding_model_path_per_label: Path,
     use_label_embedding: bool,
-) -> Iterator[tf.compat.v1.Session]:
+) -> Iterator[tf.Session]:
     logger = logging.getLogger("create_session")
     logger.debug("creating session")
 
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = False
 
-    with tf.compat.v1.Session(config=config) as session:
-        saver = tf.compat.v1.train.Saver(max_to_keep=1)
+    with tf.Session(config=config) as session:
+        saver = tf.train.Saver(max_to_keep=1)
 
         if remove_ckpts_before_train and ckpt_dir.exists():
             shutil.rmtree(ckpt_dir.as_posix())

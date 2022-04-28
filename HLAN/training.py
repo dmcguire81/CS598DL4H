@@ -1,14 +1,14 @@
 import logging
 from typing import Any, Callable, Iterable, Mapping
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 from HLAN.HAN_model_dynamic import HAN
 from HLAN.performance import ModelPerformance, RunningModelPerformance
 
 
 def train(
-    session: tf.compat.v1.Session,
+    session: tf.Session,
     model: HAN,
     epoch: int,
     feeder: Callable[[], Iterable[Mapping[Any, Any]]],

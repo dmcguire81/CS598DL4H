@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 from HLAN.HAN_model_dynamic import HAN
 from HLAN.performance import (
@@ -15,7 +15,7 @@ from HLAN.performance import (
 
 
 def validate(
-    session: tf.compat.v1.Session,
+    session: tf.Session,
     model: HAN,
     epoch: int,
     num_classes: int,
@@ -93,7 +93,7 @@ def validate(
 def update_performance(
     ckpt_dir: Path,
     model: HAN,
-    session: tf.compat.v1.Session,
+    session: tf.Session,
     best_micro_f1_score: float,
     epoch: int,
     model_outputs: ModelOutputs,
@@ -111,7 +111,7 @@ def update_performance(
             best_micro_f1_score,
             summary_performance.micro_f1_score,
         )
-        saver = tf.compat.v1.train.Saver(max_to_keep=1)
+        saver = tf.train.Saver(max_to_keep=1)
         save_path = ckpt_dir / "model.ckpt"
         logger.info("Saving model checkpoint to %s", save_path)
         saver.save(session, save_path.as_posix(), global_step=epoch)

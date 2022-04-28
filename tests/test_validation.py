@@ -30,7 +30,7 @@ def test_update_validation_performance_saves_checkpoint_on_improvement(
 
     mock_saver = mocker.MagicMock()
     mock_saver_constructor = mocker.MagicMock(return_value=mock_saver)
-    monkeypatch.setattr(validation.tf.compat.v1.train, "Saver", mock_saver_constructor)
+    monkeypatch.setattr(validation.tf.train, "Saver", mock_saver_constructor)
 
     epoch = 0
     model_outputs = ModelOutputs(
