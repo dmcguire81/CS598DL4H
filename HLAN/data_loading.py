@@ -6,7 +6,7 @@ from typing import Dict, Mapping, Tuple
 
 import numpy as np
 import pandas as pd
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from gensim.models import Word2Vec
 from tflearn import data_utils
 
