@@ -101,6 +101,8 @@ See `scripts` directory for operational parameters for `HLAN`, `HA-GRU` and `HAN
 
 #### MIMIC-III COVID-19 Shielding
 
+> **NOTE:** this section is incomplete due to reproducibility challenges with the COVID-19 shielding data sourced from [UK's NHS](https://digital.nhs.uk/coronavirus/shielded-patient-list/methodology/annexes), and mapped from ICD-10 to ICD-9 using tools from [The Govt. of NZ](https://www.health.govt.nz/nz-health-statistics/data-references/mapping-tools/)
+
 Needs preprocessing to extract only Admissions IDs from admissions containing COVID-19 related ICD-9 codes, derived from COVID-19 related ICD-10 codes in `./spl-icd10-opcs4-disease-groups-v2.0.csv` and from an ICD-10-to-ICD-9 mapping in `./masterb8.csv`. This process needs to generate `CSV` files akin to `caml-mimic/mimicdata/mimic3/*_50.csv` to be converted by `csv_to_text.py` to `Explainable-Automated-Medical-Coding/datasets/mimiciii_*_full_th_50_covid_shielding.txt`, the files the training expects.
 
 ##### Original
