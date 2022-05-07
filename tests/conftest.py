@@ -46,11 +46,6 @@ def report_rand_pred():
 
 
 @pytest.fixture
-def running_times():
-    return 1
-
-
-@pytest.fixture
 def early_stop_lr():
     return 0.00002
 

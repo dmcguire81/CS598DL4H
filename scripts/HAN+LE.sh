@@ -5,7 +5,7 @@ python HLAN/HAN_train.py \
     --batch_size 128 \
     --per_label_attention=False \
     --per_label_sent_only=False \
-    --running_times=1 \
+    --num_epochs=100 \
     --early_stop_lr=0.00002 \
     --remove_ckpts_before_train=False \
     --use_label_embedding=True \
