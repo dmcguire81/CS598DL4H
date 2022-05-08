@@ -6,7 +6,7 @@ from scipy import stats
 
 
 def performance_with_confidence_interval(
-    performance: pd.DataFrame, confidence: float = 0.90
+    performance: pd.DataFrame, confidence: float = 0.95
 ) -> Iterable[Tuple[str, float, float]]:
     # find the critical t-value for a 2-tailed Gaussian confidence interval
     parameters = 1
