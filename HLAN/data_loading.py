@@ -121,7 +121,7 @@ def create_vocabulary_label_pre_split(
         df = pd.read_csv(data_path.as_posix())
 
         for labels_list in df["LABELS"].tolist():
-            label_counter += Counter(labels_list.split(";"))
+            label_counter += Counter(str(labels_list).split(";"))
 
     ordered_labels = [label for label, _count in label_counter.most_common()]
 
@@ -196,7 +196,7 @@ def load_data_multilabel_pre_split(
 
     for text, labels in zip(text_lines, labels_lines):
         x = [word2index[word] for word in text.split(" ")]
-        y_index = [word2index_label[label] for label in labels.split(";")]
+        y_index = [word2index_label[label] for label in str(labels).split(";")]
         y_one_hot = tf.keras.utils.to_categorical(
             y_index, num_classes=label_dimension, dtype=int
         )
