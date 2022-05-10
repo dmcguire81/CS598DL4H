@@ -1,0 +1,38 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>11</x><y>40</y><w>380</w><h>550</h></coordinates><panel_attributes>HAN_model_dynamic::HAN
+--
+...
+-context_vector_word
+-context_vector_sentence
+...
+-context_vector_word_per_label
+-context_vector_sentence_per_label
+...
+--
++HAN(...)
+-instantiate_weights()
+...
+-inference()
+-gru_forward_word_level(word_representation)
+-gru_backward_word_level(word_representation)
+-gru_single_step_word_level(Xt, h_t_minus_1)
+-attention_word_level(hidden_state)
+-gru_forward_sentence_level(sentence_representation)
+-gru_backward_sentence_level(sentence_representation)
+-gru_single_step_sentence_level(Xt, h_t_minus_1)
+-attention_sentence_level(hidden_state)
+...
+-inference_per_label()
+-attention_word_level_per_label(hidden_state)
+-gru_forward_sentence_level_per_label(sentence_representation)
+-gru_backward_sentence_level_per_label(sentence_representation)
+-gru_single_step_sentence_level_per_label(Xt, h_t_minus_1)
+-attention_sentence_level_per_label(hidden_state)
+...
+-loss_multilabel(l2_lambda)
+...
+-train()
+--
+Responsibilities
+-- HAN(+LE) implementation
+-- HA-GRU(+LE) implementation
+*-- HLAN(+LE) implementation*</panel_attributes><additional_attributes></additional_attributes></element></diagram>

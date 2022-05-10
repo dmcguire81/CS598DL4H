@@ -1,0 +1,55 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>70</x><y>0</y><w>320</w><h>370</h></coordinates><panel_attributes>HLAN::HAN_model_dynamic::HAN
+--
+...
+-context_vector_word
+-context_vector_sentence
+...
+--
++HAN(...)
+-instantiate_weights() &lt;&lt;default implementation&gt;&gt;
+...
+-inference()  &lt;&lt;template method&gt;&gt;
+-gru_forward_word_level(word_representation)
+-gru_backward_word_level(word_representation)
+-gru_single_step_word_level(Xt, h_t_minus_1)
+-attention_word_level(hidden_state)
+-gru_forward_sentence_level(sentence_representation)
+-gru_backward_sentence_level(sentence_representation)
+-gru_single_step_sentence_level(Xt, h_t_minus_1)
+-attention_sentence_level(hidden_state)
+...
+-loss_function(l2_lambda)
+...
+-train()
+--
+Responsibilities
+*-- HAN(+LE) implementation*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>419</y><w>320</w><h>210</h></coordinates><panel_attributes>HLAN::HAN_model_dynamic::HA_GRU
+--
+-context_vector_word
+-context_vector_sentence_per_label
+--
++HA_GRU(...)
+-instantiate_weights() &lt;&lt;overriden&gt;&gt;
+&lt;&lt;per-label overrides&gt;&gt;
+-gru_forward_sentence_level(sentence_representation)
+-gru_backward_sentence_level(sentence_representation)
+-gru_single_step_sentence_level(Xt, h_t_minus_1)
+-attention_sentence_level(hidden_state)
+--
+Responsibilities
+*-- HA-GRU(+LE) implementation*</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>220</x><y>366</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>669</y><w>320</w><h>220</h></coordinates><panel_attributes>HLAN::HAN_model_dynamic::HLAN
+--
+-context_vector_word_per_label
+-context_vector_sentence_per_label
+--
++HLAN(...)
+-instantiate_weights() &lt;&lt;overriden&gt;&gt;
+&lt;&lt;per-label overrides&gt;&gt;
+-attention_word_level(hidden_state)
+-gru_forward_sentence(sentence_representation)
+-gru_backward_sentence(sentence_representation)
+-gru_single_step_sentence(Xt, h_t_minus_1)
+-attention_sentence_level(hidden_state)
+--
+Responsibilities
+*-- HLAN(+LE) implementation*</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>220</x><y>618</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element></diagram>

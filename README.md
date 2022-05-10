@@ -125,3 +125,72 @@ cd Explainable-Automated-Medical-Coding/HLAN/
     --marking_id shielding-hlan \
     --gpu=True  # Colab only
 ```
+
+## Code Changes
+
+### Refactoring of HAN Class
+
+* Original source: `Explainable-Automated-Medical-Coding/HLAN/HAN_model_dynamic.py`
+* Refactored source: `HLAN/HAN_model_dynamic.py`
+
+#### Original Class
+
+The original class is a single implementation with the responsibility for HLAN
+(Hierarchical Label-wise Attention Network), as well as both downgraded models,
+HA-GRU (Hierarchical Attention - Gated Recurrent Unit) and HAN (Hierarchical
+Attention Network). In addition, it handles the transparent application of Label
+Embedding (LE) to each, by conditional application of a pre-trained word2vec model.
+
+![](./docs/HAN_Original.png)
+
+The important call out in this diagram is the number of instances `<method>` and
+`<method>_per_label` pairs that exists, indicative of an imperitive implementation.
+Concretely, where to apply label-wise attention (i.e.: attention *per label*) is
+the primary difference between each of the model variants HAN, HA-GRU, and HLAN.
+
+#### Replace Conditional with Polymorphism
+
+The first refactoring was [Replace Conditional with Polymorphism][polymorphism].
+This allowed all the instances of `<method>` and `<method>_per_label` pairs to be
+modeled, instead, with an inheritence hierarchy from the simplest model (HAN, which
+applies no label-wise attention) to the most complex (HLAN, which applies label-wise
+attention at the sentence and word level).
+
+[polymorphism]: https://refactoring.com/catalog/replaceConditionalWithPolymorphism.html
+
+![](./docs/HAN_Replace_Conditional_with_Polymorphism.png)
+
+#### Form Template Method
+
+The second refactoring applied was [Form Template Method][form]. This allowed a
+great deal of duplication to be effectively removed by making many more finer-grained
+methods than the original class supported. With this change, commonality among
+methods defined by more than one class became apparent, and all common methods
+could be pushed up the inheritence hierarchy as a [Template Method][template].
+
+[form]: https://www.industriallogic.com/xp/refactoring/formTemplateMethod.html
+[template]: https://en.wikipedia.org/wiki/Template_method_pattern
+
+![](./docs/HAN_Form_Template_Method.png)
+
+#### Deduplication Results
+
+Both refactorings allowed approximately a 40% redunction in Lines of Code, and 75%
+reduction in words, for a functionally equivalent implementation, as shown.
+
+##### Lines
+
+```sh
+$ wc -l Explainable-Automated-Medical-Coding/HLAN/HAN_model_dynamic.py
+    1193 Explainable-Automated-Medical-Coding/HLAN/HAN_model_dynamic.py
+$ wc -l HLAN/HAN_model_dynamic.py
+     698 HLAN/HAN_model_dynamic.py
+```
+
+##### Words
+```sh
+$ wc -w Explainable-Automated-Medical-Coding/HLAN/HAN_model_dynamic.py
+    6577 Explainable-Automated-Medical-Coding/HLAN/HAN_model_dynamic.py
+$ wc -w HLAN/HAN_model_dynamic.py
+    1678 HLAN/HAN_model_dynamic.py
+```

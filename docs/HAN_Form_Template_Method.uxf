@@ -1,0 +1,84 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>0</x><y>0</y><w>410</w><h>710</h></coordinates><panel_attributes>HLAN::HAN_model_dynamic::HAN
+--
+...
+-context_vector_word
+-context_vector_sentence
+...
+--
++HAN(...)
+-instantiate_weights() &lt;&lt;template method&gt;&gt;
+-instantiate_context_vectors() &lt;&lt;default implementation&gt;&gt;
+...
+-inference() &lt;&lt;template method&gt;&gt;
+-linear_layer() &lt;&lt;default implementation&gt;&gt;
+...
+-gru_word_level(embedded_words, reverse)
+-gru_single_step_word_level(Xt, h_t_minus_1)
+...
+-attention_word_level(hidden_state) &lt;&lt;template method&gt;&gt;
+-word_hidden_representation(representation) &lt;&lt;default implementation&gt;&gt;
+-context_vector_word_level() &lt;&lt;default implementation&gt;&gt;
+-word_level_attention_logits_axis() &lt;&lt;default implementation&gt;&gt;
+...
+-gru_sentence_level(representation, reverse) &lt;&lt;template method&gt;&gt;
+-sentence_axis() &lt;&lt;default implementation&gt;&gt;
+...
+-gru_single_step_sentence_level(Xt, h_t_minus_1) &lt;&lt;template method&gt;&gt;
+-gru_reset_gate_weights() &lt;&lt;default implementation&gt;&gt;
+-gru_update_gate_weights() &lt;&lt;default implementation&gt;&gt;
+-gru_hidden_state_weights() &lt;&lt;default implementation&gt;&gt;
+...
+-attention_sentence_level(hidden_state) &lt;&lt;template method&gt;&gt;
+-sentence_encoding_axis() &lt;&lt;default implementation&gt;&gt;
+-sentence_encoding_shape() &lt;&lt;default implementation&gt;&gt;
+-sentence_level_attention_weights() &lt;&lt;default implementation&gt;&gt;
+-word_level_attention_shape() &lt;&lt;default implementation&gt;&gt;
+-sentence_hidden_representation(representation) &lt;&lt;default implementation&gt;&gt;
+-context_vector_sentence_level() &lt;&lt;default implementation&gt;&gt;
+-sentence_level_attention_logits_axis() &lt;&lt;default implementation&gt;&gt;
+...
+-loss_function(l2_lambda)
+...
+-train()
+...
+-add_summary(log_dir)
+--
+Responsibilities
+*-- HAN(+LE) implementation*
+-- Hierarchical Attention Network algorithmic template</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>59</y><w>340</w><h>200</h></coordinates><panel_attributes>HLAN::HAN_model_dynamic::HA_GRU
+--
+-context_vector_word
+-context_vector_sentence_per_label
+--
+-instantiate_context_vectors() &lt;&lt;overriden&gt;&gt;
+-linear_layer() &lt;&lt;overriden&gt;&gt;
+-sentence_hidden_representation(representation) &lt;&lt;overriden&gt;&gt;
+-context_vector_sentence_level() &lt;&lt;overriden&gt;&gt;
+-sentence_level_attention_logits_axis() &lt;&lt;overriden&gt;&gt;
+--
+Responsibilities
+*-- HA-GRU(+LE) details*
+-- Specialization of Hierarchical Attention Network algorithmic
+template to per-label attention at the sentence level, only</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>16</y><w>490</w><h>750</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;700;10;730;260;730;260;10;470;10;470;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>309</y><w>340</w><h>330</h></coordinates><panel_attributes>HLAN::HAN_model_dynamic::HLAN
+--
+-context_vector_word_per_label
+-context_vector_sentence_per_label
+--
+-instantiate_context_vectors() &lt;&lt;overriden&gt;&gt;
+-word_hidden_representation(representation) &lt;&lt;overriden&gt;&gt;
+-context_vector_word_level()  &lt;&lt;overriden&gt;&gt;
+-word_level_attention_logits_axis()  &lt;&lt;overriden&gt;&gt;
+-sentence_axis() &lt;&lt;overriden&gt;&gt;
+-gru_reset_gate_weights() &lt;&lt;overriden&gt;&gt;
+-gru_update_gate_weights() &lt;&lt;overriden&gt;&gt;
+-gru_hidden_state_weights() &lt;&lt;overriden&gt;&gt;
+-sentence_encoding_axis() &lt;&lt;overriden&gt;&gt;
+-sentence_encoding_shape() &lt;&lt;overriden&gt;&gt;
+-sentence_hidden_representation(representation) &lt;&lt;overriden&gt;&gt;
+-sentence_level_attention_weights() &lt;&lt;overriden&gt;&gt;
+-word_level_attention_shape() &lt;&lt;overriden&gt;&gt;
+--
+Responsibilities
+*-- HLAN(+LE) details*
+-- Specialization of Hierarchical Attention Network algorithmic
+template to per-label attention at the sentence and word levels</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>248</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element></diagram>
